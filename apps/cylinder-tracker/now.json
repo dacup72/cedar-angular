@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "name": "cylinder-tracker",
+    "builds": [
+      { "src": "/dist/apps/api/main.js", "use": "@now/node" },
+      { "src": "/dist/apps/cylinder-tracker/*", "use": "@now/static" }
+    ],
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/dist/apps/api/main.js" },
+      { "handle": "filesystem" },
+      { "src": "/assets/(.*)", "dest": "/dist/apps/cylinder-tracker/assets/$1"},
+      { "src": "/(.*).(js|css|ico)", "dest": "/dist/apps/cylinder-tracker/$1.$2" },
+      { "src": "/(.*)", "dest": "/dist/apps/cylinder-tracker/index.html" }
+    ]
+  }

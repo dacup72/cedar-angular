@@ -1,5 +1,5 @@
 {
-  "npmScope": "cedar-angular",
+  "npmScope": "cedar-all",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -30,6 +30,15 @@
       "tags": []
     },
     "api-interfaces": {
+      "tags": []
+    },
+    "material": {
+      "tags": []
+    },
+    "core-data": {
+      "tags": []
+    },
+    "ui-toolbar": {
       "tags": []
     }
   }

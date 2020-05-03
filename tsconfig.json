@@ -16,7 +16,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cedar-angular/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@cedar-angular/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@cedar-all/material": ["libs/material/src/index.ts"],
+      "@cedar-all/core-data": ["libs/core-data/src/index.ts"],
+      "@cedar-all/ui-toolbar": ["libs/ui-toolbar/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

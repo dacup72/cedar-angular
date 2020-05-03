@@ -10,6 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
+import { HomeModule } from './home/home.module';
+import { GlobsModule } from './globs/globs.module';
+import { InUseModule } from './in-use/in-use.module';
+import { SparesModule } from './spares/spares.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +26,11 @@ import { StoreModule } from '@ngrx/store';
     MaterialModule,
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    HomeModule,
+    GlobsModule,
+    InUseModule,
+    SparesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

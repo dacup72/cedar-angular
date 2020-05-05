@@ -10,6 +10,7 @@ import { GlobsComponent } from './globs.component';
   imports: [
     CommonModule,
     GlobsRoutingModule
-  ]
+  ],
+  exports: [GlobsComponent]
 })
 export class GlobsModule { }

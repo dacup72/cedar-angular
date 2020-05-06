@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectsService, Project } from '@cedar-all/core-data';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cylinder-tracker-spares',
@@ -9,7 +10,7 @@ import { ProjectsService, Project } from '@cedar-all/core-data';
 export class SparesComponent implements OnInit {
   selectedProject: Project;
   primaryColor = 'red';
-  projects: Project[];
+  projects$;
 
   constructor(private projectsService: ProjectsService) { }
 
@@ -22,10 +23,16 @@ export class SparesComponent implements OnInit {
   }
 
   getProjects() {
-    this.projects = this.projectsService.all();
+    this.projects$ = this.projectsService.all();
+  }
+
+  deleteProject(project) {
+    this.projectsService.delete(project.id)
+      .subscribe(result => this.getProjects());
   }
 
   cancel() {
     this.selectProject(null);
   }
+  
 }

@@ -5,9 +5,9 @@
   "scripts": {
     "ng": "ng",
     "nx": "nx",
-    "start": "concurrently \"npm run server:auth\" \"ng serve\"",
+    "start": "concurrently \"npm run server\" \"ng serve\"",
     "server:all": "concurrently \"npm run server\" \"ng serve\"",
-    "server": "json-server server/db.json",
+    "server": "json-server server/server.js",
     "server:auth": "node server/server.js",
     "build": "ng build",
     "test": "ng test",

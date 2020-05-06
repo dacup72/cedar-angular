@@ -5,9 +5,9 @@
   "scripts": {
     "ng": "ng",
     "nx": "nx",
-    "start": "concurrently \"npm run server\" \"ng serve\"",
-    "server:all": "concurrently \"npm run server\" \"ng serve\"",
-    "server": "json-server server/server.js",
+    "start": "ng serve",
+    "server:all": "concurrently \"ng serve api\" \"ng serve\"",
+    "server": "json-server server/db.json",
     "server:auth": "node server/server.js",
     "build": "ng build",
     "test": "ng test",
@@ -29,8 +29,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "deploy": "ng build --prod cylinder-tracker && ng build --prod api && now --prod",
-    "deploy2": "ng build --prod cylinder-tracker && now --prod"
+    "deploy": "ng build --prod cylinder-tracker && ng build --prod api && now --prod"
   },
   "private": true,
   "dependencies": {
@@ -56,7 +55,6 @@
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "json-server": "^0.16.1",
-    "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",

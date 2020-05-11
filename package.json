@@ -7,8 +7,6 @@
     "nx": "nx",
     "start": "ng serve",
     "server:all": "concurrently \"ng serve api\" \"ng serve\"",
-    "server": "json-server server/db.json",
-    "server:auth": "node server/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",

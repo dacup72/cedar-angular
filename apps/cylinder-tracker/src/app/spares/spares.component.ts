@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectsService, Project } from '@cedar-all/core-data';
+import { CylindersService } from '@cedar-all/core-data';
+import { Cylinder } from '@cedar-angular/api-interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,31 +9,31 @@ import { Observable } from 'rxjs';
   styleUrls: ['./spares.component.css']
 })
 export class SparesComponent implements OnInit {
-  selectedProject: Project;
+  selectedCylinder: Cylinder;
   primaryColor = 'red';
-  projects$;
+  cylinders$;
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private cylindersService: CylindersService) { }
 
   ngOnInit(): void {
-    this.getProjects();
+    this.getCylinders();
   }
 
-  selectProject(project) {
-    this.selectedProject = project;
+  selectCylinder(cylinder) {
+    this.selectedCylinder = cylinder;
   }
 
-  getProjects() {
-    this.projects$ = this.projectsService.all();
+  getCylinders() {
+    this.cylinders$ = this.cylindersService.getAllCylinders();
   }
 
-  deleteProject(project) {
-    this.projectsService.delete(project.id)
-      .subscribe(result => this.getProjects());
+  deleteCylinder(cylinder) {
+    this.cylindersService.deleteCylinder(cylinder.id)
+      .subscribe(result => this.getCylinders());
   }
 
   cancel() {
-    this.selectProject(null);
+    this.selectCylinder(null);
   }
   
 }

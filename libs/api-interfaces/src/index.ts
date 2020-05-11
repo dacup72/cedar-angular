@@ -1,1 +1,1 @@
-export * from './lib/api-interfaces';
+export { Message, Cylinder } from './lib/api-interfaces';

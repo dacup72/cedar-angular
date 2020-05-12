@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class SparesComponent implements OnInit {
   selectedCylinder: Cylinder;
-  primaryColor = 'red';
   cylinders$;
 
   constructor(private cylindersService: CylindersService) { }
@@ -35,7 +34,6 @@ export class SparesComponent implements OnInit {
 
   cancel() {
     this.resetCylinder();
-    
   }
 
   createCylinder(cylinder) {

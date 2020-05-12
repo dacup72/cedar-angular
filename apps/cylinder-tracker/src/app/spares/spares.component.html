@@ -1,63 +1,18 @@
 <div class="container">
-  <!-- PROJECTS LIST -->
   <div class="col-50">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          <h1>Spare Cylinders</h1>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item (click)="selectCylinder(cylinder)" *ngFor="let cylinder of cylinders$ | async">
-            <h3 mat-line [style.color]="primaryColor">
-              {{cylinder.title}}
-            </h3>
-            <p mat-line>
-              {{cylinder.details}}
-            </p>
-            <button mat-icon-button (click)="deleteCylinder(cylinder); $event.stopImmediatePropagation()">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+    <cylinder-tracker-spares-list
+      [cylinders]="cylinders$ | async"
+      (selected)="selectCylinder($event)"
+      (deleted)="deleteCylinder($event)"
+    >
+    </cylinder-tracker-spares-list>
   </div>
-  <!-- PROJECT DETAILS -->
   <div class="col-50">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          <h1>
-            <span *ngIf="selectedCylinder.id; else elseBlock">{{selectedCylinder.title}}</span>
-            <ng-template #elseBlock>Select a Cylinder</ng-template>
-          </h1>
-        </mat-card-title>
-      </mat-card-header>
-      <form (submit)="saveCylinder(selectedCylinder)">
-        <mat-card-content>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Title" [(ngModel)]="selectedCylinder.title" type="text" name="title">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Details" [(ngModel)]="selectedCylinder.details" type="text" name="details"></textarea>
-          </mat-form-field>
-          <section class="full-width">
-            <h4>{{selectedCylinder.percentComplete}}% Complete</h4>
-            <mat-slider clas="full-width" min="0" max="100" thumbLabel [(ngModel)]="selectedCylinder.percentComplete" name="percentComplete"></mat-slider>
-          </section>
-          <section>
-            <mat-checkbox [(ngModel)]="selectedCylinder.approved" name="approved">
-              Approved By Customer
-            </mat-checkbox>
-          </section>
-        </mat-card-content>
-        <mat-card-actions>
-          <button type="submit" mat-button color="primary">Save</button>
-          <button type="button" mat-button (click)="cancel()">Cancel</button>
-        </mat-card-actions>
-      </form>
-    </mat-card>
+    <cylinder-tracker-spares-details
+      [cylinder]="selectedCylinder"
+      (saved)="saveCylinder($event)"
+      (cancelled)="cancel()"
+    >
+    </cylinder-tracker-spares-details>
   </div>
 </div>

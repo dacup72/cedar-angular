@@ -15,6 +15,7 @@ import { MatSnackBarModule } from  '@angular/material/snack-bar';
 import { MatTableModule } from  '@angular/material/table';
 import { MatToolbarModule } from  '@angular/material/toolbar';
 import { MatButtonToggleModule } from  '@angular/material/button-toggle';
+import { MatRadioModule } from  '@angular/material/radio';
 
 @NgModule({
   imports: [
@@ -33,7 +34,9 @@ import { MatButtonToggleModule } from  '@angular/material/button-toggle';
     MatSnackBarModule,
     MatTableModule,
     MatToolbarModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRadioModule
+
   ],
   exports: [
     MatButtonModule,
@@ -51,7 +54,8 @@ import { MatButtonToggleModule } from  '@angular/material/button-toggle';
     MatSnackBarModule,
     MatTableModule,
     MatToolbarModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatRadioModule
   ]
 })
 export class MaterialModule {}

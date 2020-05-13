@@ -6,14 +6,21 @@
   </mat-card-header>
   <mat-card-content>
     <mat-list>
-      <mat-list-item *ngFor="let cylinder of cylinders" (click)="selected.emit(cylinder)">
-        <h3 mat-line>
-          {{cylinder.title}}
-        </h3>
+      <mat-list-item
+        *ngFor="let cylinder of cylinders"
+        (click)="selected.emit(cylinder)"
+      >
+        <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
+        <h3 mat-line>Expiration Date: {{ cylinder.expDate }}</h3>
         <p mat-line>
-          {{cylinder.details}}
+          Gas Codes:
+          <span *ngFor="let code of cylinder.epaGasCodes">{{ code }} </span>
         </p>
-        <button mat-icon-button *ngIf="!readonly" (click)="deleted.emit(cylinder); $event.stopImmediatePropagation()">
+        <button
+          mat-icon-button
+          *ngIf="!readonly"
+          (click)="deleted.emit(cylinder); $event.stopImmediatePropagation()"
+        >
           <mat-icon>close</mat-icon>
         </button>
       </mat-list-item>

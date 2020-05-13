@@ -3,9 +3,14 @@ export interface Message {
 }
 
 export interface Cylinder {
-  id: string,
-  title: string,
-  details: string,
-  percentComplete: number,
-  approved: boolean,
+  id: string;
+  cylinderID: string;
+  expDate: string;
+  vendorID: string;
+  epaGasCodes: string[];
+  componentGases: {
+    name: string;
+    amount: number;
+    amountType: string;
+  }[]
 }

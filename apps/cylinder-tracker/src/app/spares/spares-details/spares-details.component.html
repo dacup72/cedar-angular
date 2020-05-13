@@ -2,9 +2,9 @@
   <mat-card-header>
     <mat-card-title>
       <h1>
-        <span *ngIf="currentCylinder.id; else elseBlock">{{
-          origionalTitle
-        }}</span>
+        <span *ngIf="currentCylinder.id; else elseBlock">
+          Cylinder: {{ origionalTitle }}
+        </span>
         <ng-template #elseBlock>Select a Cylinder</ng-template>
       </h1>
     </mat-card-title>
@@ -14,40 +14,73 @@
       <mat-form-field class="full-width">
         <input
           matInput
-          placeholder="Title"
-          [(ngModel)]="currentCylinder.title"
+          placeholder="Cylinder ID"
+          [(ngModel)]="currentCylinder.cylinderID"
           type="text"
-          name="title"
+          name="cylinderID"
         />
       </mat-form-field>
       <mat-form-field class="full-width">
-        <textarea
+        <input
           matInput
-          placeholder="Details"
-          [(ngModel)]="currentCylinder.details"
+          placeholder="Expiration Date"
+          [(ngModel)]="currentCylinder.expDate"
           type="text"
-          name="details"
-        ></textarea>
+          name="expDate"
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Vendor ID"
+          [(ngModel)]="currentCylinder.vendorID"
+          type="text"
+          name="vendorID"
+        />
       </mat-form-field>
       <section class="full-width">
-        <h4>{{ currentCylinder.percentComplete }}% Complete</h4>
-        <mat-slider
-          clas="full-width"
-          min="0"
-          max="100"
-          thumbLabel
-          [(ngModel)]="currentCylinder.percentComplete"
-          name="percentComplete"
-        ></mat-slider>
-      </section>
-      <section>
-        <mat-checkbox [(ngModel)]="currentCylinder.approved" name="approved">
-          Approved By Customer
+        <h4>EPA Gas Codes</h4>
+        <mat-checkbox
+          name="NOX"
+          *ngFor="let code of epaGasCodes"
+          (change)="gasCodeChange($event, code)"
+          [checked]="currentCylinder.epaGasCodes.includes(code)"
+        >
+          {{ code }}
         </mat-checkbox>
       </section>
+      <mat-list>
+        <h4>Component Gases</h4>
+        <mat-list-item *ngFor="let code of currentCylinder.epaGasCodes">
+          <mat-label>{{ code }}</mat-label>
+          <mat-form-field>
+            <mat-label>Measurement</mat-label>
+            <input
+              matInput
+              type="number"
+              min="1"
+              [value]="getMeasurementValue(code)"
+              (change)="measurementValueChange($event, code)"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Measurement Type</mat-label>
+            <mat-select
+              (selectionChange)="measurementTypeChange($event, code)"
+              [value]="getMeasurementType(code)"
+            >
+              <mat-option *ngFor="let type of measurementTypes" [value]="type">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
     </mat-card-content>
     <mat-card-actions>
-      <button type="submit" mat-button color="primary">Save</button>
+      <button type="submit" mat-button color="primary">
+        Save
+      </button>
       <button type="button" mat-button (click)="cancelled.emit()">
         Cancel
       </button>

@@ -8,6 +8,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from '@cedar-all/material';
 import { AppRoutingModule } from './app-routing.module';
+import { UiToolbarModule } from '@cedar-all/ui-toolbar';
 
 import { AppComponent } from './app.component';
 
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
     NxModule.forRoot(),
     HttpClientModule, 
     BrowserAnimationsModule,
+    UiToolbarModule,
     MaterialModule,
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),

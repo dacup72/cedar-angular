@@ -3,80 +3,126 @@ import { Cylinder } from '@cedar-angular/api-interfaces';
 
 @Injectable()
 export class CylindersService {
-    // Temporary database
-    private cylinders: Cylinder[] = [
+  // Temporary database
+  private cylinders: Cylinder[] = [
+    {
+      id: '0',
+      cylinderID: '4557324',
+      expDate: 'March 1st',
+      vendorID: 'Vendor id 44',
+      epaGasCodes: ['NOX', 'SO2'],
+      componentGases: [
         {
-            id: "0",
-            title: "NOX",
-            details: "This is the cylinder details",
-            percentComplete: 30,
-            approved: true,
+          name: 'NOX',
+          amount: 25.4,
+          amountType: 'ppm'
         },
         {
-            id: "1",
-            title: "SO2",
-            details: "This is the cylinder details",
-            percentComplete: 80,
-            approved: true,
+          name: 'SO2',
+          amount: 14.8,
+          amountType: 'ppm'
+        }
+      ]
+    },
+    {
+      id: '1',
+      cylinderID: '55587',
+      expDate: 'April 1st',
+      vendorID: 'Vendor id 44',
+      epaGasCodes: ['NOX', 'O2'],
+      componentGases: [
+        {
+          name: 'NOX',
+          amount: 25.4,
+          amountType: 'ppm'
         },
         {
-            id: "2",
-            title: "PM2.5",
-            details: "This is the cylinder details",
-            percentComplete: 10,
-            approved: true,
+          name: 'O2',
+          amount: 12.3,
+          amountType: 'ppm'
         }
-    ];
-
-    getAllCylinders(): Cylinder[] {
-        return [...this.cylinders];
+      ]
     }
+  ];
 
-    addCylinder(title: string, details: string) {
-        const id = Math.random().toString();
-        const percentComplete = 0;
-        const approved = true;
+  getAllCylinders(): Cylinder[] {
+    return [...this.cylinders];
+  }
 
-        const newCylinder = {
-            id,
-            title,
-            details,
-            percentComplete,
-            approved
-        }
+  addCylinder(
+    cylinderID: string,
+    expDate: string,
+    vendorID: string,
+    epaGasCodes: string[],
+    componentGases: {
+      name: string;
+      amount: number;
+      amountType: string;
+    }[]
+  ) {
+    const id = Math.random().toString();
 
-        this.cylinders.push(newCylinder);
-        return { id: newCylinder.id };
+    const newCylinder = {
+      id,
+      cylinderID,
+      expDate,
+      vendorID,
+      epaGasCodes,
+      componentGases
+    };
+
+    this.cylinders.push(newCylinder);
+    return { id: newCylinder.id };
+  }
+
+  getCylinder(id: string): Cylinder {
+    const { cylinder } = this.findCylinder(id);
+    return { ...cylinder };
+  }
+
+  updateCylinder(
+    id: string,
+    cylinderID: string,
+    expDate: string,
+    vendorID: string,
+    epaGasCodes: string[],
+    componentGases: {
+      name: string;
+      amount: number;
+      amountType: string;
+    }[]
+  ) {
+    const { index, cylinder } = this.findCylinder(id);
+    const updatedCylinder = { ...cylinder };
+    if (cylinderID) {
+      updatedCylinder.cylinderID = cylinderID;
     }
-
-    getCylinder(id: string): Cylinder {
-        const { cylinder } = this.findCylinder(id);
-        return { ...cylinder };
+    if (expDate) {
+      updatedCylinder.expDate = expDate;
     }
-
-    updateCylinder(id: string, title: string, details: string) {
-        const { index, cylinder } = this.findCylinder(id);
-        const updatedCylinder = { ...cylinder };
-        if (title) {
-            updatedCylinder.title = title
-        }
-        if (details) {
-            updatedCylinder.details = details
-        }
-        this.cylinders[index] = updatedCylinder;
-        return { id: updatedCylinder.id };
+    if (vendorID) {
+      updatedCylinder.vendorID = vendorID;
     }
-
-    deleteCylinder(id: string) {
-        const { index } = this.findCylinder(id);
-        this.cylinders.splice(index, 1);
-        return { id };
+    if (epaGasCodes) {
+      updatedCylinder.epaGasCodes = epaGasCodes;
     }
-
-    private findCylinder(id: string): { index: number, cylinder: Cylinder } {
-        const index = this.cylinders.findIndex(cylinder => id == cylinder.id);
-        const cylinder = this.cylinders[index];
-        if (!cylinder) throw new NotFoundException('Could not find cylinder.')
-        return { index, cylinder };
+    if (componentGases) {
+      updatedCylinder.componentGases = componentGases;
     }
+    this.cylinders[index] = updatedCylinder;
+    return { id: updatedCylinder.id };
+  }
+
+  deleteCylinder(id: string) {
+    const { index } = this.findCylinder(id);
+    this.cylinders.splice(index, 1);
+    return { id };
+  }
+
+  private findCylinder(id: string): { index: number; cylinder: Cylinder } {
+    const index = this.cylinders.findIndex(cylinder => id == cylinder.id);
+    const cylinder = this.cylinders[index];
+    if (!cylinder) throw new NotFoundException('Could not find cylinder.');
+    return { index, cylinder };
+  }
 }

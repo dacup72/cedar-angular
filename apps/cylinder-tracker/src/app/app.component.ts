@@ -13,6 +13,4 @@ export class AppComponent {
     { path: '/inuse', icon: 'work', title: 'In Use'},
     { path: '/globs', icon: 'work', title: 'Globs'},
   ];
-
-  constructor() {}
 }

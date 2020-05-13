@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CylindersService } from '@cedar-all/core-data';
 import { Cylinder } from '@cedar-angular/api-interfaces';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cylinder-tracker-spares',
@@ -12,7 +11,7 @@ export class SparesComponent implements OnInit {
   selectedCylinder: Cylinder;
   cylinders$;
 
-  constructor(private cylindersService: CylindersService) { }
+  constructor(private cylindersService: CylindersService) {}
 
   ngOnInit(): void {
     this.getCylinders();
@@ -28,7 +27,8 @@ export class SparesComponent implements OnInit {
   }
 
   deleteCylinder(cylinder) {
-    this.cylindersService.deleteCylinder(cylinder.id)
+    this.cylindersService
+      .deleteCylinder(cylinder.id)
       .subscribe(result => this.getCylinders());
   }
 
@@ -37,26 +37,25 @@ export class SparesComponent implements OnInit {
   }
 
   createCylinder(cylinder) {
-    this.cylindersService.createCylinder(cylinder)
-      .subscribe(result => {
-        this.getCylinders();
-        this.resetCylinder();
-      })
+    this.cylindersService.createCylinder(cylinder).subscribe(result => {
+      this.getCylinders();
+      this.resetCylinder();
+    });
   }
 
   updateCylinder(cylinder) {
-    this.cylindersService.updateCylinder(cylinder.id, cylinder)
+    this.cylindersService
+      .updateCylinder(cylinder.id, cylinder)
       .subscribe(result => {
         this.getCylinders();
         this.resetCylinder();
-      })
+      });
   }
 
   saveCylinder(cylinder) {
-    if(cylinder.id) {
+    if (cylinder.id) {
       this.updateCylinder(cylinder);
-    }
-    else {
+    } else {
       this.createCylinder(cylinder);
     }
   }
@@ -64,12 +63,18 @@ export class SparesComponent implements OnInit {
   resetCylinder() {
     const emptyCylinder: Cylinder = {
       id: null,
-      title: '',
-      details: '',
-      percentComplete: 0,
-      approved: false
-    }
+      cylinderID: '',
+      expDate: '',
+      vendorID: '',
+      epaGasCodes: [],
+      componentGases: [
+        {
+          name: '',
+          amount: 0,
+          amountType: ''
+        }
+      ]
+    };
     this.selectCylinder(emptyCylinder);
   }
-  
 }

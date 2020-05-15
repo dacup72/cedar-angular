@@ -16,6 +16,7 @@ import { MatTableModule } from  '@angular/material/table';
 import { MatToolbarModule } from  '@angular/material/toolbar';
 import { MatButtonToggleModule } from  '@angular/material/button-toggle';
 import { MatRadioModule } from  '@angular/material/radio';
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 @NgModule({
   imports: [
@@ -35,8 +36,8 @@ import { MatRadioModule } from  '@angular/material/radio';
     MatTableModule,
     MatToolbarModule,
     MatButtonToggleModule,
-    MatRadioModule
-
+    MatRadioModule,
+    DragDropModule
   ],
   exports: [
     MatButtonModule,
@@ -55,7 +56,8 @@ import { MatRadioModule } from  '@angular/material/radio';
     MatTableModule,
     MatToolbarModule,
     MatButtonToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    DragDropModule
   ]
 })
 export class MaterialModule {}

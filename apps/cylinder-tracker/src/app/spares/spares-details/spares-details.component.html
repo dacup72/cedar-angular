@@ -11,6 +11,7 @@
   </mat-card-header>
   <form (submit)="saved.emit(currentCylinder)">
     <mat-card-content>
+      <!-- Cylinder ID -->
       <mat-form-field class="full-width">
         <input
           matInput
@@ -20,6 +21,8 @@
           name="cylinderID"
         />
       </mat-form-field>
+
+      <!-- Expiration Date -->
       <mat-form-field class="full-width">
         <input
           matInput
@@ -29,6 +32,8 @@
           name="expDate"
         />
       </mat-form-field>
+
+      <!-- Vendor ID -->
       <mat-form-field class="full-width">
         <input
           matInput
@@ -38,44 +43,65 @@
           name="vendorID"
         />
       </mat-form-field>
-      <section class="full-width">
-        <h4>EPA Gas Codes</h4>
-        <mat-checkbox
-          name="NOX"
-          *ngFor="let code of epaGasCodes"
-          (change)="gasCodeChange($event, code)"
-          [checked]="currentCylinder.epaGasCodes.includes(code)"
-        >
-          {{ code }}
-        </mat-checkbox>
-      </section>
-      <mat-list>
-        <h4>Component Gases</h4>
-        <mat-list-item *ngFor="let code of currentCylinder.epaGasCodes">
-          <mat-label>{{ code }}</mat-label>
-          <mat-form-field>
-            <mat-label>Measurement</mat-label>
-            <input
-              matInput
-              type="number"
-              min="1"
-              [value]="getMeasurementValue(code)"
-              (change)="measurementValueChange($event, code)"
-            />
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Measurement Type</mat-label>
-            <mat-select
-              (selectionChange)="measurementTypeChange($event, code)"
-              [value]="getMeasurementType(code)"
+
+      <!-- EPA Gas Codes -->
+      <mat-card>
+        <mat-card-content>
+          <h4>EPA Gas Codes</h4>
+          <section class="full-width">
+            <mat-checkbox
+              name="NOX"
+              *ngFor="let code of epaGasCodes"
+              (change)="gasCodeChange($event, code)"
+              [checked]="currentCylinder.epaGasCodes.includes(code)"
             >
-              <mat-option *ngFor="let type of measurementTypes" [value]="type">
-                {{ type }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </mat-list-item>
-      </mat-list>
+              {{ code }}
+            </mat-checkbox>
+          </section>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Component Gases -->
+      <mat-card>
+        <mat-card-content>
+          <h4>Component Gases</h4>
+          <section class="full-width">
+            <mat-list>
+              <mat-list-item
+                class="component-gas-item"
+                *ngFor="let code of currentCylinder.epaGasCodes"
+              >
+                <mat-label class="component-gas-label">{{ code }}</mat-label>
+                <mat-divider [inset]="true" [vertical]="true"></mat-divider>
+                <mat-form-field>
+                  <mat-label>Measurement</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    min="1"
+                    [value]="getMeasurementValue(code)"
+                    (change)="measurementValueChange($event, code)"
+                  />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Measurement Type</mat-label>
+                  <mat-select
+                    (selectionChange)="measurementTypeChange($event, code)"
+                    [value]="getMeasurementType(code)"
+                  >
+                    <mat-option
+                      *ngFor="let type of measurementTypes"
+                      [value]="type"
+                    >
+                      {{ type }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-list-item>
+            </mat-list>
+          </section>
+        </mat-card-content>
+      </mat-card>
     </mat-card-content>
     <mat-card-actions>
       <button type="submit" mat-button color="primary">

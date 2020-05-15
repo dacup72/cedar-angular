@@ -10,6 +10,9 @@ import { InUseComponent } from './in-use.component';
   imports: [
     CommonModule,
     InUseRoutingModule
+  ],
+  exports: [
+    InUseComponent
   ]
 })
 export class InUseModule { }

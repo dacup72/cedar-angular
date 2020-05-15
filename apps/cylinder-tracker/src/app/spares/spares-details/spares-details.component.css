@@ -1,3 +1,19 @@
-.mat-form-field, .mat-checkbox {
-    margin-left: 8px;
-  }
+.mat-form-field,
+.mat-checkbox {
+  margin-left: 8px;
+}
+
+.mat-card-header,
+.mat-list-item {
+  margin-bottom: 8px;
+}
+
+.component-gas-item {
+  border: 0px;
+}
+
+.component-gas-label {
+  width: 18%;
+  margin-right: 8px;
+  font-weight: bold;
+}

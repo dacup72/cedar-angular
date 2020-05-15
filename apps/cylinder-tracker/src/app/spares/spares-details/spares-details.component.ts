@@ -22,30 +22,29 @@ export class SparesDetailsComponent {
 
   gasCodeChange(event, gasCode) {
     if(event.checked) {
-      this.currentCylinder.epaGasCodes.push(gasCode);
+      this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.concat([gasCode]);
     }
     else {
       this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.filter(code => code !== gasCode);
     }
   }
 
-  getMeasurementValue(code) {
-    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === code)
+  getMeasurementValue(componentGas) {
+    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
     return gas.length > 0  ? gas[0].amount : '';
   }
 
-  getMeasurementType(code) {
-    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === code)
+  getMeasurementType(componentGas) {
+    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
     return gas.length > 0 ? gas[0].amountType : '';
   }
 
-  measurementValueChange(event, code) {
-    this.currentCylinder.componentGases.filter(gas => gas.name === code)[0].amount = event.target.value;
-
+  measurementValueChange(event, componentGas) {
+    this.currentCylinder.componentGases.filter(gas => gas.name === componentGas)[0].amount = event.target.value;
   }
 
-  measurementTypeChange(event, code) {
-    this.currentCylinder.componentGases.filter(gas => gas.name === code)[0].amountType = event.value;
+  measurementTypeChange(event, componentGas) {
+    this.currentCylinder.componentGases.filter(gas => gas.name === componentGas)[0].amountType = event.value;
   }
 
  }

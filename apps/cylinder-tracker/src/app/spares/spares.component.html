@@ -9,9 +9,9 @@
   </div>
   <div class="col-50">
     <cylinder-tracker-spares-details
-      [cylinder]="selectedCylinder"
+      [cylinder]="selectedCylinder$ | async"
       (saved)="saveCylinder($event)"
-      (cancelled)="cancel()"
+      (cancelled)="resetSelectedCylinder()"
     >
     </cylinder-tracker-spares-details>
   </div>

@@ -8,15 +8,15 @@ import { Cylinder } from '@cedar-angular/api-interfaces';
 })
 export class SparesDetailsComponent {
   currentCylinder: Cylinder;
-  origionalTitle;
+  origionalTitle: string;
   epaGasCodes = ['NOX', 'SO2', 'O2'];
   measurementTypes = ['ppm', 'ppb'];
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
 
   // Make a copy of the cylinder object to avoid shared state anytime cylinder is set.
-  @Input() set cylinder(value) {
-    if(value) this.origionalTitle = value.cylinderID;
+  @Input() set cylinder(value: Cylinder) {
+    if(value) { this.origionalTitle = value.cylinderID; }
     this.currentCylinder = Object.assign({}, value);
   }
 

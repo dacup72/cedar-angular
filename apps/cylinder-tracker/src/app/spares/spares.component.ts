@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CylindersService } from '@cedar-all/core-data';
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'cylinder-tracker-spares',
@@ -8,73 +9,39 @@ import { Cylinder } from '@cedar-angular/api-interfaces';
   styleUrls: ['./spares.component.css']
 })
 export class SparesComponent implements OnInit {
-  selectedCylinder: Cylinder;
-  cylinders$;
+  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
+  cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
+  
+  constructor(
+    private cylindersFacade: CylindersFacade
+  ) { }
 
-  constructor(private cylindersService: CylindersService) {}
+  ngOnInit() {
+    this.cylindersFacade.loadCylinders();
+    this.cylindersFacade.mutations$.subscribe(_ => this.resetSelectedCylinder());
+    this.resetSelectedCylinder();
+  }
 
-  ngOnInit(): void {
-    this.getCylinders();
-    this.resetCylinder();
+  resetSelectedCylinder() {
+    this.selectCylinder({id: null});
   }
 
   selectCylinder(cylinder) {
-    this.selectedCylinder = cylinder;
-  }
-
-  getCylinders() {
-    this.cylinders$ = this.cylindersService.getAllCylinders();
-  }
-
-  deleteCylinder(cylinder) {
-    this.cylindersService
-      .deleteCylinder(cylinder.id)
-      .subscribe(result => this.getCylinders());
-  }
-
-  cancel() {
-    this.resetCylinder();
-  }
-
-  createCylinder(cylinder) {
-    this.cylindersService.createCylinder(cylinder).subscribe(result => {
-      this.getCylinders();
-      this.resetCylinder();
-    });
-  }
-
-  updateCylinder(cylinder) {
-    this.cylindersService
-      .updateCylinder(cylinder.id, cylinder)
-      .subscribe(result => {
-        this.getCylinders();
-        this.resetCylinder();
-      });
+    this.cylindersFacade.selectCylinder(cylinder.id);
   }
 
   saveCylinder(cylinder) {
     if (cylinder.id) {
-      this.updateCylinder(cylinder);
+      this.cylindersFacade.updateCylinder(cylinder);
     } else {
-      this.createCylinder(cylinder);
+      this.cylindersFacade.createCylinder(cylinder);
     }
+    this.cylindersFacade.loadCylinders();
   }
 
-  resetCylinder() {
-    const emptyCylinder: Cylinder = {
-      id: null,
-      cylinderID: '',
-      expDate: '',
-      vendorID: '',
-      epaGasCodes: [],
-      componentGases: [
-        {
-          name: '',
-          amount: 0,
-          amountType: ''
-        }
-      ]
-    };
-    this.selectCylinder(emptyCylinder);
+  deleteCylinder(cylinder) {
+    this.cylindersFacade.deleteCylinder(cylinder);
   }
 }
+
+

@@ -12,5 +12,5 @@ export interface Cylinder {
     name: string;
     amount: number;
     amountType: string;
-  }[]
+  }[];
 }

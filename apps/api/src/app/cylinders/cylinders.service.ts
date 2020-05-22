@@ -116,7 +116,7 @@ export class CylindersService {
   deleteCylinder(id: string) {
     const { index } = this.findCylinder(id);
     this.cylinders.splice(index, 1);
-    return { id };
+    return { id: id };
   }
 
   private findCylinder(id: string): { index: number; cylinder: Cylinder } {

@@ -3,28 +3,29 @@ import { NgModule } from '@angular/core';
 import { NxModule } from '@nrwl/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from '@cedar-all/material';
 import { AppRoutingModule } from './app-routing.module';
 import { UiToolbarModule } from '@cedar-all/ui-toolbar';
+import { LayoutModule } from '@angular/cdk/layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { CoreDataModule } from '@cedar-all/core-data';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule, 
-    NxModule.forRoot(),
-    HttpClientModule, 
     BrowserAnimationsModule,
+    NxModule.forRoot(),
+    CoreDataModule,
+    HttpClientModule, 
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     UiToolbarModule,
-    MaterialModule,
-    EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot(),
-    StoreModule.forRoot({}, {}),
-    AppRoutingModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

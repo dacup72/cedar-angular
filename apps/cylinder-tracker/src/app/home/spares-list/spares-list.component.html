@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Spare Cylinders</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list
+      cdkDropList
+      id="sparesDropList"
+      (cdkDropListDropped)="dropped.emit($event)"
+      [cdkDropListData]="spareCylinders"
+      [cdkDropListConnectedTo]="['inUseDropList']"
+    >
+      <mat-list-item 
+        cdkDrag
+        *ngFor="let cylinder of spareCylinders"
+        (click)="selected.emit(cylinder)"
+      >
+        <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
+        <h3 mat-line>Expiration Date: {{ cylinder.expDate }}</h3>
+        <p mat-line>
+          Gas Codes:
+          <span *ngFor="let code of cylinder.epaGasCodes">{{ code }} </span>
+        </p>
+        <button
+          mat-icon-button
+          *ngIf="!readonly"
+          (click)="deleted.emit(cylinder); $event.stopImmediatePropagation()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

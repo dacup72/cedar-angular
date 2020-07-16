@@ -56,7 +56,8 @@ const emptyCylinder: Cylinder = {
       amount: 0,
       amountType: ''
     }
-  ]
+  ],
+  status: 'spare'
 };
 
 export const selectCurrentCylinder = createSelector(

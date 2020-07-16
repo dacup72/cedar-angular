@@ -35,9 +35,10 @@ export class CylindersController {
       name: string;
       amount: number;
       amountType: string;
-    }[]
+    }[],
+    @Body('status') status: string
   ) {
-    return this.cylindersService.addCylinder(cylinderID, expDate, vendorID, epaGasCodes, componentGases);
+    return this.cylindersService.addCylinder(cylinderID, expDate, vendorID, epaGasCodes, componentGases, status);
   }
 
   @Patch(':id')
@@ -51,9 +52,10 @@ export class CylindersController {
       name: string;
       amount: number;
       amountType: string;
-    }[]
+    }[],
+    @Body('status') status: string
   ) {
-    return this.cylindersService.updateCylinder(id, cylinderID, expDate, vendorID, epaGasCodes, componentGases);
+    return this.cylindersService.updateCylinder(id, cylinderID, expDate, vendorID, epaGasCodes, componentGases, status);
   }
 
   @Delete(':id')

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'cylinder-tracker-spares',
   templateUrl: './spares.component.html',
@@ -11,19 +10,19 @@ import { Observable } from 'rxjs';
 export class SparesComponent implements OnInit {
   selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
-  
-  constructor(
-    private cylindersFacade: CylindersFacade
-  ) { }
 
-  ngOnInit() {
+  constructor(private cylindersFacade: CylindersFacade) {}
+
+  ngOnInit(): void {
     this.cylindersFacade.loadCylinders();
-    this.cylindersFacade.mutations$.subscribe(_ => this.resetSelectedCylinder());
+    this.cylindersFacade.mutations$.subscribe(_ =>
+      this.resetSelectedCylinder()
+    );
     this.resetSelectedCylinder();
   }
 
   resetSelectedCylinder() {
-    this.selectCylinder({id: null});
+    this.selectCylinder({ id: null });
   }
 
   selectCylinder(cylinder) {
@@ -43,5 +42,3 @@ export class SparesComponent implements OnInit {
     this.cylindersFacade.deleteCylinder(cylinder);
   }
 }
-
-

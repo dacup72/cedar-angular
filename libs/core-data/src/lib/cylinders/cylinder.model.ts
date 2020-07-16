@@ -9,4 +9,5 @@ export interface Cylinder {
       amount: number;
       amountType: string;
     }[];
+    status: string;
   }

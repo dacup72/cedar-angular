@@ -1,0 +1,10 @@
+mat-card,
+mat-card-content,
+mat-list {
+  height: 100%;
+}
+
+mat-list-item {
+  border: 1px solid black;
+  margin: 5px;
+}

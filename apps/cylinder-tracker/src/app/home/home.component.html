@@ -1,1 +1,22 @@
-<p>home works!</p>
+<mat-grid-list cols="3" gutterSize="10px">
+  <mat-grid-tile rowspan="2">
+    <cylinder-tracker-spares-list
+      [cylinders]="cylinders$ | async"
+      (selected)="selectCylinder($event)"
+      (deleted)="deleteCylinder($event)"
+      (dropped)="drop($event)"
+    >
+    </cylinder-tracker-spares-list>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <cylinder-tracker-globs></cylinder-tracker-globs>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <cylinder-tracker-in-use
+      [cylinders]="cylinders$ | async"
+      (selected)="selectCylinder($event)"
+      (deleted)="deleteCylinder($event)"
+      (dropped)="drop($event)"
+    ></cylinder-tracker-in-use>
+  </mat-grid-tile>
+</mat-grid-list>

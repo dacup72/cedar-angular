@@ -22,7 +22,8 @@ export class CylindersService {
           amount: 14.8,
           amountType: 'ppm'
         }
-      ]
+      ],
+      status: 'spare'
     },
     {
       id: '1',
@@ -41,7 +42,8 @@ export class CylindersService {
           amount: 12.3,
           amountType: 'ppm'
         }
-      ]
+      ],
+      status: 'inUse'
     }
   ];
 
@@ -58,7 +60,8 @@ export class CylindersService {
       name: string;
       amount: number;
       amountType: string;
-    }[]
+    }[],
+    status: string
   ) {
     const id = Math.random().toString();
 
@@ -68,7 +71,8 @@ export class CylindersService {
       expDate,
       vendorID,
       epaGasCodes,
-      componentGases
+      componentGases,
+      status
     };
 
     this.cylinders.push(newCylinder);
@@ -90,7 +94,8 @@ export class CylindersService {
       name: string;
       amount: number;
       amountType: string;
-    }[]
+    }[],
+    status: string
   ) {
     const { index, cylinder } = this.findCylinder(id);
     const updatedCylinder = { ...cylinder };
@@ -108,6 +113,9 @@ export class CylindersService {
     }
     if (componentGases) {
       updatedCylinder.componentGases = componentGases;
+    }
+    if (status) {
+      updatedCylinder.status = status;
     }
     this.cylinders[index] = updatedCylinder;
     return { id: updatedCylinder.id };

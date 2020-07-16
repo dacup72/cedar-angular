@@ -9,8 +9,6 @@ export class AppComponent {
   title = "Cylinder Project";
   links = [
     { path: '/', icon: 'home', title: 'Home'},
-    { path: '/spares', icon: 'face', title: 'Spares'},
-    { path: '/inuse', icon: 'work', title: 'In Use'},
-    { path: '/globs', icon: 'work', title: 'Globs'},
+    { path: '/spares', icon: 'face', title: 'Spares'}
   ];
 }

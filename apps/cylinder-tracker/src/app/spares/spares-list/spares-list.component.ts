@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Cylinder } from '@cedar-angular/api-interfaces';
 
 @Component({
-  selector: 'cylinder-tracker-spares-list',
+  selector: 'cylinder-tracker-spares-list2',
   templateUrl: './spares-list.component.html',
   styleUrls: ['./spares-list.component.css']
 })

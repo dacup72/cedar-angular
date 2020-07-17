@@ -74,9 +74,8 @@ export class CylindersService {
       componentGases,
       status
     };
-
     this.cylinders.push(newCylinder);
-    return { id: newCylinder.id };
+    return { ...newCylinder };
   }
 
   getCylinder(id: string): Cylinder {
@@ -118,7 +117,7 @@ export class CylindersService {
       updatedCylinder.status = status;
     }
     this.cylinders[index] = updatedCylinder;
-    return { id: updatedCylinder.id };
+    return { ...updatedCylinder };
   }
 
   deleteCylinder(id: string) {

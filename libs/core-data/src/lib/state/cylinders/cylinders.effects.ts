@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { map } from 'rxjs/operators';
 
@@ -20,6 +20,8 @@ import { CylindersState } from './cylinders.reducer';
 
 @Injectable({ providedIn: 'root' })
 export class CylindersEffects {
+  @Effect() effect$ = this.actions$.pipe(ofType(CylindersActionTypes.CylindersAction));
+
   @Effect() loadCylinders$ = this.dataPersistence.fetch(
     CylindersActionTypes.LoadCylinders,
     {

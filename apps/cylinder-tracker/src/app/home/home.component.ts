@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
 import { SparesListComponent } from './spares-list/spares-list.component';
 import { InUseComponent } from './in-use/in-use.component';
-
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'cylinder-tracker-home',
@@ -12,10 +16,11 @@ import { InUseComponent } from './in-use/in-use.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
+  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade
+    .selectedCylinder$;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
-  
-  constructor(private cylindersFacade: CylindersFacade) { }
+
+  constructor(private cylindersFacade: CylindersFacade) {}
 
   ngOnInit(): void {
     this.cylindersFacade.loadCylinders();
@@ -24,7 +29,7 @@ export class HomeComponent implements OnInit {
     );
     this.resetSelectedCylinder();
   }
-  
+
   resetSelectedCylinder() {
     this.selectCylinder({ id: null });
   }
@@ -39,7 +44,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.cylindersFacade.createCylinder(cylinder);
     }
-    this.cylindersFacade.loadCylinders();
   }
 
   deleteCylinder(cylinder) {
@@ -48,25 +52,33 @@ export class HomeComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer !== event.container) {
-      const droppedCylinder = Object.assign({}, event.previousContainer.data[event.previousIndex]);
+      const droppedCylinder = Object.assign(
+        {},
+        event.previousContainer.data[event.previousIndex]
+      );
 
-      transferArrayItem(event.previousContainer.data,
+      transferArrayItem(
+        event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex);
+        event.currentIndex
+      );
 
-      switch(event.container.id) {
+      switch (event.container.id) {
         case 'sparesDropList':
           droppedCylinder['status'] = 'spare';
           break;
         case 'inUseDropList':
           droppedCylinder['status'] = 'inUse';
           break;
+        case 'globDropList':
+          droppedCylinder['status'] = 'glob';
+          break;
         default:
           break;
       }
-      
+
       this.saveCylinder(droppedCylinder);
-    } 
+    }
   }
 }

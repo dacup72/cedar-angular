@@ -7,7 +7,7 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item
-        *ngFor="let cylinder of cylinders"
+        *ngFor="let cylinder of spareCylinders"
         (click)="selected.emit(cylinder)"
       >
         <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>

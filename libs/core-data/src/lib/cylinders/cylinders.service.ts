@@ -20,11 +20,11 @@ export class CylindersService {
   }
 
   getAllCylinders() {
-    return this.httpClient.get(BASE_URL);
+    return this.httpClient.get<Cylinder[]>(this.getUrl());
   }
 
   getSingleCylinder(id: string) {
-    return this.httpClient.get(this.getUrlForId(id));
+    return this.httpClient.get<Cylinder>(this.getUrlForId(id));
   }
 
   createCylinder(cylinder) {

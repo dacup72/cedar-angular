@@ -9,7 +9,12 @@
     </cylinder-tracker-spares-list>
   </mat-grid-tile>
   <mat-grid-tile colspan="2">
-    <cylinder-tracker-globs></cylinder-tracker-globs>
+    <cylinder-tracker-globs
+      [cylinders]="cylinders$ | async"
+      (selected)="selectCylinder($event)"
+      (deleted)="deleteCylinder($event)"
+      (dropped)="drop($event)"
+    ></cylinder-tracker-globs>
   </mat-grid-tile>
   <mat-grid-tile colspan="2">
     <cylinder-tracker-in-use

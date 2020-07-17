@@ -1,5 +1,5 @@
 import { Cylinder } from './../../cylinders/cylinder.model';
-import { CylindersActionTypes } from './cylinders.actions';
+import { CylindersActionTypes, CylinderActions } from './cylinders.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 // Define the shape of the state
@@ -19,13 +19,13 @@ export const initialState: CylindersState = adapter.getInitialState({
 // Reducers
 export function cylindersReducers(
   state = initialState,
-  action
+  action: CylinderActions
 ): CylindersState {
   switch (action.type) {
     case CylindersActionTypes.CylinderSelected:
      return Object.assign({}, state, { selectedCylinderId: action.payload });
     case CylindersActionTypes.CylindersLoaded:
-      return adapter.setAll(action.payload, state);
+      return adapter.addAll(action.payload, state);
     case CylindersActionTypes.CylinderCreated:
       return adapter.addOne(action.payload, state);
     case CylindersActionTypes.CylinderUpdated:
@@ -40,8 +40,9 @@ export function cylindersReducers(
 // Selectors
 export const getSelectedCylinderId = (state: CylindersState) => state.selectedCylinderId;
 
-const { selectIds, selectEntities, selectAll } = adapter.getSelectors();
+const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();
 
 export const selectCylinderIds = selectIds;
 export const selectCylinderEntities = selectEntities;
 export const selectAllCylinders = selectAll;
+export const selectCylinderTotal = selectTotal;

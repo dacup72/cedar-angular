@@ -4,14 +4,13 @@
       <h1>In Use Cylinders</h1>
     </mat-card-title>
   </mat-card-header>
-  <mat-card-content style="height: 100%;">
+  <mat-card-content>
     <mat-list
-    style="height: 100%;"
       cdkDropList
       id="inUseDropList"
       (cdkDropListDropped)="dropped.emit($event)"
       [cdkDropListData]="inUseCylinders"
-      [cdkDropListConnectedTo]="['sparesDropList']"
+      [cdkDropListConnectedTo]="['sparesDropList', 'globDropList']"
     >
       <mat-list-item
         cdkDrag

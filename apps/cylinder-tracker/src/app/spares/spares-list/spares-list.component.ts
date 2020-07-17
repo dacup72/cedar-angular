@@ -7,7 +7,11 @@ import { Cylinder } from '@cedar-angular/api-interfaces';
   styleUrls: ['./spares-list.component.css']
 })
 export class SparesListComponent {
-  @Input() cylinders: Cylinder[];
+  spareCylinders: Cylinder[];
+
+  @Input() set cylinders(value: Cylinder[]) {
+    if(value) this.spareCylinders = value.filter(c => c.status === 'spare')
+  }
   @Input() readonly = false;
   @Output() selected = new EventEmitter();
   @Output() deleted = new EventEmitter();

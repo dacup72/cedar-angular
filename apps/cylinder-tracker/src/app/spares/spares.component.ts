@@ -33,9 +33,10 @@ export class SparesComponent implements OnInit {
     if (cylinder.id) {
       this.cylindersFacade.updateCylinder(cylinder);
     } else {
+      console.log(cylinder)
       this.cylindersFacade.createCylinder(cylinder);
     }
-    this.cylindersFacade.loadCylinders();
+    //this.cylindersFacade.loadCylinders();
   }
 
   deleteCylinder(cylinder) {

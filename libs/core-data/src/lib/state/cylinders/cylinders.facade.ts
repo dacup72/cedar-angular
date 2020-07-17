@@ -3,8 +3,6 @@ import { ActionsSubject, select, Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { CylindersState } from './cylinders.reducer';
 import { selectAllCylinders, selectCurrentCylinder } from '..';
-import { Cylinder } from '../../cylinders/cylinder.model';
-import { Observable } from 'rxjs';
 import {
   LoadCylinders,
   CreateCylinder,

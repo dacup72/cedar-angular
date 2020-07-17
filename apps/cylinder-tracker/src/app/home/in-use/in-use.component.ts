@@ -8,13 +8,9 @@ import { Cylinder } from '@cedar-angular/api-interfaces';
 })
 export class InUseComponent {
   inUseCylinders: Cylinder[];
-  cylinderCountUpdated: boolean = false;
 
   @Input() set cylinders(value: Cylinder[]) {
-    if(value.length > 0 && !this.cylinderCountUpdated) { 
-      this.inUseCylinders = value.filter(c => c.status === 'inUse')
-      this.cylinderCountUpdated = true;
-    }
+    if(value) this.inUseCylinders = value.filter(c => c.status === 'inUse')
   }
   @Input() readonly = false;
   @Output() dropped = new EventEmitter();

@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { Cylinder } from '../../cylinders/cylinder.model';
 
 export enum CylindersActionTypes {
+  CylindersAction = '[Cylinders] Action',
   CylinderSelected = '[Cylinders] Selected',
   LoadCylinders = '[Cylinders] Load Data',
   CylindersLoaded = '[Cylinders] Data Loaded',
@@ -13,6 +14,10 @@ export enum CylindersActionTypes {
   CylinderDeleted = '[Cylinders] Data Deleted'
 }
 
+export class Cylinders implements Action {
+  readonly type = CylindersActionTypes.CylindersAction;
+}
+
 export class SelectCylinder implements Action {
   readonly type = CylindersActionTypes.CylinderSelected;
   constructor(public payload: Cylinder) {}
@@ -20,6 +25,7 @@ export class SelectCylinder implements Action {
 
 export class LoadCylinders implements Action {
   readonly type = CylindersActionTypes.LoadCylinders;
+  constructor() { }
 }
 
 export class CylindersLoaded implements Action {
@@ -58,7 +64,7 @@ export class CylinderDeleted implements Action {
 }
 
 // This is typescript saying that CylinderActions can be one of many types
-export type CylinderActions =
+export type CylinderActions = Cylinders
   | SelectCylinder
   | LoadCylinders
   | CylindersLoaded

@@ -18,9 +18,7 @@ export const reducers: ActionReducerMap<AppState> = {
 };
 
 // CYLINDERS SELECTORS
-export const selectCylinderState = createFeatureSelector<
-  fromCylinders.CylindersState
->('cylinders');
+export const selectCylinderState = createFeatureSelector<fromCylinders.CylindersState>('cylinders');
 
 export const selectCylinderIds = createSelector(
   selectCylinderState,
@@ -36,8 +34,6 @@ export const selectAllCylinders = createSelector(
   selectCylinderState,
   fromCylinders.selectAllCylinders
 );
-
-
 
 export const selectCurrentCylinderId = createSelector(
   selectCylinderState,

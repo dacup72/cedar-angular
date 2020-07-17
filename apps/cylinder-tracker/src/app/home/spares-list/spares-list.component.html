@@ -7,7 +7,7 @@
       <mat-icon>add</mat-icon>
     </button>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="scrollable">
     <mat-list
       cdkDropList
       id="sparesDropList"
@@ -15,7 +15,7 @@
       [cdkDropListData]="spareCylinders"
       [cdkDropListConnectedTo]="['inUseDropList', 'globDropList']"
     >
-      <mat-list-item 
+      <mat-list-item
         cdkDrag
         *ngFor="let cylinder of spareCylinders"
         (click)="selected.emit(cylinder)"

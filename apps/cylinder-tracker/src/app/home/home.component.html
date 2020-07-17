@@ -1,5 +1,5 @@
-<mat-grid-list cols="3" gutterSize="10px">
-  <mat-grid-tile rowspan="2">
+<mat-grid-list cols="2" gutterSize="10px">
+  <mat-grid-tile>
     <cylinder-tracker-spares-list
       [cylinders]="cylinders$ | async"
       (selected)="selectCylinder($event)"
@@ -8,15 +8,15 @@
     >
     </cylinder-tracker-spares-list>
   </mat-grid-tile>
-  <mat-grid-tile colspan="2">
+  <!-- <mat-grid-tile>
     <cylinder-tracker-globs
       [cylinders]="cylinders$ | async"
       (selected)="selectCylinder($event)"
       (deleted)="deleteCylinder($event)"
       (dropped)="drop($event)"
     ></cylinder-tracker-globs>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="2">
+  </mat-grid-tile> -->
+  <mat-grid-tile>
     <cylinder-tracker-in-use
       [cylinders]="cylinders$ | async"
       (selected)="selectCylinder($event)"

@@ -1,18 +1,18 @@
-<div class="container">
-  <div class="col-50">
+<mat-grid-list cols="2" gutterSize="10px">
+  <mat-grid-tile>
     <cylinder-tracker-spares-list2
       [cylinders]="cylinders$ | async"
       (selected)="selectCylinder($event)"
       (deleted)="deleteCylinder($event)"
     >
     </cylinder-tracker-spares-list2>
-  </div>
-  <div class="col-50">
+  </mat-grid-tile>
+  <mat-grid-tile>
     <cylinder-tracker-spares-details
       [cylinder]="selectedCylinder$ | async"
       (saved)="saveCylinder($event)"
       (cancelled)="resetSelectedCylinder()"
     >
     </cylinder-tracker-spares-details>
-  </div>
-</div>
+  </mat-grid-tile>
+</mat-grid-list>

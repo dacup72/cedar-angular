@@ -24,14 +24,19 @@ export function cylindersReducers(
   switch (action.type) {
     case CylindersActionTypes.CylinderSelected:
      return Object.assign({}, state, { selectedCylinderId: action.payload });
+
     case CylindersActionTypes.CylindersLoaded:
-      return adapter.addAll(action.payload, state);
+      return adapter.setAll(action.payload, state);
+
     case CylindersActionTypes.CylinderCreated:
       return adapter.addOne(action.payload, state);
+
     case CylindersActionTypes.CylinderUpdated:
       return adapter.upsertOne(action.payload, state);
+
     case CylindersActionTypes.CylinderDeleted:
       return adapter.removeOne(action.payload.id, state);
+      
     default:
       return state;
   }

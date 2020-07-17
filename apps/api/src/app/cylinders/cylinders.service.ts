@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { Cylinder } from '@cedar-all/core-data';
 
 @Injectable()
 export class CylindersService {

@@ -8,7 +8,7 @@ import {
   Delete
 } from '@nestjs/common';
 
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { Cylinder } from '@cedar-all/core-data';
 import { CylindersService } from './cylinders.service';
 
 @Controller('cylinder')

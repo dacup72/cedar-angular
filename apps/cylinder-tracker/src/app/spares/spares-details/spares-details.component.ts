@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { Cylinder, ComponentGas, emptyCylinder } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-spares-details',
@@ -16,27 +16,34 @@ export class SparesDetailsComponent {
 
   // Make a copy of the cylinder object to avoid shared state anytime cylinder is set.
   @Input() set cylinder(value: Cylinder) {
-    if(value) { this.origionalTitle = value.cylinderID; }
+    if(value) this.origionalTitle = value.cylinderID; 
     this.currentCylinder = Object.assign({}, value);
   }
 
   gasCodeChange(event, gasCode) {
     if(event.checked) {
       this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.concat([gasCode]);
+      const emptyComponentGas: ComponentGas = {
+        name: gasCode,
+        amount: null,
+        amountType: null
+      }
+      this.currentCylinder.componentGases = this.currentCylinder.componentGases.concat([emptyComponentGas]);
     }
     else {
       this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.filter(code => code !== gasCode);
+      this.currentCylinder.componentGases = this.currentCylinder.componentGases.filter(gas => gas.name !== gasCode);
     }
   }
 
   getMeasurementValue(componentGas) {
-    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
-    return gas.length > 0  ? gas[0].amount : '';
+    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
+    return selectedGas.length > 0  ? selectedGas[0].amount : '';
   }
 
   getMeasurementType(componentGas) {
-    const gas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
-    return gas.length > 0 ? gas[0].amountType : '';
+    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
+    return selectedGas.length > 0 ? selectedGas[0].amountType : '';
   }
 
   measurementValueChange(event, componentGas) {
@@ -47,4 +54,17 @@ export class SparesDetailsComponent {
     this.currentCylinder.componentGases.filter(gas => gas.name === componentGas)[0].amountType = event.value;
   }
 
+  resetCurrentCylinder() {
+    this.currentCylinder = Object.assign({}, emptyCylinder);
+  }
+
+  onSubmit() {
+    this.saved.emit(this.currentCylinder);
+    this.resetCurrentCylinder();
+  }
+
+  onCancel() {
+    this.cancelled.emit();
+    this.resetCurrentCylinder();
+  }
  }

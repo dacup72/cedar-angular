@@ -15,10 +15,7 @@ export class SparesComponent implements OnInit {
 
   ngOnInit(): void {
     this.cylindersFacade.loadCylinders();
-    this.cylindersFacade.mutations$.subscribe(_ =>
-      this.resetSelectedCylinder()
-    );
-    this.resetSelectedCylinder();
+    this.cylindersFacade.mutations$.subscribe(_ => this.resetSelectedCylinder());
   }
 
   resetSelectedCylinder() {
@@ -33,10 +30,8 @@ export class SparesComponent implements OnInit {
     if (cylinder.id) {
       this.cylindersFacade.updateCylinder(cylinder);
     } else {
-      console.log(cylinder)
       this.cylindersFacade.createCylinder(cylinder);
     }
-    //this.cylindersFacade.loadCylinders();
   }
 
   deleteCylinder(cylinder) {

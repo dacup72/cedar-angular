@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { Cylinder } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-in-use',

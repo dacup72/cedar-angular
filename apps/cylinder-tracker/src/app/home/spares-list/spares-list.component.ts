@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { Cylinder } from '@cedar-angular/api-interfaces';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Cylinder } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-spares-list',
@@ -16,5 +16,4 @@ export class SparesListComponent {
   @Output() dropped = new EventEmitter();
   @Output() selected = new EventEmitter();
   @Output() deleted = new EventEmitter();
-  
 }

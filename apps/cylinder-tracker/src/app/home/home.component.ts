@@ -1,14 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem
-} from '@angular/cdk/drag-drop';
-import { SparesListComponent } from './spares-list/spares-list.component';
-import { InUseComponent } from './in-use/in-use.component';
-import { share } from 'rxjs/operators';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'cylinder-tracker-home',

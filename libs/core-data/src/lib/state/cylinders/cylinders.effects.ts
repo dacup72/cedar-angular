@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { map } from 'rxjs/operators';
 
-import { Cylinder } from './../../cylinders/cylinder.model';
+import { Cylinder } from '@cedar-all/core-data';
 import { CylindersService } from './../../cylinders/cylinders.service';
 import {
   CylindersActionTypes,

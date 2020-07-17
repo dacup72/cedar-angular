@@ -40,7 +40,7 @@ export const selectCurrentCylinderId = createSelector(
   fromCylinders.getSelectedCylinderId
 );
 
-const emptyCylinder: Cylinder = {
+export const emptyCylinder: Cylinder = {
   id: null,
   cylinderID: '',
   expDate: '',

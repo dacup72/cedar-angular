@@ -4,10 +4,12 @@ export interface Cylinder {
     expDate: string;
     vendorID: string;
     epaGasCodes: string[];
-    componentGases: {
-      name: string;
-      amount: number;
-      amountType: string;
-    }[];
+    componentGases: ComponentGas[];
     status: string;
   }
+
+export interface ComponentGas {
+  name: string;
+  amount: number;
+  amountType: string;
+}

@@ -30,14 +30,13 @@ const users: User[] = [
 ];
 
 // TODO: Use RSA Key for JWT signing
-const RSA_PRIVATE_KEY = fs.readFileSync('./apps/api/private.key');
+//const RSA_PRIVATE_KEY = fs.readFileSync('./apps/api/private.key');
 const SECRET_KEY = '123456789';
 
 @Injectable()
 export class FakeBackendInterceptor {
 
-      authenticate(username, password, auth) {
-        console.log("AUTH: ", auth, " : ", username)
+      authenticate(username, password) {
           const user = users.find(x => x.username === username && x.password === password);
           const expireTime = 120;
           if (!user) return this.error('Username or password is incorrect');

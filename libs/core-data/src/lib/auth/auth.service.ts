@@ -31,7 +31,6 @@ export class AuthService {
       })
       .pipe(
         map(user => {
-          console.log("USER: ", user)
           const expiresAt = moment().add(user.expiresIn, 'second');
           
           // store user details and jwt token in local storage to keep user logged in between page refreshes

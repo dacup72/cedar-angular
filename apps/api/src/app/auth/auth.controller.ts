@@ -24,8 +24,8 @@ export class AuthController {
   addUser(
     @Body('username') username: string,
     @Body('password') password: string[],
-    @Headers('Authorization') auth: string
+    //@Headers('Authorization') auth: string
   ) {
-    return this.fakeBackendInterceptor.authenticate(username, password, auth);
+    return this.fakeBackendInterceptor.authenticate(username, password);
   }
 }

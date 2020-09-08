@@ -13,7 +13,7 @@
       id="sparesDropList"
       (cdkDropListDropped)="dropped.emit($event)"
       [cdkDropListData]="spareCylinders"
-      [cdkDropListConnectedTo]="['inUseDropList', 'globDropList']"
+      [cdkDropListConnectedTo]="['inUseDropList']"
     >
       <mat-list-item
         cdkDrag

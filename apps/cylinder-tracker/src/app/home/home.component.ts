@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { User } from '@cedar-angular/api-interfaces';
+import { UserService } from '@cedar-all/core-data';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'cylinder-tracker-home',
@@ -9,11 +12,12 @@ import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade
-    .selectedCylinder$;
+  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
+  users: User[];
+  loading = false;
 
-  constructor(private cylindersFacade: CylindersFacade) {}
+  constructor(private cylindersFacade: CylindersFacade, private userService: UserService) {}
 
   ngOnInit(): void {
     this.cylindersFacade.loadCylinders();
@@ -21,6 +25,12 @@ export class HomeComponent implements OnInit {
       this.resetSelectedCylinder()
     );
     this.resetSelectedCylinder();
+
+    this.loading = true;
+    this.userService.getAll().pipe(first()).subscribe(users => {
+        this.loading = false;
+        this.users = users;
+    });
   }
 
   resetSelectedCylinder() {

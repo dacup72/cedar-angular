@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder, ComponentGas, emptyCylinder } from '@cedar-all/core-data';
+import { Cylinder, emptyCylinder } from '@cedar-all/core-data';
+import { ComponentGas } from '@cedar-angular/api-interfaces';
 
 @Component({
   selector: 'cylinder-tracker-spares-details',

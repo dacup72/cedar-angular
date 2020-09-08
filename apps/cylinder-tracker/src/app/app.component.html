@@ -1,6 +1,7 @@
 <ui-ui-toolbar
   [title]="title"
   (toggleSidenav)="sidenav.toggle()"
+  (logout)="logout()"
 ></ui-ui-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" closed class="app-sidenav">

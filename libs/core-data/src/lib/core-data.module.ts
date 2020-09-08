@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CylindersService } from './cylinders/cylinders.service';
 import { StateModule } from './state/state.module';
+import { UserService } from './auth/user.service';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { StateModule } from './state/state.module';
     StateModule
   ],
   providers: [
-    CylindersService
+    CylindersService,
+    UserService
   ]
 })
 export class CoreDataModule {}

@@ -27,11 +27,11 @@ export class CylindersService {
     return this.httpClient.get<Cylinder>(this.getUrlForId(id));
   }
 
-  createCylinder(cylinder) {
+  createCylinder(cylinder: Cylinder) {
     return this.httpClient.post(this.getUrl(), cylinder);
   }
 
-  updateCylinder(cylinder) {
+  updateCylinder(cylinder: Cylinder) {
     return this.httpClient.patch(this.getUrlForId(cylinder.id), cylinder);
   }
 

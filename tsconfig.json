@@ -10,36 +10,19 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@env/*": [
-        "apps/api/src/environments/*"
-      ],
-      "@cedar-angular/api-interfaces": [
-        "libs/api-interfaces/src/index.ts"
-      ],
-      "@cedar-all/material": [
-        "libs/material/src/index.ts"
-      ],
-      "@cedar-all/core-data": [
-        "libs/core-data/src/index.ts"
-      ],
-      "@cedar-all/ui-toolbar": [
-        "libs/ui-toolbar/src/index.ts"
-      ]
+      "@env/*": ["apps/api/src/environments/*"],
+      "@cedar-angular/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@cedar-all/material": ["libs/material/src/index.ts"],
+      "@cedar-all/core-data": ["libs/core-data/src/index.ts"],
+      "@cedar-all/ui-toolbar": ["libs/ui-toolbar/src/index.ts"],
+      "@cedar-all/ui-login": ["libs/ui-login/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

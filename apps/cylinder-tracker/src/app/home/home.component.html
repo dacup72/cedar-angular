@@ -1,3 +1,14 @@
+<div class="card">
+  <h4 class="card-header">You're logged in with Angular 9 & JWT!!</h4>
+  <div class="card-body">
+      <h6>Users from secure api end point</h6>
+      <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+      <ul *ngIf="users">
+          <li *ngFor="let user of users">{{user.username}} {{user.email}}</li>
+      </ul>
+  </div>
+</div>
+
 <mat-grid-list cols="2" gutterSize="10px">
   <mat-grid-tile>
     <cylinder-tracker-spares-list
@@ -8,14 +19,6 @@
     >
     </cylinder-tracker-spares-list>
   </mat-grid-tile>
-  <!-- <mat-grid-tile>
-    <cylinder-tracker-globs
-      [cylinders]="cylinders$ | async"
-      (selected)="selectCylinder($event)"
-      (deleted)="deleteCylinder($event)"
-      (dropped)="drop($event)"
-    ></cylinder-tracker-globs>
-  </mat-grid-tile> -->
   <mat-grid-tile>
     <cylinder-tracker-in-use
       [cylinders]="cylinders$ | async"

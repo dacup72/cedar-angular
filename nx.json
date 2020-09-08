@@ -40,6 +40,9 @@
     },
     "ui-toolbar": {
       "tags": []
+    },
+    "ui-login": {
+      "tags": []
     }
   }
 }

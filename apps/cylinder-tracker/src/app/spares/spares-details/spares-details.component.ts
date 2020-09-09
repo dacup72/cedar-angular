@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Cylinder, emptyCylinder } from '@cedar-all/core-data';
 import { ComponentGas } from '@cedar-angular/api-interfaces';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cylinder-tracker-spares-details',
@@ -10,49 +11,50 @@ import { ComponentGas } from '@cedar-angular/api-interfaces';
 export class SparesDetailsComponent {
   currentCylinder: Cylinder;
   origionalTitle: string;
-  epaGasCodes = ['NOX', 'SO2', 'O2'];
-  measurementTypes = ['ppm', 'ppb'];
+  epaGasTypeCodes = ['NO', 'NO2', 'NOX', 'SO2', 'O2'];
+  measurementTypes = ['ppm', '%'];
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
 
   // Make a copy of the cylinder object to avoid shared state anytime cylinder is set.
   @Input() set cylinder(value: Cylinder) {
     if(value) this.origionalTitle = value.cylinderID; 
-    this.currentCylinder = Object.assign({}, value);
+    this.currentCylinder = _.cloneDeep(value);
   }
 
   gasCodeChange(event, gasCode) {
     if(event.checked) {
-      this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.concat([gasCode]);
+      this.currentCylinder.epaGasTypeCodes = this.currentCylinder.epaGasTypeCodes.concat([gasCode]);
       const emptyComponentGas: ComponentGas = {
-        name: gasCode,
-        amount: null,
-        amountType: null
+        qaGasDefCode: null,
+        epaGasCode: gasCode,
+        gasConcentration: null,
+        uom: null
       }
       this.currentCylinder.componentGases = this.currentCylinder.componentGases.concat([emptyComponentGas]);
     }
     else {
-      this.currentCylinder.epaGasCodes = this.currentCylinder.epaGasCodes.filter(code => code !== gasCode);
-      this.currentCylinder.componentGases = this.currentCylinder.componentGases.filter(gas => gas.name !== gasCode);
+      this.currentCylinder.epaGasTypeCodes = this.currentCylinder.epaGasTypeCodes.filter(code => code !== gasCode);
+      this.currentCylinder.componentGases = this.currentCylinder.componentGases.filter(gas => gas.epaGasCode !== gasCode);
     }
   }
 
   getMeasurementValue(componentGas) {
-    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
-    return selectedGas.length > 0  ? selectedGas[0].amount : '';
+    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.epaGasCode === componentGas);
+    return selectedGas.length > 0  ? selectedGas[0].gasConcentration : '';
   }
 
   getMeasurementType(componentGas) {
-    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.name === componentGas);
-    return selectedGas.length > 0 ? selectedGas[0].amountType : '';
+    const selectedGas = this.currentCylinder.componentGases.filter(gas => gas.epaGasCode === componentGas);
+    return selectedGas.length > 0 ? selectedGas[0].uom : '';
   }
 
   measurementValueChange(event, componentGas) {
-    this.currentCylinder.componentGases.filter(gas => gas.name === componentGas)[0].amount = event.target.value;
+    this.currentCylinder.componentGases.filter(gas => gas.epaGasCode === componentGas)[0].gasConcentration = event.target.value;
   }
 
   measurementTypeChange(event, componentGas) {
-    this.currentCylinder.componentGases.filter(gas => gas.name === componentGas)[0].amountType = event.value;
+    this.currentCylinder.componentGases.filter(gas => gas.epaGasCode === componentGas)[0].uom = event.value;
   }
 
   resetCurrentCylinder() {

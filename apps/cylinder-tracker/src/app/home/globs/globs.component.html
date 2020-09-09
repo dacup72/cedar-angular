@@ -18,10 +18,10 @@
         (click)="selected.emit(cylinder)"
       >
         <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
-        <h3 mat-line>Expiration Date: {{ cylinder.expDate }}</h3>
+        <h3 mat-line>Expiration Date: {{ cylinder.expirationDate }}</h3>
         <p mat-line>
           Gas Codes:
-          <span *ngFor="let code of cylinder.epaGasCodes">{{ code }} </span>
+          <span *ngFor="let code of cylinder.epaGasTypeCodes">{{ code }} </span>
         </p>
         <button
           mat-icon-button

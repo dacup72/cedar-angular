@@ -43,17 +43,23 @@ export const selectCurrentCylinderId = createSelector(
 export const emptyCylinder: Cylinder = {
   id: null,
   cylinderID: '',
-  expDate: '',
+  expirationDate: '',
   vendorID: '',
-  epaGasCodes: [],
+  epaGasTypeCodes: [],
   componentGases: [
     {
-      name: '',
-      amount: 0,
-      amountType: ''
+      qaGasDefCode: '',
+      epaGasCode: '',
+      gasConcentration: 0,
+      uom: ''
     }
   ],
-  status: 'spare'
+  state: 'spare',
+  certificationImage: '',
+  hasBeenUsedForQA: false,
+  createdByPartialEdit: false,
+  editHistory: '',
+  errorList: []
 };
 
 export const selectCurrentCylinder = createSelector(

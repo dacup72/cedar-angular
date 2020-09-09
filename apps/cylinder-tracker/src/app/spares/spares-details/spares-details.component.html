@@ -27,9 +27,9 @@
         <input
           matInput
           placeholder="Expiration Date"
-          [(ngModel)]="currentCylinder.expDate"
+          [(ngModel)]="currentCylinder.expirationDate"
           type="text"
-          name="expDate"
+          name="expirationDate"
         />
       </mat-form-field>
 
@@ -51,9 +51,9 @@
           <section class="full-width">
             <mat-checkbox
               name="NOX"
-              *ngFor="let code of epaGasCodes"
+              *ngFor="let code of epaGasTypeCodes"
               (change)="gasCodeChange($event, code)"
-              [checked]="currentCylinder.epaGasCodes.includes(code)"
+              [checked]="currentCylinder.epaGasTypeCodes.includes(code)"
             >
               {{ code }}
             </mat-checkbox>
@@ -69,7 +69,7 @@
             <mat-list>
               <mat-list-item
                 class="component-gas-item"
-                *ngFor="let code of currentCylinder.epaGasCodes"
+                *ngFor="let code of currentCylinder.epaGasTypeCodes"
               >
                 <mat-label class="component-gas-label">{{ code }}</mat-label>
                 <mat-divider [inset]="true" [vertical]="true"></mat-divider>

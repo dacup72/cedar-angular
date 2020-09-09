@@ -10,7 +10,7 @@ export class InUseComponent {
   inUseCylinders: Cylinder[];
 
   @Input() set cylinders(value: Cylinder[]) {
-    if(value) this.inUseCylinders = value.filter(c => c.status === 'inUse')
+    if(value) this.inUseCylinders = value.filter(c => c.state === 'inUse')
   }
   @Input() readonly = false;
   @Output() dropped = new EventEmitter();

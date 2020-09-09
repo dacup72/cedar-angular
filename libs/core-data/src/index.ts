@@ -1,5 +1,5 @@
 export { CylindersService } from './lib/cylinders/cylinders.service';
-export { Cylinder, Cylinder2 } from './lib/cylinders/cylinder.model';
+export { Cylinder } from './lib/cylinders/cylinder.model';
 export { QAGasProfile } from './lib/qaGasProfiles/qa-gas-profile.model';
 export { CoreDataModule } from './lib/core-data.module';
 export { CylindersFacade } from './lib/state/cylinders/cylinders.facade';

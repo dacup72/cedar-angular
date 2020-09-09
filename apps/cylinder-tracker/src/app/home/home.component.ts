@@ -69,13 +69,13 @@ export class HomeComponent implements OnInit {
 
       switch (event.container.id) {
         case 'sparesDropList':
-          droppedCylinder['status'] = 'spare';
+          droppedCylinder['state'] = 'spare';
           break;
         case 'inUseDropList':
-          droppedCylinder['status'] = 'inUse';
+          droppedCylinder['state'] = 'inUse';
           break;
         case 'globDropList':
-          droppedCylinder['status'] = 'glob';
+          droppedCylinder['state'] = 'glob';
           break;
         default:
           break;

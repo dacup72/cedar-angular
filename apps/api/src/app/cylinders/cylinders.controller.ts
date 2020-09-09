@@ -28,34 +28,36 @@ export class CylindersController {
   @Post()
   addCylinder(
     @Body('cylinderID') cylinderID: string,
-    @Body('expDate') expDate: string,
+    @Body('expirationDate') expirationDate: string,
     @Body('vendorID') vendorID: string,
-    @Body('epaGasCodes') epaGasCodes: string[],
+    @Body('epaGasTypeCodes') epaGasTypeCodes: string[],
     @Body('componentGases') componentGases: {
-      name: string;
-      amount: number;
-      amountType: string;
+      qaGasDefCode: string;
+      epaGasCode: string;
+      gasConcentration: number;
+      uom: string;
     }[],
-    @Body('status') status: string
+    @Body('state') state: string
   ) {
-    return this.cylindersService.addCylinder(cylinderID, expDate, vendorID, epaGasCodes, componentGases, status);
+    return this.cylindersService.addCylinder(cylinderID, expirationDate, vendorID, epaGasTypeCodes, componentGases, state);
   }
 
   @Patch(':id')
   updateCylinder(
     @Param('id') id: string,
     @Body('cylinderID') cylinderID: string,
-    @Body('expDate') expDate: string,
+    @Body('expirationDate') expirationDate: string,
     @Body('vendorID') vendorID: string,
-    @Body('epaGasCodes') epaGasCodes: string[],
+    @Body('epaGasTypeCodes') epaGasTypeCodes: string[],
     @Body('componentGases') componentGases: {
-      name: string;
-      amount: number;
-      amountType: string;
+      qaGasDefCode: string;
+      epaGasCode: string;
+      gasConcentration: number;
+      uom: string;
     }[],
-    @Body('status') status: string
+    @Body('state') state: string
   ) {
-    return this.cylindersService.updateCylinder(id, cylinderID, expDate, vendorID, epaGasCodes, componentGases, status);
+    return this.cylindersService.updateCylinder(id, cylinderID, expirationDate, vendorID, epaGasTypeCodes, componentGases, state);
   }
 
   @Delete(':id')

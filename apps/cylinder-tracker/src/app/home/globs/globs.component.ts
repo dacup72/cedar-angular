@@ -10,7 +10,7 @@ export class GlobsComponent {
   globCylinders: Cylinder[];
 
   @Input() set cylinders(value: Cylinder[]) {
-    if(value) this.globCylinders = value.filter(c => c.status === 'glob')
+    if(value) this.globCylinders = value.filter(c => c.state === 'glob')
   }
   @Input() readonly = false;
   @Output() dropped = new EventEmitter();

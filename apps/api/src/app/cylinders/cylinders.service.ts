@@ -7,43 +7,57 @@ export class CylindersService {
   private cylinders: Cylinder[] = [
     {
       id: '0',
-      cylinderID: '4557324',
-      expDate: 'March 1st',
-      vendorID: 'Vendor id 44',
-      epaGasCodes: ['NOX', 'SO2'],
+      cylinderID: 'EB0078736',
+      expirationDate: '1992-08-09',
+      vendorID: '44',
+      epaGasTypeCodes: ['NOX', 'SO2'],
       componentGases: [
         {
-          name: 'NOX',
-          amount: 25.4,
-          amountType: 'ppm'
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NOX',
+          gasConcentration: 25.4,
+          uom: 'ppm'
         },
         {
-          name: 'SO2',
-          amount: 14.8,
-          amountType: 'ppm'
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'SO2',
+          gasConcentration: 14.8,
+          uom: 'ppm'
         }
       ],
-      status: 'spare'
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
     },
     {
       id: '1',
-      cylinderID: '55587',
-      expDate: 'April 1st',
-      vendorID: 'Vendor id 44',
-      epaGasCodes: ['NOX', 'O2'],
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
       componentGases: [
         {
-          name: 'NOX',
-          amount: 25.4,
-          amountType: 'ppm'
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
         },
         {
-          name: 'O2',
-          amount: 12.3,
-          amountType: 'ppm'
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
         }
       ],
-      status: 'inUse'
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
     }
   ];
 
@@ -53,26 +67,37 @@ export class CylindersService {
 
   addCylinder(
     cylinderID: string,
-    expDate: string,
+    expirationDate: string,
     vendorID: string,
-    epaGasCodes: string[],
+    epaGasTypeCodes: string[],
     componentGases: {
-      name: string;
-      amount: number;
-      amountType: string;
+      qaGasDefCode: string;
+      epaGasCode: string;
+      gasConcentration: number;
+      uom: string;
     }[],
-    status: string
+    state: string
   ) {
     const id = Math.random().toString();
+    const certificationImage = 'image url';
+    const hasBeenUsedForQA = false;
+    const createdByPartialEdit = false;
+    const editHistory = '<history goes here />';
+    const errorList = [];
 
     const newCylinder = {
       id,
       cylinderID,
-      expDate,
+      expirationDate,
       vendorID,
-      epaGasCodes,
+      epaGasTypeCodes,
       componentGases,
-      status
+      state,
+      certificationImage,
+      hasBeenUsedForQA,
+      createdByPartialEdit,
+      editHistory,
+      errorList
     };
     this.cylinders.push(newCylinder);
     return { ...newCylinder };
@@ -84,37 +109,38 @@ export class CylindersService {
   }
 
   updateCylinder(
-    id: string,
+    id,
     cylinderID: string,
-    expDate: string,
+    expirationDate: string,
     vendorID: string,
-    epaGasCodes: string[],
+    epaGasTypeCodes: string[],
     componentGases: {
-      name: string;
-      amount: number;
-      amountType: string;
+      qaGasDefCode: string;
+      epaGasCode: string;
+      gasConcentration: number;
+      uom: string;
     }[],
-    status: string
+    state: string
   ) {
     const { index, cylinder } = this.findCylinder(id);
     const updatedCylinder = { ...cylinder };
     if (cylinderID) {
       updatedCylinder.cylinderID = cylinderID;
     }
-    if (expDate) {
-      updatedCylinder.expDate = expDate;
+    if (expirationDate) {
+      updatedCylinder.expirationDate = expirationDate;
     }
     if (vendorID) {
       updatedCylinder.vendorID = vendorID;
     }
-    if (epaGasCodes) {
-      updatedCylinder.epaGasCodes = epaGasCodes;
+    if (epaGasTypeCodes) {
+      updatedCylinder.epaGasTypeCodes = epaGasTypeCodes;
     }
     if (componentGases) {
       updatedCylinder.componentGases = componentGases;
     }
-    if (status) {
-      updatedCylinder.status = status;
+    if (state) {
+      updatedCylinder.state = state;
     }
     this.cylinders[index] = updatedCylinder;
     return { ...updatedCylinder };
@@ -127,7 +153,7 @@ export class CylindersService {
   }
 
   private findCylinder(id: string): { index: number; cylinder: Cylinder } {
-    const index = this.cylinders.findIndex(cylinder => id == cylinder.id);
+    const index = this.cylinders.findIndex(cylinder => id === cylinder.id);
     const cylinder = this.cylinders[index];
     if (!cylinder) throw new NotFoundException('Could not find cylinder.');
     return { index, cylinder };

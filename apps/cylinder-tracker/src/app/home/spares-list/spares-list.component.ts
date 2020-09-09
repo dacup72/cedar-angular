@@ -10,7 +10,7 @@ export class SparesListComponent {
   spareCylinders: Cylinder[];
 
   @Input() set cylinders(value: Cylinder[]) {
-    if(value) this.spareCylinders = value.filter(c => c.status === 'spare')
+    if(value) this.spareCylinders = value.filter(c => c.state === 'spare')
   }
   @Input() readonly = false;
   @Output() dropped = new EventEmitter();

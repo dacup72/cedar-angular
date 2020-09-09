@@ -11,19 +11,13 @@ export interface User {
 }
 
 export interface ComponentGas {
-  name: string;
-  amount: number;
-  amountType: string;
-}
-
-export interface ComponentGas2 {
-  qaGasDefCode: String;
-  epaGasCode: String;
-  gasConcentration: Number;
-  uom: String;
+  qaGasDefCode: string;
+  epaGasCode: string;
+  gasConcentration: number;
+  uom: string;
 }
 
 export interface ErrorInfo {
-  severity: Number;
-  desc: String;
+  severity: number;
+  desc: string;
 }

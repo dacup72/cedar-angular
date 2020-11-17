@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill" class="date-picker" color="accent">
+  <mat-label>{{datePickerTitle}}</mat-label>
+  <input matInput [matDatepicker]="picker" (dateChange)="dateSelected.emit($event)"/>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

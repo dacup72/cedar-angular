@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CylindersFacade, Cylinder } from '@cedar-all/core-data';
+import { CylindersFacade, Cylinder, GasProfilesFacade, QAGasProfile } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { User } from '@cedar-angular/api-interfaces';
@@ -14,18 +14,32 @@ import { first } from 'rxjs/operators';
 export class HomeComponent implements OnInit {
   selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
+  gasProfiles$: Observable<QAGasProfile[]> = this.gasProfilesFacade.allGasProfiles$;
   users: User[];
   loading = false;
 
-  constructor(private cylindersFacade: CylindersFacade, private userService: UserService) {}
+  constructor(
+    private cylindersFacade: CylindersFacade, 
+    private userService: UserService, 
+    private gasProfilesFacade: GasProfilesFacade
+  ) {}
 
   ngOnInit(): void {
+    // INIT CYLINDERS
     this.cylindersFacade.loadCylinders();
     this.cylindersFacade.mutations$.subscribe(_ =>
       this.resetSelectedCylinder()
     );
     this.resetSelectedCylinder();
 
+    // INIT GAS PROFILES
+    this.gasProfilesFacade.loadGasProfiles();
+    this.gasProfilesFacade.mutations$.subscribe(_ =>
+      this.resetSelectedGasProfile()
+    );
+    this.resetSelectedCylinder();
+
+    // INIT USERS
     this.loading = true;
     this.userService.getAll().pipe(first()).subscribe(users => {
         this.loading = false;
@@ -33,6 +47,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // CYLINDERS ACTIONS
   resetSelectedCylinder() {
     this.selectCylinder({ id: null });
   }
@@ -53,7 +68,18 @@ export class HomeComponent implements OnInit {
     this.cylindersFacade.deleteCylinder(cylinder);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+
+  // GAS PROFILES ACTIONS
+  resetSelectedGasProfile() {
+    this.selectGasProfle({ id: null });
+  }
+
+  selectGasProfle(gasProfile) {
+    this.gasProfilesFacade.selectGasProfile(gasProfile.id);
+  }
+
+  // CYLINDER DRAG AND DROP EVENT
+  cylinderDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer !== event.container) {
       const droppedCylinder = Object.assign(
         {},

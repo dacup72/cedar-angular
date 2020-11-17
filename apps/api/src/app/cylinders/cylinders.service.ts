@@ -58,6 +58,357 @@ export class CylindersService {
       createdByPartialEdit: false,
       editHistory: "<history goes here />",
       errorList: []
+    },
+    {
+      id: '2',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '3',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '4',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '5',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '6',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '7',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '8',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '9',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '10',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '11',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '12',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '13',
+      cylinderID: 'EB0064498',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
+    },
+    {
+      id: '14',
+      cylinderID: 'EEEEEEEEEEE',
+      expirationDate: '2021-05-23',
+      vendorID: '23',
+      epaGasTypeCodes: ['NO2', 'O2'],
+      componentGases: [
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'NO2',
+          gasConcentration: 25.4,
+          uom: 'ppm'
+        },
+        {
+          qaGasDefCode: 'unknown',
+          epaGasCode: 'O2',
+          gasConcentration: 14.8,
+          uom: '%'
+        }
+      ],
+      state: 'spare',
+      certificationImage: 'image url',
+      hasBeenUsedForQA: false,
+      createdByPartialEdit: false,
+      editHistory: "<history goes here />",
+      errorList: []
     }
   ];
 

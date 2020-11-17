@@ -1,39 +1,45 @@
 <mat-card>
-  <mat-card-header class="flexSpaceBetween">
-    <mat-card-title>
-      <h1>Spare Cylinders</h1>
-    </mat-card-title>
-    <button>
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-card-header>
-  <mat-card-content class="scrollable">
-    <mat-list
-      cdkDropList
-      id="sparesDropList"
-      (cdkDropListDropped)="dropped.emit($event)"
-      [cdkDropListData]="spareCylinders"
-      [cdkDropListConnectedTo]="['inUseDropList']"
+  <div class="title-section">
+    <h1>Available Cylinders</h1>
+    <button mat-raised-button>Add Cylinder</button>
+  </div>
+  <div class="filter-section">
+    <cedar-all-ui-filter-chips
+      [filterItemName]="selectTitleCylinder"
+      [allItems]="cylinderIDs"
+      (selectionChange)="cylinderIDSelected($event)"
     >
-      <mat-list-item
-        cdkDrag
-        *ngFor="let cylinder of spareCylinders"
-        (click)="selected.emit(cylinder)"
+    </cedar-all-ui-filter-chips>
+    <ui-date-picker
+      [datePickerTitle]="datePickerTitle"
+      (dateSelected)="dateSelected($event)"
+    >
+    </ui-date-picker>
+    <cedar-all-ui-filter-chips
+      [filterItemName]="filterItemName"
+      [allItems]="gasTypes"
+      (selectionChange)="gasTypeSelected($event)"
+    >
+    </cedar-all-ui-filter-chips>
+  </div>
+  <mat-tab-group mat-stretch-tabs backgroundColor="primary" color="accent">
+    <mat-tab label="Spare Cylinders">
+      <cylinder-tracker-cylinder-item
+        [cylinders]="filteredSpareCylinders"
+        (cylinderDropped)="cylinderDropped.emit($event)"
+        (cylinderSelected)="cylinderSelected.emit($event)"
+        (cylinderDeleted)="cylinderDeleted.emit($event)"
       >
-        <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
-        <h3 mat-line>Expiration Date: {{ cylinder.expirationDate }}</h3>
-        <p mat-line>
-          Gas Codes:
-          <span *ngFor="let code of cylinder.epaGasTypeCodes">{{ code }} </span>
-        </p>
-        <button
-          mat-icon-button
-          *ngIf="!readonly"
-          (click)="deleted.emit(cylinder); $event.stopImmediatePropagation()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
+      </cylinder-tracker-cylinder-item>
+    </mat-tab>
+    <mat-tab label="In-Service Cylinders">
+      <cylinder-tracker-cylinder-item
+        [cylinders]="filteredInUseCylinders"
+        (cylinderDropped)="cylinderDropped.emit($event)"
+        (cylinderSelected)="cylinderSelected.emit($event)"
+        (cylinderDeleted)="cylinderDeleted.emit($event)"
+      >
+      </cylinder-tracker-cylinder-item>
+    </mat-tab>
+  </mat-tab-group>
 </mat-card>

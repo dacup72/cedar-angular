@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CylindersService } from './cylinders/cylinders.service';
+import { QAGasProfileService } from './qaGasProfiles/qa-gas-profile.service';
 import { StateModule } from './state/state.module';
 import { UserService } from './auth/user.service';
 
@@ -14,6 +15,7 @@ import { UserService } from './auth/user.service';
   ],
   providers: [
     CylindersService,
+    QAGasProfileService,
     UserService
   ]
 })

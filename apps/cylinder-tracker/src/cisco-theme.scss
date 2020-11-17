@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$cisco-primary: mat-palette($mat-blue, 800); // #1565c0
+$cisco-accent: mat-palette($mat-amber, 900); // #ff6f00
+$cisco-warn: mat-palette($mat-red);
+
+$cisco-theme: mat-light-theme($cisco-primary, $cisco-accent, $cisco-warn);
+
+@include angular-material-theme($cisco-theme);

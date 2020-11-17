@@ -26,7 +26,7 @@
               "apps/cylinder-tracker/src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/cylinder-tracker/src/cisco-theme.scss",
               "apps/cylinder-tracker/src/styles.scss"
             ],
             "scripts": []
@@ -324,6 +324,102 @@
             "tsConfig": "libs/ui-login/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "libs/ui-login/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "ui-filter-chips": {
+      "projectType": "library",
+      "root": "libs/ui-filter-chips",
+      "sourceRoot": "libs/ui-filter-chips/src",
+      "prefix": "cedar-all",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-filter-chips/tsconfig.lib.json",
+              "libs/ui-filter-chips/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui-filter-chips/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-filter-chips/jest.config.js",
+            "tsConfig": "libs/ui-filter-chips/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ui-filter-chips/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "date-picker": {
+      "projectType": "library",
+      "root": "libs/date-picker",
+      "sourceRoot": "libs/date-picker/src",
+      "prefix": "ui",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/date-picker/tsconfig.lib.json",
+              "libs/date-picker/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/date-picker/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/date-picker/jest.config.js",
+            "tsConfig": "libs/date-picker/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/date-picker/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "select-autocomplete": {
+      "projectType": "library",
+      "root": "libs/select-autocomplete",
+      "sourceRoot": "libs/select-autocomplete/src",
+      "prefix": "ui",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/select-autocomplete/tsconfig.lib.json",
+              "libs/select-autocomplete/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/select-autocomplete/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/select-autocomplete/jest.config.js",
+            "tsConfig": "libs/select-autocomplete/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/select-autocomplete/src/test-setup.ts"
           }
         }
       },

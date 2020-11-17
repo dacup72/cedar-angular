@@ -21,7 +21,12 @@
       "@cedar-all/material": ["libs/material/src/index.ts"],
       "@cedar-all/core-data": ["libs/core-data/src/index.ts"],
       "@cedar-all/ui-toolbar": ["libs/ui-toolbar/src/index.ts"],
-      "@cedar-all/ui-login": ["libs/ui-login/src/index.ts"]
+      "@cedar-all/ui-login": ["libs/ui-login/src/index.ts"],
+      "@cedar-all/ui-filter-chips": ["libs/ui-filter-chips/src/index.ts"],
+      "@cedar-all/date-picker": ["libs/date-picker/src/index.ts"],
+      "@cedar-all/select-autocomplete": [
+        "libs/select-autocomplete/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

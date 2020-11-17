@@ -1,13 +1,17 @@
+import { ErrorInfo } from '@cedar-angular/api-interfaces';
+
+
 export interface QAGasProfile {
+    readonly id: string;
     readonly pid: number;
     readonly name: string;
     readonly unitNumber: number;
-    readonly unitName: string;
     readonly cedarGasCode: string;
     readonly analyzerSpanType: string;
     readonly qaTestType: string;
     readonly gasLevel: string;
-    uom: string;
+    readonly uom: string;
+    readonly instrumentSpan: number;
     readonly minAllowableGasValue: number;
     readonly maxAllowableGasValue: number;
     gasConcentration: number;
@@ -15,7 +19,7 @@ export interface QAGasProfile {
     expirationDate: string;
     vendorID: string;
     epaGasTypeCode: string;
-    readonly instrumentSpan: number;
     readonly cylPressure?: number;
     cylPressureUOM?: number;
+    readonly errorList: ErrorInfo[];
 }

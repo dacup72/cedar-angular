@@ -43,6 +43,15 @@
     },
     "ui-login": {
       "tags": []
+    },
+    "ui-filter-chips": {
+      "tags": []
+    },
+    "date-picker": {
+      "tags": []
+    },
+    "select-autocomplete": {
+      "tags": []
     }
   }
 }

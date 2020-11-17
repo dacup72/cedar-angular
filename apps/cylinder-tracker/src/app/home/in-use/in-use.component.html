@@ -8,14 +8,14 @@
     <mat-list
       cdkDropList
       id="inUseDropList"
-      (cdkDropListDropped)="dropped.emit($event)"
+      (cdkDropListDropped)="cylinderDropped.emit($event)"
       [cdkDropListData]="inUseCylinders"
       [cdkDropListConnectedTo]="['sparesDropList']"
     >
       <mat-list-item
         cdkDrag
         *ngFor="let cylinder of inUseCylinders"
-        (click)="selected.emit(cylinder)"
+        (click)="cylinderSelected.emit(cylinder)"
       >
         <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
         <h3 mat-line>Expiration Date: {{ cylinder.expirationDate }}</h3>
@@ -25,8 +25,7 @@
         </p>
         <button
           mat-icon-button
-          *ngIf="!readonly"
-          (click)="deleted.emit(cylinder); $event.stopImmediatePropagation()"
+          (click)="cylinderDeleted.emit(cylinder); $event.stopImmediatePropagation()"
         >
           <mat-icon>close</mat-icon>
         </button>

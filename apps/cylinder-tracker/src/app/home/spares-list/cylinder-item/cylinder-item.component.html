@@ -1,0 +1,36 @@
+<ul
+  cdkDropList
+  id="sparesDropList"
+  (cdkDropListDropped)="cylinderDropped.emit($event)"
+  [cdkDropListData]="cylinders"
+  [cdkDropListConnectedTo]="['inUseDropList']"
+>
+  <li
+    class="cylinder-item"
+    cdkDrag
+    *ngFor="let cylinder of cylinders"
+    (click)="cylinderSelected.emit(cylinder)"
+  >
+    <div class="cylinder-item-color-bar"></div>
+    <div class="flex1">
+      <h2 class="cylinder-item-id">Cylinder ID: {{ cylinder.cylinderID }}</h2>
+      <div class="cylinder-item-gas-codes">
+        Gas Codes:
+        <span *ngFor="let code of cylinder.epaGasTypeCodes" class="gas-code">
+          {{ code }}
+        </span>
+      </div>
+      <h3 class="cylinder-item-expiration">
+        Expiration Date: {{ cylinder.expirationDate }}
+      </h3>
+    </div>
+    <div class="flex2">
+      <button
+        mat-icon-button
+        (click)="cylinderDeleted.emit(cylinder); $event.stopImmediatePropagation()"
+      >
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+    </div>
+  </li>
+</ul>

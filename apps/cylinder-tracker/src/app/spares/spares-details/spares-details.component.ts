@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Cylinder, emptyCylinder } from '@cedar-all/core-data';
 import { ComponentGas } from '@cedar-angular/api-interfaces';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'cylinder-tracker-spares-details',
@@ -19,7 +19,7 @@ export class SparesDetailsComponent {
   // Make a copy of the cylinder object to avoid shared state anytime cylinder is set.
   @Input() set cylinder(value: Cylinder) {
     if(value) this.origionalTitle = value.cylinderID; 
-    this.currentCylinder = _.cloneDeep(value);
+    this.currentCylinder = cloneDeep(value);
   }
 
   gasCodeChange(event, gasCode) {
@@ -58,7 +58,7 @@ export class SparesDetailsComponent {
   }
 
   resetCurrentCylinder() {
-    this.currentCylinder = Object.assign({}, emptyCylinder);
+    this.currentCylinder = cloneDeep(emptyCylinder);
   }
 
   onSubmit() {
@@ -71,3 +71,6 @@ export class SparesDetailsComponent {
     this.resetCurrentCylinder();
   }
  }
+
+
+ 

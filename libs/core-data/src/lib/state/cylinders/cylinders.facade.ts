@@ -30,7 +30,7 @@ export class CylindersFacade {
   constructor(private store: Store<CylindersState>, private actions$: ActionsSubject) { }
 
   selectCylinder(cylinderId) {
-    this.store.dispatch(new SelectCylinder(cylinderId))
+    this.store.dispatch(new SelectCylinder(cylinderId));
   }
 
   loadCylinders() {

@@ -1,0 +1,80 @@
+@import 'apps/cylinder-tracker/src/cisco-theme.scss';
+
+.cylinder-item {
+  margin-bottom: 24px;
+  padding: 6px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.cylinder-item-color-bar {
+  background-color: mat-color(map-get($cisco-theme, accent));
+  width: 10px;
+}
+
+mat-icon {
+  font-size: 34px;
+}
+
+.cylinder-item:hover {
+  background-color: #f2f2f2;
+}
+
+.flex1 {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 90%;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cylinder-item-id,
+.cylinder-item-gas-codes,
+.cylinder-item-expiration {
+  flex-basis: 50%;
+}
+
+.cylinder-item-id {
+  font-weight: bold;
+}
+
+.cylinder-item-gas-codes {
+  box-sizing: border-box;
+  border: 1px solid #f2f2f2;
+  border-radius: 6px;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.gas-code {
+  box-sizing: border-box;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid mat-color(map-get($cisco-theme, primary));
+  border-radius: 6px;
+  background-color: mat-color(map-get($cisco-theme, primary));
+  margin-right: 4px;
+  margin-left: 4px;
+  color: white;
+}
+
+.flex2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+#sparesDropList {
+  overflow: auto;
+  height: 65vh;
+  padding: 0;
+}
+
+#sparesDropList::-webkit-scrollbar {
+  display: none;
+}

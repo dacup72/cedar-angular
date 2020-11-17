@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { Cylinder } from '@cedar-all/core-data';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-in-use',
@@ -8,12 +8,18 @@ import { Cylinder } from '@cedar-all/core-data';
 })
 export class InUseComponent {
   inUseCylinders: Cylinder[];
+  gasProfiles: QAGasProfile[];
 
   @Input() set cylinders(value: Cylinder[]) {
     if(value) this.inUseCylinders = value.filter(c => c.state === 'inUse')
   }
-  @Input() readonly = false;
-  @Output() dropped = new EventEmitter();
-  @Output() selected = new EventEmitter();
-  @Output() deleted = new EventEmitter();
+  @Input() set qaGasProfiles(value: QAGasProfile[]) {
+    if(value) {
+      console.log(value)
+      this.gasProfiles = value;
+    }
+  }
+  @Output() cylinderDropped = new EventEmitter();
+  @Output() cylinderSelected = new EventEmitter();
+  @Output() cylinderDeleted = new EventEmitter();
 }

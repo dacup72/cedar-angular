@@ -11,21 +11,21 @@
 
 <mat-grid-list cols="2" gutterSize="10px" rowHeight="91vh">
   <mat-grid-tile>
-    <cylinder-tracker-spares-list
+    <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
       (cylinderSelected)="selectCylinder($event)"
       (cylinderDeleted)="deleteCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
     >
-    </cylinder-tracker-spares-list>
+    </cylinder-tracker-available-cylinders>
   </mat-grid-tile>
   <mat-grid-tile>
-    <cylinder-tracker-in-use
+    <cylinder-tracker-assign-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
       (cylinderSelected)="selectCylinder($event)"
       (cylinderDeleted)="deleteCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
-    ></cylinder-tracker-in-use>
+    ></cylinder-tracker-assign-cylinders>
   </mat-grid-tile>
 </mat-grid-list>

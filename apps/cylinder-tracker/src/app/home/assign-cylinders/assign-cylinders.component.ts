@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
 
 @Component({
-  selector: 'cylinder-tracker-in-use',
-  templateUrl: './in-use.component.html',
-  styleUrls: ['./in-use.component.css']
+  selector: 'cylinder-tracker-assign-cylinders',
+  templateUrl: './assign-cylinders.component.html',
+  styleUrls: ['./assign-cylinders.component.scss']
 })
-export class InUseComponent {
+export class AssignCylindersComponent {
   inUseCylinders: Cylinder[];
   gasProfiles: QAGasProfile[];
 

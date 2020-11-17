@@ -3,18 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { SparesListComponent } from './spares-list/spares-list.component';
+import { AvailableCylindersComponent } from './available-cylinders/available-cylinders.component';
 import { MaterialModule } from '@cedar-all/material';
 import { FormsModule } from '@angular/forms';
-import { InUseComponent } from './in-use/in-use.component';
-import { GlobsComponent } from './globs/globs.component';
+import { AssignCylindersComponent } from './assign-cylinders/assign-cylinders.component';
 import { UiFilterChipsModule } from '@cedar-all/ui-filter-chips';
 import { DatePickerModule } from '@cedar-all/date-picker';
 import { SelectAutocompleteModule } from '@cedar-all/select-autocomplete';
-import { CylinderItemComponent } from './spares-list/cylinder-item/cylinder-item.component';
+import { CylinderItemComponent } from './available-cylinders/cylinder-item/cylinder-item.component';
 
 @NgModule({
-  declarations: [HomeComponent, SparesListComponent, InUseComponent, GlobsComponent, CylinderItemComponent],
+  declarations: [HomeComponent, AvailableCylindersComponent, AssignCylindersComponent, CylinderItemComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

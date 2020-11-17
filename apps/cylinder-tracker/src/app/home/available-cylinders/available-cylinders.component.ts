@@ -3,11 +3,11 @@ import { Cylinder } from '@cedar-all/core-data';
 import * as Moment from 'moment';
 
 @Component({
-  selector: 'cylinder-tracker-spares-list',
-  templateUrl: './spares-list.component.html',
-  styleUrls: ['./spares-list.component.scss']
+  selector: 'cylinder-tracker-available-cylinders',
+  templateUrl: './available-cylinders.component.html',
+  styleUrls: ['./available-cylinders.component.scss']
 })
-export class SparesListComponent {
+export class AvailableCylindersComponent {
   spareCylinders: Cylinder[];
   inUseCylinders: Cylinder[];
   filteredSpareCylinders: Cylinder[];

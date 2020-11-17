@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InUseComponent } from './in-use.component';
+import { AssignCylindersComponent } from './assign-cylinders.component';
 
-describe('InUseComponent', () => {
-  let component: InUseComponent;
-  let fixture: ComponentFixture<InUseComponent>;
+describe('AssignCylindersComponent', () => {
+  let component: AssignCylindersComponent;
+  let fixture: ComponentFixture<AssignCylindersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InUseComponent ]
+      declarations: [ AssignCylindersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InUseComponent);
+    fixture = TestBed.createComponent(AssignCylindersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

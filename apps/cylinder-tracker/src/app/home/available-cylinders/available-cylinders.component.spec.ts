@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SparesListComponent } from './spares-list.component';
+import { AvailableCylindersComponent } from './available-cylinders.component';
 
-describe('SparesListComponent', () => {
-  let component: SparesListComponent;
-  let fixture: ComponentFixture<SparesListComponent>;
+describe('AvailableCylindersComponent', () => {
+  let component: AvailableCylindersComponent;
+  let fixture: ComponentFixture<AvailableCylindersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SparesListComponent ]
+      declarations: [ AvailableCylindersComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SparesListComponent);
+    fixture = TestBed.createComponent(AvailableCylindersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

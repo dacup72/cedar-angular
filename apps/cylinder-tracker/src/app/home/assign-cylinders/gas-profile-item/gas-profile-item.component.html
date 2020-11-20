@@ -1,0 +1,31 @@
+<li
+  class="gas-profile-item"
+  *ngFor="let gasProfile of gasProfiles; let i = index"
+  cdkDropList
+  id="{{'gasProfileDropList' + i}}"
+  (cdkDropListDropped)="cylinderDropped.emit($event)"
+  [cdkDropListData]="[gasProfile]"
+  [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
+>
+  <div class="flex1">
+    <h2 class="gas-item-title">
+      {{ gasProfile.name }}
+    </h2>
+    <div class="gas-item-unit">Unit: {{ gasProfile.unitNumber }}</div>
+  </div>
+  <div class="flex2">
+    <div *ngIf="gasProfile.cylinderID; else no_assigned_cylinder">Assigned Cylinder: {{ gasProfile.cylinderID }}</div>
+    <ng-template #no_assigned_cylinder><div class="no-cylinder-assigned-text">No Cylinder Assigned</div></ng-template>
+  </div>
+  <div class="flex3">
+    <button mat-icon-button [matMenuTriggerFor]="gasMenu">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <mat-menu #gasMenu="matMenu">
+      <button mat-menu-item (click)="unassignCylinder.emit(gasProfile)">
+        <mat-icon>assignment_return</mat-icon>
+        <span>Unassign Cylinder</span>
+      </button>
+    </mat-menu>
+  </div>
+</li>

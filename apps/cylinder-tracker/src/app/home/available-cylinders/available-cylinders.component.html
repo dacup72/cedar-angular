@@ -24,22 +24,53 @@
   </div>
   <mat-tab-group mat-stretch-tabs backgroundColor="primary" color="accent">
     <mat-tab label="Spare Cylinders">
-      <cylinder-tracker-cylinder-item
-        [cylinders]="filteredSpareCylinders"
-        (cylinderDropped)="cylinderDropped.emit($event)"
-        (cylinderSelected)="cylinderSelected.emit($event)"
-        (cylinderDeleted)="cylinderDeleted.emit($event)"
+      <ul
+        cdkDropList
+        id="sparesDropList"
+        (cdkDropListDropped)="cylinderDropped.emit($event)"
+        [cdkDropListData]="filteredSpareCylinders"
+        [cdkDropListConnectedTo]="dropListConnections"
       >
-      </cylinder-tracker-cylinder-item>
+        <li
+          cdkDrag
+          *ngFor="let cylinder of filteredSpareCylinders"
+          (click)="cylinderSelected.emit(cylinder)"
+        >
+          <cylinder-tracker-cylinder-item
+            [cylinder]="cylinder"
+            [isAssignedCylinder]="false"
+            (cylinderDropped)="cylinderDropped.emit($event)"
+            (cylinderSelected)="cylinderSelected.emit($event)"
+            (cylinderDeleted)="cylinderDeleted.emit($event)"
+          >
+          </cylinder-tracker-cylinder-item>
+        </li>
+      </ul>
     </mat-tab>
     <mat-tab label="In-Service Cylinders">
-      <cylinder-tracker-cylinder-item
-        [cylinders]="filteredInUseCylinders"
-        (cylinderDropped)="cylinderDropped.emit($event)"
-        (cylinderSelected)="cylinderSelected.emit($event)"
-        (cylinderDeleted)="cylinderDeleted.emit($event)"
+      <ul
+        cdkDropList
+        id="inUseDropList"
+        (cdkDropListDropped)="cylinderDropped.emit($event)"
+        [cdkDropListData]="filteredInUseCylinders"
+        [cdkDropListConnectedTo]="dropListConnections"
       >
-      </cylinder-tracker-cylinder-item>
+        <li
+          cdkDrag
+          *ngFor="let cylinder of filteredInUseCylinders"
+          (click)="cylinderSelected.emit(cylinder)"
+        >
+          <cylinder-tracker-cylinder-item
+            [cylinder]="cylinder"
+            [isAssignedCylinder]="true"
+            [gasProfiles]="gasProfiles"
+            (cylinderDropped)="cylinderDropped.emit($event)"
+            (cylinderSelected)="cylinderSelected.emit($event)"
+            (cylinderDeleted)="cylinderDeleted.emit($event)"
+          >
+          </cylinder-tracker-cylinder-item>
+        </li>
+      </ul>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

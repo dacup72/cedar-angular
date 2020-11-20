@@ -11,9 +11,12 @@ import { UiFilterChipsModule } from '@cedar-all/ui-filter-chips';
 import { DatePickerModule } from '@cedar-all/date-picker';
 import { SelectAutocompleteModule } from '@cedar-all/select-autocomplete';
 import { CylinderItemComponent } from './available-cylinders/cylinder-item/cylinder-item.component';
+import { GasProfileItemComponent } from './assign-cylinders/gas-profile-item/gas-profile-item.component';
+import { CylinderDropDialogComponent } from './cylinder-drop-dialog/cylinder-drop-dialog.component';
+import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog/gas-profile-unassign-dialog.component';
 
 @NgModule({
-  declarations: [HomeComponent, AvailableCylindersComponent, AssignCylindersComponent, CylinderItemComponent],
+  declarations: [HomeComponent, AvailableCylindersComponent, AssignCylindersComponent, CylinderItemComponent, GasProfileItemComponent, CylinderDropDialogComponent, GasProfileUnassignDialogComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

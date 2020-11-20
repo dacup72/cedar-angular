@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
   <mat-card-header>
     <mat-card-title>
       <h1>In Use Cylinders</h1>
@@ -32,4 +32,63 @@
       </mat-list-item>
     </mat-list>
   </mat-card-content>
+</mat-card> -->
+
+<mat-card>
+  <div class="title-section">
+    <h1>Assign Cylinders</h1>
+  </div>
+  <div class="filter-section">
+    <cedar-all-ui-filter-chips
+      [filterItemName]="selectTitleCylinder"
+      [allItems]="cylinderIDs"
+      (selectionChange)="cylinderIDSelected($event)"
+    >
+    </cedar-all-ui-filter-chips>
+    <ui-date-picker
+      [datePickerTitle]="datePickerTitle"
+      (dateSelected)="dateSelected($event)"
+    >
+    </ui-date-picker>
+    <cedar-all-ui-filter-chips
+      [filterItemName]="filterItemName"
+      [allItems]="gasTypes"
+      (selectionChange)="gasTypeSelected($event)"
+    >
+    </cedar-all-ui-filter-chips>
+  </div>
+  <mat-tab-group mat-stretch-tabs backgroundColor="primary" color="accent">
+    <mat-tab label="In-Service Cylinders">
+      <ul class="inUseDropList">
+        <li>
+          <cylinder-tracker-cylinder-item
+            *ngFor="let cylinder of filteredInUseCylinders; let i = index"
+            cdkDropList
+            id="{{'inUseDropList' + i}}"
+            (cdkDropListDropped)="cylinderDropped.emit($event)"
+            [cdkDropListData]="[inUseCylinders]"
+            [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
+            [cylinder]="cylinder"
+            [isAssignedCylinder]="true"
+            [disableItemDrag]="true"
+            [gasProfiles]="gasProfiles"
+            (cylinderDropped)="cylinderDropped.emit($event)"
+            (cylinderSelected)="cylinderSelected.emit($event)"
+            (cylinderDeleted)="cylinderDeleted.emit($event)"
+          >
+          </cylinder-tracker-cylinder-item>
+        </li>
+      </ul>
+    </mat-tab>
+    <mat-tab label="Gas Profiles">
+      <ul class="gas-profile-list">
+        <cylinder-tracker-gas-profile-item
+          [gasProfiles]="gasProfiles"
+          (cylinderDropped)="cylinderDropped.emit($event)"
+          (unassignCylinder)="unassignCylinder.emit($event)"
+        >
+        </cylinder-tracker-gas-profile-item>
+      </ul>
+    </mat-tab>
+  </mat-tab-group>
 </mat-card>

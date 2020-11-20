@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { QaGasProfileService } from './qa-gas-profile.service';
+import { QAGasProfileService } from './qa-gas-profile.service';
 
 describe('QaGasProfileService', () => {
-  let service: QaGasProfileService;
+  let service: QAGasProfileService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(QaGasProfileService);
+    service = TestBed.inject(QAGasProfileService);
   });
 
   it('should be created', () => {

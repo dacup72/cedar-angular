@@ -64,7 +64,7 @@ export class GasProfilesService {
     if (gasConcentration) {
       updatedGasProfile.gasConcentration = gasConcentration;
     }
-    if (cylinderID) {
+    if (cylinderID || cylinderID === '') {
       updatedGasProfile.cylinderID = cylinderID;
     }
     if (expirationDate) {
@@ -76,8 +76,8 @@ export class GasProfilesService {
     if (epaGasTypeCode) {
       updatedGasProfile.epaGasTypeCode = epaGasTypeCode;
     }
-
-    this.gasProfiles[index] = updatedGasProfile;
+    
+    this.gasProfiles[index] = updatedGasProfile;    
     return { ...updatedGasProfile };
   }
 

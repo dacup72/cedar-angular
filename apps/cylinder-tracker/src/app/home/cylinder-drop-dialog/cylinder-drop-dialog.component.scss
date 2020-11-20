@@ -1,0 +1,73 @@
+@import 'apps/cylinder-tracker/src/cisco-theme.scss';
+
+.dialog-title {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid black;
+  padding-bottom: 8px;
+
+}
+
+.cylinder-display {
+  background-color: mat-color(map-get($cisco-theme, primary));
+  color: white;
+  display: flex;
+  flex-basis: 30%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.directional-action {
+  display: flex;
+  flex-basis: 30%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.directional-action > div {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.icon {
+  font-size: 36px;
+}
+
+.mat-icon { transform: scale(3); } 
+
+.dialog-content {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-bottom: 1px solid #f2f2f2;
+    padding: 8px;
+}
+
+.gas-selector {
+    background-color: #f2f2f2;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+.gas-item {
+    flex-basis: 100%;
+    text-align: center;
+    padding: 4px;
+}
+
+.gas-title {
+    border-bottom: 1px solid black;
+    flex-basis: 100%;
+    text-align: center;
+    padding: 4px;
+}
+

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder } from '@cedar-all/core-data';
+import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-cylinder-item',
@@ -10,9 +10,20 @@ export class CylinderItemComponent {
 
   constructor() { }
 
-  @Input() cylinders: Cylinder[];
+  @Input() cylinder: Cylinder;
+  @Input() gasProfiles: QAGasProfile[] = [];
+  @Input() isAssignedCylinder: boolean;
+  @Input() disableItemDrag = false;
   @Output() cylinderDropped = new EventEmitter();
-  @Output() cylinderSelected = new EventEmitter();
+  //@Output() cylinderSelected = new EventEmitter();
   @Output() cylinderDeleted = new EventEmitter();
 
+  findAssignedGasProfiles(cylinder: Cylinder) {
+    if(this.gasProfiles.length > 0) {
+      return this.gasProfiles.filter(gasProfile => gasProfile.cylinderID === cylinder.cylinderID);
+    } 
+    return [];
+  }
+
 }
+

@@ -90,3 +90,32 @@ ui-select-autocomplete, ui-date-picker, cedar-all-ui-filter-chips {
 button.mat-raised-button:hover {
   background-color: mat-color(map-get($cisco-theme, accent));
 }
+
+#sparesDropList, #inUseDropList {
+  overflow: auto;
+  height: 65vh;
+  padding: 0;
+}
+
+#sparesDropList::-webkit-scrollbar, #inUseDropList::-webkit-scrollbar {
+  display: none;
+}
+
+cylinder-tracker-cylinder-item {
+  margin-bottom: 24px;
+  padding: 6px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+
+cylinder-tracker-cylinder-item:hover {
+  background-color: #f2f2f2;
+}
+
+li {
+  list-style-type: none;
+}

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder } from '@cedar-all/core-data';
+import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
 import * as Moment from 'moment';
 
 @Component({
@@ -12,13 +12,15 @@ export class AvailableCylindersComponent {
   inUseCylinders: Cylinder[];
   filteredSpareCylinders: Cylinder[];
   filteredInUseCylinders: Cylinder[];
+  gasProfiles: QAGasProfile[];
 
   filterItemName = 'Gas Type';
   gasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
   datePickerTitle="Expiration Date";
   selectTitleCylinder = 'Cylinder ID';
   cylinderIDs: string[] = [];
-
+  dropListConnections = [];
+  
   selectedFilters = {
     cylinderIDs: [],
     expirationDate: '',
@@ -29,8 +31,19 @@ export class AvailableCylindersComponent {
     if(value) {
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
+      for (let i = 0; i < this.inUseCylinders.length; i++) {
+        this.dropListConnections.push('inUseDropList' + i);
+      }
       this.cylinderIDs = value.map(c => c.cylinderID);
       this.filterCylinders();
+    }
+  }
+  @Input() set qaGasProfiles(value: QAGasProfile[]) {
+    if(value) {
+      for (let i = 0; i < value.length; i++) {
+        this.dropListConnections.push('gasProfileDropList' + i);
+      }
+      this.gasProfiles = value;
     }
   }
   @Output() cylinderDropped = new EventEmitter();

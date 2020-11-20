@@ -13,6 +13,7 @@
   <mat-grid-tile>
     <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
+      [qaGasProfiles]="gasProfiles$ | async"
       (cylinderSelected)="selectCylinder($event)"
       (cylinderDeleted)="deleteCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
@@ -26,6 +27,7 @@
       (cylinderSelected)="selectCylinder($event)"
       (cylinderDeleted)="deleteCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
+      (unassignCylinder)="unassignCylinder($event)"
     ></cylinder-tracker-assign-cylinders>
   </mat-grid-tile>
 </mat-grid-list>

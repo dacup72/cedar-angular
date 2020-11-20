@@ -1,6 +1,5 @@
 import { ErrorInfo } from '@cedar-angular/api-interfaces';
 
-
 export interface QAGasProfile {
     readonly id: string;
     readonly pid: number;

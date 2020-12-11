@@ -12,6 +12,8 @@ import { UserService } from '@cedar-all/core-data';
 import { first } from 'rxjs/operators';
 import { CylinderDropDialogComponent } from './cylinder-drop-dialog/cylinder-drop-dialog.component';
 import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog/gas-profile-unassign-dialog.component';
+import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
+import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -60,15 +62,19 @@ export class HomeComponent implements OnInit {
   }
   
   getCylindersList() {
-    let cylindersOutput: Cylinder[];
-    const cylindersObs = this.cylinders$.subscribe(cylinders => cylindersOutput = [...cylinders]);
+    const cylindersOutput: Cylinder[] = [];
+    const cylindersObs = this.cylinders$.subscribe(cylinders => {
+      cylinders.forEach(cylinder => cylindersOutput.push(Object.assign({}, cylinder)));
+    });
     cylindersObs.unsubscribe();
     return cylindersOutput;
   }
 
   getGasProfilesList() {
-    let gasProfilesOutput: QAGasProfile[];
-    const gasProfilesObs = this.gasProfiles$.subscribe(gasProfiles => gasProfilesOutput = [...gasProfiles]);
+    const gasProfilesOutput: QAGasProfile[] = [];
+    const gasProfilesObs = this.gasProfiles$.subscribe(gasProfiles => {
+      gasProfiles.forEach(gasProfile => gasProfilesOutput.push(Object.assign({}, gasProfile)));
+    });
     gasProfilesObs.unsubscribe();
     return gasProfilesOutput;
   }
@@ -111,49 +117,51 @@ export class HomeComponent implements OnInit {
   cylinderDrop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) return;
 
+    const dropContainerID = event.container.id;
+    const draggedCylinder: Cylinder = Object.assign({}, event.item.data);
+    const dropContainerItem = Object.assign({}, event.container.data[0]);
+
+    if(draggedCylinder.cylinderID === dropContainerItem['cylinderID'])  return;
+
     // Cylinder dropped on Gas Profile
-    if (event.container.id.includes('gasProfileDropList')) {
-      if(event.previousContainer.data[event.previousIndex]['cylinderID'] === event.container.data[0]['cylinderID']) return;
+    if (dropContainerID.includes('gasProfileDropList')) {
 
       // If gas profile has no assigned cylinder
-      if(!event.container.data[0]['cylinderID']) this.validateCylinders(event);
-      else this.openCylinderDroppedDialog(event);
+      if(!dropContainerItem['cylinderID']) this.validateCylinders(event, 'gasProfileDropList', draggedCylinder, dropContainerItem);
+      else this.openCylinderDroppedDialog(event, 'gasProfileDropList', draggedCylinder, dropContainerItem);
     }
-    // Cylinder dropped on in use cylinder
-    else if(event.container.id.includes('inUseDropList')) {
-      // TODO: Build the logic for dropping a cylinder on in use cylinder
-      console.log('hello')
+    // Cylinder dropped on in-use cylinder
+    else if(dropContainerID.includes('inUseDropList')) {
+      this.openCylinderDroppedDialog(event, 'inUseDropList', draggedCylinder, dropContainerItem);
     }
   }
 
-  openCylinderDroppedDialog(event: CdkDragDrop<string[]>) {
-    const droppedCylinder = Object.assign({}, event.previousContainer.data[event.previousIndex]);
-    let previousAssignedCylinder = null;
-    let selectedGasProfile = null;
+  openCylinderDroppedDialog(event: CdkDragDrop<string[]>, dropList: string, draggedCylinder: Cylinder, dropContainerItem) {
+    const dialogData = {
+      cylinder1: draggedCylinder,
+      cylinder2: null,
+      gasProfiles: []
+    }
     
-    if (event.container.id.includes('gasProfileDropList')) {
-      selectedGasProfile = Object.assign({}, event.container.data[0]);
-      previousAssignedCylinder = Object.assign({},
-        this.getCylindersList().filter(cylinder => cylinder.cylinderID === selectedGasProfile['cylinderID'])[0]
-      )
+    if (dropList === 'gasProfileDropList') {
+      dialogData.cylinder2 = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylinderID'])[0];
+      dialogData.gasProfiles = [dropContainerItem];
+    }
+    else if(dropList === 'inUseDropList') {
+      dialogData.cylinder2 = dropContainerItem;
+      dialogData.gasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylinderID === dropContainerItem['cylinderID']);
     }
 
-    const dialogRef = this.dialog.open(CylinderDropDialogComponent, {
-      data: {
-        cylinder1: droppedCylinder,
-        cylinder2: previousAssignedCylinder,
-        gasProfiles: [selectedGasProfile]
-      }
-    });
+    const dialogRef = this.dialog.open(CylinderDropDialogComponent, { data: dialogData });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result === true) this.validateCylinders(event);
+    dialogRef.afterClosed().subscribe(gasProfilesBeingChanged => {
+      if(!gasProfilesBeingChanged) return;
+      if(gasProfilesBeingChanged.length) this.validateCylinders(event, dropList, draggedCylinder, dropContainerItem, gasProfilesBeingChanged);
     });
   }
 
   //TODO: Fix the multiple component updates happening due to multiple state changing method calls
-  validateCylinders(event: CdkDragDrop<string[]>) {
-    const droppedCylinder = Object.assign({}, event.previousContainer.data[event.previousIndex]);
+  validateCylinders(event: CdkDragDrop<string[]>, dropList: string, draggedCylinder: Cylinder, dropContainerItem, gasProfilesBeingReplaced?: string[]) {
 
     // Transfer dropped cylinder to recieving array for smooth UI transition
     transferArrayItem(
@@ -164,51 +172,160 @@ export class HomeComponent implements OnInit {
     );
 
     // Cylinder Dropped On Gas Profile
-    if (event.container.id.includes('gasProfileDropList')) {
-      const selectedGasProfile = Object.assign({}, event.container.data[1]);
+    if (dropList === 'gasProfileDropList') {
 
       // If replaceing already assigned cylinder then find and update that cylinder
-      if(selectedGasProfile['cylinderID'] !== droppedCylinder['cylinderID'] && selectedGasProfile['cylinderID']) {
-        const previousAssignedCylinder = Object.assign({},
-          this.getCylindersList().filter(cylinder => cylinder.cylinderID === selectedGasProfile['cylinderID'])[0]
-        )
-        if(previousAssignedCylinder) {
+      if( dropContainerItem['cylinderID'] && dropContainerItem['cylinderID'] !== draggedCylinder.cylinderID) {
+        const previousAssignedCylinder = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylinderID'])[0];
+        const previousAssignedGasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylinderID === previousAssignedCylinder.cylinderID);
+        
+        previousAssignedCylinder.state = 'spare';
 
-          // Check to see if cylinder is assigned to more than 1 gas profile
-          this.getGasProfilesList().forEach(gasProfile => {
-            if(gasProfile.id !== selectedGasProfile['id'] && gasProfile.cylinderID === previousAssignedCylinder.cylinderID) {
-              previousAssignedCylinder.state = 'inUse';
-            }
-            else {
-              previousAssignedCylinder.state = 'spare';
-            }
-          });
-          this.saveCylinder(previousAssignedCylinder);
-        } 
+        // If previous assigned cylinder has more than 1 associated gas profile then it stays in use
+        if(previousAssignedCylinder && previousAssignedGasProfiles.length > 1) {
+          previousAssignedCylinder.state = 'inUse';
+        }
+        else {
+          // TODO: Need to open dialog asking user if they want to retire the previous assigned cylinder since removing from last assigned gas profile
+        }
+
+        this.saveCylinder(previousAssignedCylinder);
       }
 
       // Update the newely assigned cylinder and gas profile
-      selectedGasProfile['cylinderID'] = droppedCylinder['cylinderID'];
-      droppedCylinder['state'] = 'inUse';
-      this.updateGasProfile(selectedGasProfile);
-      this.saveCylinder(droppedCylinder);
+      dropContainerItem['cylinderID'] = draggedCylinder.cylinderID;
+      draggedCylinder.state = 'inUse';
+      this.updateGasProfile(dropContainerItem);
+      this.saveCylinder(draggedCylinder);
+    }
+
+    // TODO: Dropping inUse cylinder onto another inUse cylinder needs to have options to swap or replace
+    if(dropList === 'inUseDropList') {
+      dropContainerItem['state'] = 'spare';
+
+      // Update the selected gas profiles
+      this.getGasProfilesList().forEach(gasProfile => {
+        if(gasProfilesBeingReplaced.includes(gasProfile.name)) {
+          gasProfile.cylinderID = draggedCylinder.cylinderID;
+          this.updateGasProfile(gasProfile);
+        }
+        else if(gasProfile.cylinderID === dropContainerItem['cylinderID']) {
+          dropContainerItem['state'] = 'inUse';
+        }
+      });
+
+      draggedCylinder.state = 'inUse';
+      this.saveCylinder(dropContainerItem);
+      this.saveCylinder(draggedCylinder);
     }
   }
 
-  unassignCylinder(gasProfile: QAGasProfile) {
-    const assignedCylinder = Object.assign({}, this.getCylindersList().filter(cylinder => cylinder.cylinderID === gasProfile.cylinderID)[0]);
-    let openDialog = true;
+  editCylinder(cylinder: Cylinder) {
+    console.log('edit cylinder');
+    // TODO: Create edit cylinder dialog
+  }
 
-    // Check to see if cylinder is assigned to more than 1 gas profile
-    this.getGasProfilesList().forEach(gasP => {
-      if(gasP.id !== gasProfile.id && gasP.cylinderID === assignedCylinder.cylinderID) {
-        this.finishUassignCylinder(assignedCylinder, gasProfile, 'inUse')
-        openDialog = false;
+  retireCylinder(cylinder: Cylinder) {
+    const dialogRef = this.dialog.open(CylinderRetireDialogComponent, {
+      data: {
+        cylinder: cylinder
       }
     });
 
-    if(openDialog) this.openGasProfileUnassignDialog(assignedCylinder, gasProfile);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+
+        // Remove assigned gas profiles
+        this.getGasProfilesList().forEach(gasProfile => {
+          if(gasProfile.cylinderID === cylinder.cylinderID) {
+            gasProfile.cylinderID = '';
+            this.updateGasProfile(gasProfile);
+          }
+        })
+
+        const changedCylinder = Object.assign({}, cylinder);
+        changedCylinder.state = 'retired';
+        this.saveCylinder(changedCylinder);
+      }
+    });    
   }
+
+  // unassignCylinder(cylinder: Cylinder) {
+  //   const assignedGasProfiles = this.getGasProfilesList().filter(gasProfile => cylinder.cylinderID === gasProfile.cylinderID);
+
+  //   const dialogRef = this.dialog.open(CylinderUnassignDialogComponent, {
+  //     data: {
+  //       cylinder: cylinder,
+  //       gasProfiles: assignedGasProfiles
+  //     }
+  //   });
+
+  //   // Remove cylinderID property from deselected gas profiles
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if(result) {
+
+  //       // TODO: Need to optimize repeated code and clean up logic
+  //       let openRetireQuestionDialog = true;
+
+  //       for(const gasSelection in result) {
+  //         if(result[gasSelection]) openRetireQuestionDialog = false;
+  //       }
+
+  //       if(openRetireQuestionDialog) {
+  //         const dialogRef2 = this.dialog.open(GasProfileUnassignDialogComponent, {
+  //           data: {
+  //             cylinder: cylinder
+  //           }
+  //         });
+
+  //         dialogRef2.afterClosed().subscribe(result2 => {
+  //           const changedCylinder = Object.assign({}, cylinder);
+  //           if(result2 === 'spare') {
+  //             changedCylinder.state = 'spare';
+  //             this.saveCylinder(changedCylinder);
+  //           }
+  //           else if(result2 === 'retire') {
+  //             changedCylinder.state = 'retired';
+  //             this.saveCylinder(changedCylinder);
+  //           }
+  //           else {
+  //             return;
+  //           }
+
+  //           assignedGasProfiles.forEach(gasProfile => {
+  //             if(!result[gasProfile.id]) {
+  //               gasProfile.cylinderID = '';
+  //               this.updateGasProfile(gasProfile);
+  //             }
+  //           })
+  //         });
+  //       }
+  //       else {
+  //         assignedGasProfiles.forEach(gasProfile => {
+  //           if(!result[gasProfile.id]) {
+  //             gasProfile.cylinderID = '';
+  //             this.updateGasProfile(gasProfile);
+  //           }
+  //         })
+  //       }
+  //     }
+  //   });
+  // }
+
+  // unassignGasProfile(gasProfile: QAGasProfile) {
+  //   const assignedCylinder = Object.assign({}, this.getCylindersList().filter(cylinder => cylinder.cylinderID === gasProfile.cylinderID)[0]);
+  //   let openDialog = true;
+
+  //   // Check to see if cylinder is assigned to more than 1 gas profile
+  //   this.getGasProfilesList().forEach(gasP => {
+  //     if(gasP.id !== gasProfile.id && gasP.cylinderID === assignedCylinder.cylinderID) {
+  //       this.finishUassignCylinder(assignedCylinder, gasProfile, 'inUse')
+  //       openDialog = false;
+  //     }
+  //   });
+
+  //   if(openDialog) this.openGasProfileUnassignDialog(assignedCylinder, gasProfile);
+  // }
 
   openGasProfileUnassignDialog(assignedCylinder: Cylinder, gasProfile: QAGasProfile) {
     const dialogRef = this.dialog.open(GasProfileUnassignDialogComponent, {
@@ -218,8 +335,8 @@ export class HomeComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === true) this.finishUassignCylinder(assignedCylinder, gasProfile, 'retired');
-      else this.finishUassignCylinder(assignedCylinder, gasProfile, 'spare');
+      if(result === 'retire') this.finishUassignCylinder(assignedCylinder, gasProfile, 'retired');
+      else if(result === 'spare') this.finishUassignCylinder(assignedCylinder, gasProfile, 'spare');
     });
   }
 

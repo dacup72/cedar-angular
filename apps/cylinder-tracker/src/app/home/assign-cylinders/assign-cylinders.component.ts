@@ -38,8 +38,10 @@ export class AssignCylindersComponent {
   }
   @Output() cylinderDropped = new EventEmitter();
   @Output() cylinderSelected = new EventEmitter();
-  @Output() cylinderDeleted = new EventEmitter();
   @Output() unassignCylinder = new EventEmitter();
+  @Output() retireCylinder = new EventEmitter();
+  //@Output() unassignGasProfile = new EventEmitter();
+  @Output() editCylinder = new EventEmitter();
 
 
   filterCylinders() {

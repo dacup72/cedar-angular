@@ -14,9 +14,11 @@ import { CylinderItemComponent } from './available-cylinders/cylinder-item/cylin
 import { GasProfileItemComponent } from './assign-cylinders/gas-profile-item/gas-profile-item.component';
 import { CylinderDropDialogComponent } from './cylinder-drop-dialog/cylinder-drop-dialog.component';
 import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog/gas-profile-unassign-dialog.component';
+import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
+import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 
 @NgModule({
-  declarations: [HomeComponent, AvailableCylindersComponent, AssignCylindersComponent, CylinderItemComponent, GasProfileItemComponent, CylinderDropDialogComponent, GasProfileUnassignDialogComponent],
+  declarations: [HomeComponent, AvailableCylindersComponent, AssignCylindersComponent, CylinderItemComponent, GasProfileItemComponent, CylinderDropDialogComponent, GasProfileUnassignDialogComponent, CylinderUnassignDialogComponent, CylinderRetireDialogComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

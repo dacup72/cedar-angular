@@ -8,4 +8,14 @@ $cisco-warn: mat-palette($mat-red);
 
 $cisco-theme: mat-light-theme($cisco-primary, $cisco-accent, $cisco-warn);
 
+$cylinder-tracker-primary2: #2a6bb1; // Correct Cisco Primary Color
+$cylinder-tracker-primary: #426b97;
+$cylinder-tracker-secondary1: #2C2AB1;
+$cylinder-tracker-secondary2: #2AAEB1;
+$cylinder-tracker-accent: #b1802a;
+//$cylinder-tracker-purple: #B12AAF;
+$cylinder-tracker-purple: #2C2AB1;
+//$cylinder-tracker-green: #2AB12C;
+$cylinder-tracker-green: #b13c2a;
+
 @include angular-material-theme($cisco-theme);

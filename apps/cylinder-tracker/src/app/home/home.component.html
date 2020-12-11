@@ -15,8 +15,9 @@
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
       (cylinderSelected)="selectCylinder($event)"
-      (cylinderDeleted)="deleteCylinder($event)"
+      (retireCylinder)="retireCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
+      (editCylinder)="editCylinder($event)"
     >
     </cylinder-tracker-available-cylinders>
   </mat-grid-tile>
@@ -25,9 +26,9 @@
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
       (cylinderSelected)="selectCylinder($event)"
-      (cylinderDeleted)="deleteCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
-      (unassignCylinder)="unassignCylinder($event)"
+      (retireCylinder)="retireCylinder($event)"
+      (editCylinder)="editCylinder($event)"
     ></cylinder-tracker-assign-cylinders>
   </mat-grid-tile>
 </mat-grid-list>

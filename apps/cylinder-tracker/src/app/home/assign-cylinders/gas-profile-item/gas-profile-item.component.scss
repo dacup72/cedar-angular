@@ -1,60 +1,104 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
 .gas-profile-item {
-  margin-bottom: 24px;
-  padding: 6px;
-  border: 1px solid #eee;
+  margin-bottom: 25px;
+  border: 1px solid $cylinder-tracker-primary2;
   border-radius: 6px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 3px 0 $cylinder-tracker-primary2;
   display: flex;
   justify-content: space-between;
   background-color: white;
-  flex-wrap: wrap;
 }
 
 .gas-profile-item:hover {
-  background-color: #f2f2f2;
+  background-color: #E1E1E1;
 }
 
-mat-icon {
-  font-size: 34px;
+.gas-item-color-bar {
+  background-color: $cylinder-tracker-primary2;
+  width: 15px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
 }
 
-.flex1 {
+.gas-item-content {
   display: flex;
-  flex-basis: 50%;
+  justify-content: space-between;
+  flex-basis: 95%;
   flex-wrap: wrap;
+  align-items: center;
+  margin-right: 15px;
 }
 
 .gas-item-title,
-.gas-item-unit {
-  flex-basis: 100%;
-  justify-self: center;
+.gas-item-unit,
+.gas-profile-gas-codes,
+.assigned-cylinder {
+  flex-basis: 50%;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
-.flex2 {
+.gas-item-title {
+  font-weight: bold;
+}
+
+.assigned-cylinder {
+  box-sizing: border-box;
   display: flex;
-  flex-basis: 40%;
   align-items: center;
-  background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: #A9A9A9;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
 }
 
-.flex2 > div {
-  color: white;
+.assigned-cylinder > div {
+  color: black;
   text-align: center;
+  font-weight: bold;
+  padding: 8px;
+}
+
+.unit-text {
+  background-color: #A9A9A9;
+  padding: 8px;
+  border-radius: 6px;
   font-weight: bold;
 }
 
-.flex3 {
-  display: flex;
-  flex-basis: 10%;
-  justify-content: center;
-  align-items: center;
+.no-cylinder-assigned-text {
+  color: red !important;
 }
 
-.no-cylinder-assigned-text {
-  color: mat-color(map-get($cisco-theme, accent)) !important;
+.gas-profile-gas-codes {
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.gas-code-item {
+  display: flex;
+  margin: 5px;
+}
+
+.gas-code {
+  
+  font-weight: bold;
+  padding: 10px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
+  color: white;
+}
+
+.gas-concentration {
+  background-color: $cylinder-tracker-secondary2;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
 }

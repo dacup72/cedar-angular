@@ -15,8 +15,8 @@ export class CylinderItemComponent {
   @Input() isAssignedCylinder: boolean;
   @Input() disableItemDrag = false;
   @Output() cylinderDropped = new EventEmitter();
-  //@Output() cylinderSelected = new EventEmitter();
-  @Output() cylinderDeleted = new EventEmitter();
+  @Output() retireCylinder = new EventEmitter();
+  @Output() editCylinder = new EventEmitter();
 
   findAssignedGasProfiles(cylinder: Cylinder) {
     if(this.gasProfiles.length > 0) {

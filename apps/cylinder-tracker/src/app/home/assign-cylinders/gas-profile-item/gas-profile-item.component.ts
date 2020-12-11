@@ -14,7 +14,7 @@ export class GasProfileItemComponent {
   @Input() gasProfiles: QAGasProfile[];
 
   @Output() cylinderDropped = new EventEmitter();
-  @Output() unassignCylinder = new EventEmitter();
+  //@Output() unassignGasProfile = new EventEmitter();
 
   gasDropListID() {
     this.counter++;

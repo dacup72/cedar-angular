@@ -20,6 +20,7 @@ export class AvailableCylindersComponent {
   selectTitleCylinder = 'Cylinder ID';
   cylinderIDs: string[] = [];
   dropListConnections = [];
+  draggingItem = false;
   
   selectedFilters = {
     cylinderIDs: [],
@@ -48,7 +49,9 @@ export class AvailableCylindersComponent {
   }
   @Output() cylinderDropped = new EventEmitter();
   @Output() cylinderSelected = new EventEmitter();
-  @Output() cylinderDeleted = new EventEmitter();
+  @Output() retireCylinder = new EventEmitter();
+  //@Output() unassignCylinder = new EventEmitter();
+  @Output() editCylinder = new EventEmitter();
 
   filterCylinders() {
     this.filteredSpareCylinders = this.spareCylinders;
@@ -86,5 +89,9 @@ export class AvailableCylindersComponent {
   cylinderIDSelected(ids) {
     this.selectedFilters.cylinderIDs = ids;
     this.filterCylinders();
+  }
+
+  dragStarted() {
+    this.draggingItem = !this.draggingItem;
   }
 }

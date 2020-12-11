@@ -7,7 +7,8 @@ mat-card {
 
 .title-section {
   padding: 16px;
-  background-color: mat-color(map-get($cisco-theme, primary));
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -23,14 +24,15 @@ mat-card {
 .filter-section {
   display: flex;
   padding: 16px;
-  background-color: mat-color(map-get($cisco-theme, primary));
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-ui-select-autocomplete, ui-date-picker, cedar-all-ui-filter-chips {
-  flex-basis: 32%;
+ui-select-autocomplete, cedar-all-ui-filter-chips {
+  flex-basis: 49%;
 }
 
 ::ng-deep {
@@ -85,10 +87,28 @@ ui-select-autocomplete, ui-date-picker, cedar-all-ui-filter-chips {
     padding-left: 16px;
     padding-bottom: 16px;
   }
+
+  .mat-tab-header {
+    background-color: $cylinder-tracker-primary;
+  }
+
+  .mat-tab-label-active {
+    background-color: white;
+  }
+
+  .mat-tab-label {
+    border-radius: 6px;
+  }
+
+  .mat-tab-label-content {
+    font-weight: bold;
+  }
 }
 
 button.mat-raised-button:hover {
-  background-color: mat-color(map-get($cisco-theme, accent));
+  //background-color: mat-color(map-get($cisco-theme, accent));
+  background-color: $cylinder-tracker-accent;
+
 }
 
 #sparesDropList, #inUseDropList {
@@ -102,20 +122,37 @@ button.mat-raised-button:hover {
 }
 
 cylinder-tracker-cylinder-item {
-  margin-bottom: 24px;
-  padding: 6px;
-  border: 1px solid #eee;
+  margin-bottom: 25px;
   border-radius: 6px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
   display: flex;
   justify-content: space-between;
   background-color: white;
+  overflow: hidden;
+}
+
+.cylinder-item-border-green {
+  border: 1px solid $cylinder-tracker-green;
+  box-shadow: 0 1px 3px 0 $cylinder-tracker-green;
+}
+
+.cylinder-item-border-accent {
+  border: 1px solid $cylinder-tracker-accent;
+  box-shadow: 0 1px 3px 0 $cylinder-tracker-accent;
 }
 
 cylinder-tracker-cylinder-item:hover {
-  background-color: #f2f2f2;
+  background-color: #E1E1E1;
 }
 
 li {
   list-style-type: none;
 }
+
+.cdk-drag-placeholder {
+  display: none;
+}
+
+.cdk-drag-preview * {
+  transform: scale(0.8);
+}
+

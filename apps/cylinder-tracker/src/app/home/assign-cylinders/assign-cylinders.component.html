@@ -1,39 +1,3 @@
-<!-- <mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <h1>In Use Cylinders</h1>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="scrollable">
-    <mat-list
-      cdkDropList
-      id="inUseDropList"
-      (cdkDropListDropped)="cylinderDropped.emit($event)"
-      [cdkDropListData]="inUseCylinders"
-      [cdkDropListConnectedTo]="['sparesDropList']"
-    >
-      <mat-list-item
-        cdkDrag
-        *ngFor="let cylinder of inUseCylinders"
-        (click)="cylinderSelected.emit(cylinder)"
-      >
-        <h3 mat-line>Cylinder ID: {{ cylinder.cylinderID }}</h3>
-        <h3 mat-line>Expiration Date: {{ cylinder.expirationDate }}</h3>
-        <p mat-line>
-          Gas Codes:
-          <span *ngFor="let code of cylinder.epaGasTypeCodes">{{ code }} </span>
-        </p>
-        <button
-          mat-icon-button
-          (click)="cylinderDeleted.emit(cylinder); $event.stopImmediatePropagation()"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card> -->
-
 <mat-card>
   <div class="title-section">
     <h1>Assign Cylinders</h1>
@@ -45,11 +9,11 @@
       (selectionChange)="cylinderIDSelected($event)"
     >
     </cedar-all-ui-filter-chips>
-    <ui-date-picker
+    <!-- <ui-date-picker
       [datePickerTitle]="datePickerTitle"
       (dateSelected)="dateSelected($event)"
     >
-    </ui-date-picker>
+    </ui-date-picker> -->
     <cedar-all-ui-filter-chips
       [filterItemName]="filterItemName"
       [allItems]="gasTypes"
@@ -57,7 +21,7 @@
     >
     </cedar-all-ui-filter-chips>
   </div>
-  <mat-tab-group mat-stretch-tabs backgroundColor="primary" color="accent">
+  <mat-tab-group mat-stretch-tabs>
     <mat-tab label="In-Service Cylinders">
       <ul class="inUseDropList">
         <li>
@@ -66,7 +30,7 @@
             cdkDropList
             id="{{'inUseDropList' + i}}"
             (cdkDropListDropped)="cylinderDropped.emit($event)"
-            [cdkDropListData]="[inUseCylinders]"
+            [cdkDropListData]="[cylinder]"
             [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
             [cylinder]="cylinder"
             [isAssignedCylinder]="true"
@@ -74,7 +38,9 @@
             [gasProfiles]="gasProfiles"
             (cylinderDropped)="cylinderDropped.emit($event)"
             (cylinderSelected)="cylinderSelected.emit($event)"
-            (cylinderDeleted)="cylinderDeleted.emit($event)"
+            (retireCylinder)="retireCylinder.emit($event)"
+            (unassignCylinder)="unassignCylinder.emit($event)"
+            (editCylinder)="editCylinder.emit($event)"
           >
           </cylinder-tracker-cylinder-item>
         </li>
@@ -85,7 +51,6 @@
         <cylinder-tracker-gas-profile-item
           [gasProfiles]="gasProfiles"
           (cylinderDropped)="cylinderDropped.emit($event)"
-          (unassignCylinder)="unassignCylinder.emit($event)"
         >
         </cylinder-tracker-gas-profile-item>
       </ul>

@@ -1,31 +1,44 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
+.color-bar-spare {
+  background-color: $cylinder-tracker-accent;
+  width: 15px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
 
-
-.cylinder-item-color-bar {
-  background-color: mat-color(map-get($cisco-theme, accent));
-  width: 10px;
+.color-bar-assigned {
+  background-color: $cylinder-tracker-green;
+  width: 15px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
 }
 
 mat-icon {
   font-size: 34px;
 }
 
-
-
-.flex1 {
+.cylinder-item-content {
   display: flex;
   justify-content: space-between;
   flex-basis: 90%;
   flex-wrap: wrap;
   align-items: center;
+  
 }
 
 .cylinder-item-id,
+.cylinder-item-expiration {
+  flex-basis: 40%;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 .cylinder-item-gas-codes,
-.cylinder-item-expiration,
 .cylinder-item-assigned-gases {
-  flex-basis: 50%;
+  flex-basis: 60%;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .cylinder-item-id {
@@ -34,25 +47,36 @@ mat-icon {
 
 .cylinder-item-gas-codes {
   box-sizing: border-box;
-  border: 1px solid #f2f2f2;
   border-radius: 6px;
-  background-color: #f2f2f2;
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.gas-code-item {
+  display: flex;
+  margin: 4px;
 }
 
 .gas-code {
-  box-sizing: border-box;
   font-weight: bold;
   padding: 10px;
-  border: 1px solid mat-color(map-get($cisco-theme, primary));
-  border-radius: 6px;
-  background-color: mat-color(map-get($cisco-theme, primary));
-  margin-right: 4px;
-  margin-left: 4px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
 }
 
-.flex2 {
+.gas-concentration {
+  background-color: $cylinder-tracker-secondary2;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.options-menu {
   display: flex;
   justify-content: center;
   align-items: center;

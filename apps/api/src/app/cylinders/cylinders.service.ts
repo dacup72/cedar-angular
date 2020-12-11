@@ -15,7 +15,7 @@ export class CylindersService {
         {
           qaGasDefCode: 'unknown',
           epaGasCode: 'NOX',
-          gasConcentration: 25.4,
+          gasConcentration: 19.4,
           uom: 'ppm'
         },
         {
@@ -25,7 +25,7 @@ export class CylindersService {
           uom: 'ppm'
         }
       ],
-      state: 'spare',
+      state: 'inUse',
       certificationImage: 'image url',
       hasBeenUsedForQA: false,
       createdByPartialEdit: false,
@@ -37,11 +37,11 @@ export class CylindersService {
       cylinderID: 'EB0064498',
       expirationDate: '2021-05-23',
       vendorID: '23',
-      epaGasTypeCodes: ['NO2', 'O2'],
+      epaGasTypeCodes: ['NOX', 'O2'],
       componentGases: [
         {
           qaGasDefCode: 'unknown',
-          epaGasCode: 'NO2',
+          epaGasCode: 'NOX',
           gasConcentration: 25.4,
           uom: 'ppm'
         },
@@ -49,10 +49,10 @@ export class CylindersService {
           qaGasDefCode: 'unknown',
           epaGasCode: 'O2',
           gasConcentration: 14.8,
-          uom: '%'
+          uom: 'ppm'
         }
       ],
-      state: 'spare',
+      state: 'inUse',
       certificationImage: 'image url',
       hasBeenUsedForQA: false,
       createdByPartialEdit: false,
@@ -61,15 +61,15 @@ export class CylindersService {
     },
     {
       id: '2',
-      cylinderID: 'EB739902',
-      expirationDate: '2022-010-10',
+      cylinderID: 'EB839902',
+      expirationDate: '2022-10-10',
       vendorID: '3',
-      epaGasTypeCodes: ['CO'],
+      epaGasTypeCodes: ['O2'],
       componentGases: [
         {
           qaGasDefCode: 'unknown',
-          epaGasCode: 'CO',
-          gasConcentration: 14,
+          epaGasCode: 'O2',
+          gasConcentration: 33.5,
           uom: 'ppm'
         }
       ],

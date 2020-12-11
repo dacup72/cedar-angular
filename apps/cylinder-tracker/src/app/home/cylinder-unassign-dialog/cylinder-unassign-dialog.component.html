@@ -1,0 +1,25 @@
+<mat-dialog-content>
+  <div class="dialog-title">
+    Unassign Gas Profiles From Cylinder: {{ data.cylinder.cylinderID }}
+  </div>
+  <div class="dialog-content">
+    <div class="gas-selector">
+      <div class="gas-title">Select Gases To Unassign:</div>
+      <div *ngFor="let gasProfile of data.gasProfiles" class="gas-item">
+        <button mat-raised-button (click)="changeBool(gasProfile.id)">
+          {{ gasProfileSelections[gasProfile.id] ? 'Unassign' : 'Undo' }}
+        </button>
+        <span
+          [ngClass]="
+          gasProfileSelections[gasProfile.id] ? 'gas-name' : 'gas-name-disabled'
+          "
+          >{{ gasProfile.name }}</span
+        >
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button [mat-dialog-close]="gasProfileSelections">Save Changes</button>
+  <button mat-button cdkFocusInitial (click)="close()">Cancel</button>
+</mat-dialog-actions>

@@ -7,7 +7,7 @@ mat-card {
 
 .title-section {
   padding: 16px;
-  background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -23,16 +23,15 @@ mat-card {
 .filter-section {
   display: flex;
   padding: 16px;
-  background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
 ui-select-autocomplete,
-ui-date-picker,
 cedar-all-ui-filter-chips {
-  flex-basis: 32%;
+  flex-basis: 49%;
 }
 
 ::ng-deep {
@@ -100,19 +99,17 @@ cedar-all-ui-filter-chips {
 }
 
 cylinder-tracker-cylinder-item {
-  margin-bottom: 24px;
-  padding: 6px;
-  border: 1px solid #eee;
+  margin-bottom: 25px;
+  border: 1px solid $cylinder-tracker-green;
   border-radius: 6px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 3px 0 $cylinder-tracker-green;
   display: flex;
   justify-content: space-between;
   background-color: white;
-  flex-wrap: wrap;
 }
 
 cylinder-tracker-cylinder-item:hover {
-  background-color: #f2f2f2;
+  background-color: #E1E1E1;
 }
 
 

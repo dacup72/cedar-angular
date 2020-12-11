@@ -1,11 +1,10 @@
-<div class="cylinder-item-color-bar"></div>
-<div class="flex1">
+<div [ngClass]="isAssignedCylinder ? 'color-bar-assigned' : 'color-bar-spare'"></div>
+<div class="cylinder-item-content">
   <h2 class="cylinder-item-id">Cylinder ID: {{ cylinder.cylinderID }}</h2>
   <div class="cylinder-item-gas-codes">
-    Gas Codes:
-    <span *ngFor="let code of cylinder.epaGasTypeCodes" class="gas-code">
-      {{ code }}
-    </span>
+    <div *ngFor="let gas of cylinder.componentGases" class="gas-code-item">
+      <span class="gas-code">{{ gas.epaGasCode }}</span><span class="gas-concentration">{{ gas.gasConcentration }}{{ gas.uom }}</span>
+    </div>
   </div>
   <h3 class="cylinder-item-expiration">
     Expiration Date: {{ cylinder.expirationDate }}
@@ -32,20 +31,20 @@
     </p>
   </mat-expansion-panel>
 </div>
-<div class="flex2">
+<div class="options-menu">
   <button mat-icon-button [matMenuTriggerFor]="cylinderMenu">
     <mat-icon>more_horiz</mat-icon>
   </button>
   <mat-menu #cylinderMenu="matMenu">
-    <button mat-menu-item *ngIf="isAssignedCylinder">
+    <!-- <button mat-menu-item *ngIf="isAssignedCylinder" (click)="unassignCylinder.emit(cylinder)">
       <mat-icon>assignment_return</mat-icon>
       <span>Unassign Cylinder</span>
-    </button>
-    <button mat-menu-item>
+    </button> -->
+    <button mat-menu-item (click)="editCylinder.emit(cylinder)">
       <mat-icon>edit</mat-icon>
       <span>Edit Cylinder</span>
     </button>
-    <button mat-menu-item (click)="cylinderDeleted.emit(cylinder)">
+    <button mat-menu-item *ngIf="!isAssignedCylinder" (click)="retireCylinder.emit(cylinder)">
       <mat-icon>delete</mat-icon>
       <span>Retire Cylinder</span>
     </button>

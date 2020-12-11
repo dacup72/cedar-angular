@@ -10,11 +10,11 @@
       (selectionChange)="cylinderIDSelected($event)"
     >
     </cedar-all-ui-filter-chips>
-    <ui-date-picker
+    <!-- <ui-date-picker
       [datePickerTitle]="datePickerTitle"
       (dateSelected)="dateSelected($event)"
     >
-    </ui-date-picker>
+    </ui-date-picker> -->
     <cedar-all-ui-filter-chips
       [filterItemName]="filterItemName"
       [allItems]="gasTypes"
@@ -22,7 +22,7 @@
     >
     </cedar-all-ui-filter-chips>
   </div>
-  <mat-tab-group mat-stretch-tabs backgroundColor="primary" color="accent">
+  <mat-tab-group mat-stretch-tabs>
     <mat-tab label="Spare Cylinders">
       <ul
         cdkDropList
@@ -34,14 +34,16 @@
         <li
           cdkDrag
           *ngFor="let cylinder of filteredSpareCylinders"
+          [cdkDragData]="cylinder"
           (click)="cylinderSelected.emit(cylinder)"
         >
-          <cylinder-tracker-cylinder-item
+          <cylinder-tracker-cylinder-item class="cylinder-item-border-accent"
             [cylinder]="cylinder"
             [isAssignedCylinder]="false"
             (cylinderDropped)="cylinderDropped.emit($event)"
             (cylinderSelected)="cylinderSelected.emit($event)"
-            (cylinderDeleted)="cylinderDeleted.emit($event)"
+            (retireCylinder)="retireCylinder.emit($event)"
+            (editCylinder)="editCylinder.emit($event)"
           >
           </cylinder-tracker-cylinder-item>
         </li>
@@ -58,15 +60,17 @@
         <li
           cdkDrag
           *ngFor="let cylinder of filteredInUseCylinders"
+          [cdkDragData]="cylinder"
           (click)="cylinderSelected.emit(cylinder)"
         >
-          <cylinder-tracker-cylinder-item
+          <cylinder-tracker-cylinder-item class="cylinder-item-border-green"
             [cylinder]="cylinder"
             [isAssignedCylinder]="true"
             [gasProfiles]="gasProfiles"
             (cylinderDropped)="cylinderDropped.emit($event)"
             (cylinderSelected)="cylinderSelected.emit($event)"
-            (cylinderDeleted)="cylinderDeleted.emit($event)"
+            (retireCylinder)="retireCylinder.emit($event)"
+            (editCylinder)="editCylinder.emit($event)"
           >
           </cylinder-tracker-cylinder-item>
         </li>

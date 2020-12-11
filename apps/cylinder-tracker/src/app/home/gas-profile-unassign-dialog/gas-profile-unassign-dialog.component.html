@@ -4,6 +4,7 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-  <button mat-button mat-dialog-close>Move to Spares</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Retire Cylinder</button>
+  <button mat-button [mat-dialog-close]="'spare'">Move to Spares</button>
+  <button mat-button [mat-dialog-close]="'retire'">Retire Cylinder</button>
+  <button mat-button cdkFocusInitial (click)="close()">Cancel</button>
 </mat-dialog-actions>

@@ -1,0 +1,30 @@
+@import 'apps/cylinder-tracker/src/cisco-theme.scss';
+
+mat-card {
+  padding: 0;
+  height: 100%;
+}
+
+.title-section {
+  padding: 16px;
+  background-color: $cylinder-tracker-primary;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-weight: bold;
+}
+
+.title-section > h1 {
+  font-weight: bold;
+}
+
+.filter-section {
+  display: flex;
+  padding: 16px;
+  background-color: $cylinder-tracker-primary;
+  color: white;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,12 @@
+<mat-card>
+  <div class="title-section">
+    <h1>{{ cardTitle }}</h1>
+    <ng-content select=".card-title-content"></ng-content>
+  </div>
+  <div class="filter-section">
+    <ng-content select=".card-filters"></ng-content>
+  </div>
+  <div class="content-section">
+    <ng-content select=".card-content"></ng-content>
+  </div>
+</mat-card>

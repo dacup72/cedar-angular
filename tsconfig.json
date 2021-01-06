@@ -26,7 +26,8 @@
       "@cedar-all/date-picker": ["libs/date-picker/src/index.ts"],
       "@cedar-all/select-autocomplete": [
         "libs/select-autocomplete/src/index.ts"
-      ]
+      ],
+      "@cedar-all/pipes": ["libs/pipes/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

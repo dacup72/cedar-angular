@@ -24,6 +24,6 @@ export class QAGasProfileService {
   }
 
   updateQAGasProfile(qaGasProfile: QAGasProfile) {
-    return this.httpClient.patch(this.getUrlForID(qaGasProfile.id), qaGasProfile);
+    return this.httpClient.patch(this.getUrlForID(qaGasProfile.tagID), qaGasProfile);
   }
 }

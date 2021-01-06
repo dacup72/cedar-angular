@@ -1,59 +1,82 @@
-<mat-card>
-  <div class="title-section">
-    <h1>Assign Cylinders</h1>
-  </div>
-  <div class="filter-section">
-    <cedar-all-ui-filter-chips
-      [filterItemName]="selectTitleCylinder"
-      [allItems]="cylinderIDs"
-      (selectionChange)="cylinderIDSelected($event)"
+<cylinder-tracker-home-card [cardTitle]="'Assign Cylinders'">
+  <ng-container class="card-filters">
+    <ui-select-autocomplete
+      [selectTitle]="selectTitleCylinder"
+      [options]="unitNums"
+      (selectionChange)="unitNumSelected($event)"
     >
-    </cedar-all-ui-filter-chips>
-    <!-- <ui-date-picker
-      [datePickerTitle]="datePickerTitle"
-      (dateSelected)="dateSelected($event)"
-    >
-    </ui-date-picker> -->
+    </ui-select-autocomplete>
     <cedar-all-ui-filter-chips
       [filterItemName]="filterItemName"
       [allItems]="gasTypes"
       (selectionChange)="gasTypeSelected($event)"
     >
     </cedar-all-ui-filter-chips>
-  </div>
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="In-Service Cylinders">
-      <ul class="inUseDropList">
-        <li>
-          <cylinder-tracker-cylinder-item
-            *ngFor="let cylinder of filteredInUseCylinders; let i = index"
-            cdkDropList
-            id="{{'inUseDropList' + i}}"
-            (cdkDropListDropped)="cylinderDropped.emit($event)"
-            [cdkDropListData]="[cylinder]"
-            [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
-            [cylinder]="cylinder"
-            [isAssignedCylinder]="true"
-            [disableItemDrag]="true"
-            [gasProfiles]="gasProfiles"
-            (cylinderDropped)="cylinderDropped.emit($event)"
-            (cylinderSelected)="cylinderSelected.emit($event)"
-            (retireCylinder)="retireCylinder.emit($event)"
-            (unassignCylinder)="unassignCylinder.emit($event)"
-            (editCylinder)="editCylinder.emit($event)"
-          >
-          </cylinder-tracker-cylinder-item>
-        </li>
-      </ul>
-    </mat-tab>
-    <mat-tab label="Gas Profiles">
-      <ul class="gas-profile-list">
-        <cylinder-tracker-gas-profile-item
+  </ng-container>
+  <cylinder-tracker-home-tab-group
+    class="card-content"
+    [tabLeftLabel]="'In-Service Cylinders'"
+    [tabRightLabel]="'Gas Profiles'"
+  >
+    <ul class="inUseDropList tab-left-content">
+      <div *ngIf="crossCardFilters.filterItem" class="test">
+        <span>Filtered For: {{crossCardFilters.filterItem}}</span>
+        <button
+          mat-raised-button
+          class="clear-filters-button"
+          (click)="clearFilters()"
+        >
+          Clear Filters
+        </button>
+      </div>
+      <li>
+        <cylinder-tracker-cylinder-item
+          *ngFor="
+            let cylinder of inUseCylinders
+              | cylinderFilter
+                : (filterForOtherCard ? crossCardFilters : cylinderFilters)
+                : gasProfiles;
+            let i = index
+          "
+          cdkDropList
+          id="{{ 'inUseDropList' + i }}"
+          (cdkDropListDropped)="cylinderDropped.emit($event)"
+          [cdkDropListData]="[cylinder]"
+          [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
+          [cylinder]="cylinder"
+          [isAssignedCylinder]="true"
+          [disableItemDrag]="true"
           [gasProfiles]="gasProfiles"
           (cylinderDropped)="cylinderDropped.emit($event)"
+          (cylinderSelected)="cylinderSelected.emit($event)"
+          (retireCylinder)="retireCylinder.emit($event)"
+          (unassignCylinder)="unassignCylinder.emit($event)"
+          (editCylinder)="editCylinder.emit($event)"
+          (filterOtherCard)="filterOtherCard.emit($event)"
         >
-        </cylinder-tracker-gas-profile-item>
-      </ul>
-    </mat-tab>
-  </mat-tab-group>
-</mat-card>
+        </cylinder-tracker-cylinder-item>
+      </li>
+    </ul>
+    <ul class="gas-profile-list tab-right-content">
+      <div *ngIf="crossCardFilters.filterItem" class="test">
+        <span>Filtered For: {{crossCardFilters.filterItem}}</span>
+        <button
+          mat-raised-button
+          class="clear-filters-button"
+          (click)="clearFilters()"
+        >
+          Clear Filters
+        </button>
+      </div>
+      <cylinder-tracker-gas-profile-item
+        [gasProfiles]="gasProfiles"
+        [gasProfileFilters]="
+          filterForOtherCard ? crossCardFilters : gasProfileFilters
+        "
+        (cylinderDropped)="cylinderDropped.emit($event)"
+        (filterOtherCard)="filterOtherCard.emit($event)"
+      >
+      </cylinder-tracker-gas-profile-item>
+    </ul>
+  </cylinder-tracker-home-tab-group>
+</cylinder-tracker-home-card>

@@ -6,6 +6,7 @@ import { CylindersService } from './cylinders/cylinders.service';
 import { QAGasProfileService } from './qaGasProfiles/qa-gas-profile.service';
 import { StateModule } from './state/state.module';
 import { UserService } from './auth/user.service';
+import { UnitDefService } from './unit-defs/unit-def.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { UserService } from './auth/user.service';
   providers: [
     CylindersService,
     QAGasProfileService,
-    UserService
+    UserService,
+    UnitDefService
   ]
 })
 export class CoreDataModule {}

@@ -1,50 +1,98 @@
-<div [ngClass]="isAssignedCylinder ? 'color-bar-assigned' : 'color-bar-spare'"></div>
-<div class="cylinder-item-content">
-  <h2 class="cylinder-item-id">Cylinder ID: {{ cylinder.cylinderID }}</h2>
+<div
+  [ngClass]="isAssignedCylinder ? 'color-bar-assigned' : 'color-bar-spare'"
+></div>
+<div
+  class="cylinder-item-content"
+  (click)="filterOtherCard.emit(cylinder)"
+>
+  <div class="cylinder-item-id">
+    <h2>Cylinder ID: {{ cylinder.cylinderID }}</h2>
+    <h3>Expires: {{ parseDate(cylinder.expirationDate) | date }}</h3>
+  </div>
+
   <div class="cylinder-item-gas-codes">
     <div *ngFor="let gas of cylinder.componentGases" class="gas-code-item">
-      <span class="gas-code">{{ gas.epaGasCode }}</span><span class="gas-concentration">{{ gas.gasConcentration }}{{ gas.uom }}</span>
+      <span class="gas-code">{{ gas.epaGasCode }}</span
+      ><span class="gas-concentration"
+        >{{ gas.gasConcentration }} {{ gas.uom }}</span
+      >
     </div>
   </div>
-  <h3 class="cylinder-item-expiration">
-    Expiration Date: {{ cylinder.expirationDate }}
-  </h3>
-  <mat-expansion-panel
-    class="cylinder-item-assigned-gases"
+  <h3 class="cylinder-item-expiration"></h3>
+  <!-- <div class="cylinder-item-assigned-gases">
+
+  </div> -->
+
+  <!-- <table
+    mat-table
+    class="cylinder-item-assigned-gases mat-elevation-z8"
     *ngIf="isAssignedCylinder"
+    [dataSource]="cylAssignedProfiles[cylinder.cylinderID]"
   >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Assigned Gas Profiles:
-      </mat-panel-title>
-      <mat-panel-description>
-        <div
-          class="gas-profiles-gases"
-          *ngFor="let gasProfile of findAssignedGasProfiles(cylinder)"
-        >
-          ({{ gasProfile.cedarGasCode }})
-        </div>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p *ngFor="let gasProfile of findAssignedGasProfiles(cylinder)">
-      {{ gasProfile.name }}
-    </p>
-  </mat-expansion-panel>
+    <ng-container matColumnDef="unit">
+      <th mat-header-cell *matHeaderCellDef>Unit</th>
+      <td mat-cell *matCellDef="let gasProfile">{{ gasProfile }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="desc">
+      <th mat-header-cell *matHeaderCellDef>Test</th>
+      <td mat-cell *matCellDef="let gasProfile">{{ gasProfile }}</td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: gasProfileCols"></tr>
+  </table> -->
+
+  <table
+  mat-table
+  class="cylinder-item-assigned-gases mat-elevation-z8"
+  *ngIf="isAssignedCylinder"
+  [dataSource]="findAssignedGasProfiles(cylinder)"
+>
+  <ng-container matColumnDef="unit">
+    <th mat-header-cell *matHeaderCellDef>Unit</th>
+    <td mat-cell *matCellDef="let gasProfile">Unit: {{ gasProfile.unit }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="desc">
+    <th mat-header-cell *matHeaderCellDef>Test</th>
+    <td mat-cell *matCellDef="let gasProfile">{{ gasProfile.desc }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="maxValue">
+    <th mat-header-cell *matHeaderCellDef>Max Value</th>
+    <td mat-cell *matCellDef="let gasProfile">
+      {{ gasProfile.allowableGasValueMax }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="minValue">
+    <th mat-header-cell *matHeaderCellDef>Min Value</th>
+    <td mat-cell *matCellDef="let gasProfile">
+      {{ gasProfile.allowableGasValueMin }}
+    </td>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: gasProfileCols"></tr>
+</table>
+
 </div>
 <div class="options-menu">
   <button mat-icon-button [matMenuTriggerFor]="cylinderMenu">
     <mat-icon>more_horiz</mat-icon>
   </button>
   <mat-menu #cylinderMenu="matMenu">
-    <!-- <button mat-menu-item *ngIf="isAssignedCylinder" (click)="unassignCylinder.emit(cylinder)">
-      <mat-icon>assignment_return</mat-icon>
-      <span>Unassign Cylinder</span>
-    </button> -->
-    <button mat-menu-item (click)="editCylinder.emit(cylinder)">
+    <button
+      mat-menu-item
+      (click)="editCylinder.emit(cylinder); $event.stopImmediatePropagation()"
+    >
       <mat-icon>edit</mat-icon>
       <span>Edit Cylinder</span>
     </button>
-    <button mat-menu-item *ngIf="!isAssignedCylinder" (click)="retireCylinder.emit(cylinder)">
+    <button
+      mat-menu-item
+      *ngIf="!isAssignedCylinder"
+      (click)="retireCylinder.emit(cylinder); $event.stopImmediatePropagation()"
+    >
       <mat-icon>delete</mat-icon>
       <span>Retire Cylinder</span>
     </button>

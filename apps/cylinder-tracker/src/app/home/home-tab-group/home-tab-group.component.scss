@@ -1,0 +1,30 @@
+@import 'apps/cylinder-tracker/src/cisco-theme.scss';
+
+::ng-deep {
+  mat-tab-header {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  mat-tab-body {
+    padding-right: 16px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+  }
+
+  .mat-tab-header {
+    background-color: $cylinder-tracker-primary;
+  }
+
+  .mat-tab-label-active {
+    background-color: white;
+  }
+
+  .mat-tab-label {
+    border-radius: 6px;
+  }
+
+  .mat-tab-label-content {
+    font-weight: bold;
+  }
+}

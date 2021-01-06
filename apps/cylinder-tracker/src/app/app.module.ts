@@ -14,7 +14,6 @@ import { CoreDataModule } from '@cedar-all/core-data';
 import { UiLoginModule } from '@cedar-all/ui-login';
 import { UiToolbarModule } from '@cedar-all/ui-toolbar';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

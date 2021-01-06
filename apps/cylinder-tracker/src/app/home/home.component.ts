@@ -3,7 +3,9 @@ import {
   CylindersFacade,
   Cylinder,
   GasProfilesFacade,
-  QAGasProfile
+  QAGasProfile,
+  UnitDefsFacade,
+  UnitDef
 } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -12,7 +14,7 @@ import { UserService } from '@cedar-all/core-data';
 import { first } from 'rxjs/operators';
 import { CylinderDropDialogComponent } from './cylinder-drop-dialog/cylinder-drop-dialog.component';
 import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog/gas-profile-unassign-dialog.component';
-import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
+//import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
 import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -26,12 +28,25 @@ export class HomeComponent implements OnInit {
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
   gasProfiles$: Observable<QAGasProfile[]> = this.gasProfilesFacade.allGasProfiles$;
   users: User[];
+  unitDefs$: Observable<UnitDef[]> = this.unitDefsFacade.allUnitDefs$;
+
   loading = false;
+
+  availableCardFiltes = {
+    gasCodes: [],
+    filterItem: ''
+  }
+
+  assignCardFilters = {
+    gasCodes: [],
+    filterItem: ''
+  }
 
   constructor(
     private cylindersFacade: CylindersFacade,
     private userService: UserService,
     private gasProfilesFacade: GasProfilesFacade,
+    private unitDefsFacade: UnitDefsFacade,
     private dialog: MatDialog
   ) {}
 
@@ -48,7 +63,10 @@ export class HomeComponent implements OnInit {
     this.gasProfilesFacade.mutations$.subscribe(_ =>
       this.resetSelectedGasProfile()
     );
-    this.resetSelectedCylinder();
+    this.resetSelectedGasProfile();
+
+    // INIT UNIT DEFS
+    this.unitDefsFacade.loadUnitDefs();
 
     // INIT USERS
     this.loading = true;
@@ -149,19 +167,19 @@ export class HomeComponent implements OnInit {
     }
     else if(dropList === 'inUseDropList') {
       dialogData.cylinder2 = dropContainerItem;
-      dialogData.gasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylinderID === dropContainerItem['cylinderID']);
+      dialogData.gasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylID === dropContainerItem['cylinderID']);
     }
 
     const dialogRef = this.dialog.open(CylinderDropDialogComponent, { data: dialogData });
-
-    dialogRef.afterClosed().subscribe(gasProfilesBeingChanged => {
-      if(!gasProfilesBeingChanged) return;
-      if(gasProfilesBeingChanged.length) this.validateCylinders(event, dropList, draggedCylinder, dropContainerItem, gasProfilesBeingChanged);
+    
+    dialogRef.afterClosed().subscribe(options => {
+      if(!options) return;
+      if(options.gasProfilesBeingChanged.length) this.validateCylinders(event, dropList, draggedCylinder, dropContainerItem, options);
     });
   }
 
   //TODO: Fix the multiple component updates happening due to multiple state changing method calls
-  validateCylinders(event: CdkDragDrop<string[]>, dropList: string, draggedCylinder: Cylinder, dropContainerItem, gasProfilesBeingReplaced?: string[]) {
+  validateCylinders(event: CdkDragDrop<string[]>, dropList: string, draggedCylinder: Cylinder, dropContainerItem, dialogOptions?) {
 
     // Transfer dropped cylinder to recieving array for smooth UI transition
     transferArrayItem(
@@ -175,9 +193,9 @@ export class HomeComponent implements OnInit {
     if (dropList === 'gasProfileDropList') {
 
       // If replaceing already assigned cylinder then find and update that cylinder
-      if( dropContainerItem['cylinderID'] && dropContainerItem['cylinderID'] !== draggedCylinder.cylinderID) {
-        const previousAssignedCylinder = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylinderID'])[0];
-        const previousAssignedGasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylinderID === previousAssignedCylinder.cylinderID);
+      if(dropContainerItem['cylID'] && dropContainerItem['cylID'] !== draggedCylinder.cylinderID) {
+        const previousAssignedCylinder = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylID'])[0];
+        const previousAssignedGasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylID === previousAssignedCylinder.cylinderID);
         
         previousAssignedCylinder.state = 'spare';
 
@@ -185,15 +203,12 @@ export class HomeComponent implements OnInit {
         if(previousAssignedCylinder && previousAssignedGasProfiles.length > 1) {
           previousAssignedCylinder.state = 'inUse';
         }
-        else {
-          // TODO: Need to open dialog asking user if they want to retire the previous assigned cylinder since removing from last assigned gas profile
-        }
 
         this.saveCylinder(previousAssignedCylinder);
       }
 
       // Update the newely assigned cylinder and gas profile
-      dropContainerItem['cylinderID'] = draggedCylinder.cylinderID;
+      dropContainerItem['cylID'] = draggedCylinder.cylinderID;
       draggedCylinder.state = 'inUse';
       this.updateGasProfile(dropContainerItem);
       this.saveCylinder(draggedCylinder);
@@ -201,15 +216,15 @@ export class HomeComponent implements OnInit {
 
     // TODO: Dropping inUse cylinder onto another inUse cylinder needs to have options to swap or replace
     if(dropList === 'inUseDropList') {
-      dropContainerItem['state'] = 'spare';
+      dropContainerItem['state'] = dialogOptions.selectedState;
 
       // Update the selected gas profiles
       this.getGasProfilesList().forEach(gasProfile => {
-        if(gasProfilesBeingReplaced.includes(gasProfile.name)) {
-          gasProfile.cylinderID = draggedCylinder.cylinderID;
+        if(dialogOptions.gasProfilesBeingChanged.includes(gasProfile.tagID)) {
+          gasProfile.cylID = draggedCylinder.cylinderID;
           this.updateGasProfile(gasProfile);
         }
-        else if(gasProfile.cylinderID === dropContainerItem['cylinderID']) {
+        else if(gasProfile.cylID === dropContainerItem['cylinderID']) {
           dropContainerItem['state'] = 'inUse';
         }
       });
@@ -237,8 +252,8 @@ export class HomeComponent implements OnInit {
 
         // Remove assigned gas profiles
         this.getGasProfilesList().forEach(gasProfile => {
-          if(gasProfile.cylinderID === cylinder.cylinderID) {
-            gasProfile.cylinderID = '';
+          if(gasProfile.cylID === cylinder.cylinderID) {
+            gasProfile.cylID = '';
             this.updateGasProfile(gasProfile);
           }
         })
@@ -344,9 +359,25 @@ export class HomeComponent implements OnInit {
     assignedCylinder.state = action;
 
     const gasProfileChange = Object.assign({}, gasProfile);
-    gasProfileChange.cylinderID = '';
+    gasProfileChange.cylID = '';
 
     this.updateGasProfile(gasProfileChange);
     this.saveCylinder(assignedCylinder);
+  }
+
+  availableFilteringAssign(item) {
+    const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : item.cedarGasTypeCodes;
+    const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
+    this.assignCardFilters.gasCodes = gases;
+    this.assignCardFilters.filterItem = filterItem;
+    this.assignCardFilters = Object.assign({}, this.assignCardFilters);
+  }
+
+  assignFilteringAvailable(item) {
+    const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : [item.cedarGasCode];
+    const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
+    this.availableCardFiltes.gasCodes = gases;
+    this.availableCardFiltes.filterItem = filterItem;
+    this.availableCardFiltes = Object.assign({}, this.availableCardFiltes);
   }
 }

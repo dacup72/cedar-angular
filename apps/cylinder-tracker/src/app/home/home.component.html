@@ -14,10 +14,12 @@
     <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
+      [crossCardFilters]="availableCardFiltes"
       (cylinderSelected)="selectCylinder($event)"
       (retireCylinder)="retireCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
       (editCylinder)="editCylinder($event)"
+      (filterOtherCard)="availableFilteringAssign($event)"
     >
     </cylinder-tracker-available-cylinders>
   </mat-grid-tile>
@@ -25,10 +27,13 @@
     <cylinder-tracker-assign-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
+      [crossCardFilters]="assignCardFilters"
+      [unitDefs]="unitDefs$ | async"
       (cylinderSelected)="selectCylinder($event)"
       (cylinderDropped)="cylinderDrop($event)"
       (retireCylinder)="retireCylinder($event)"
       (editCylinder)="editCylinder($event)"
+      (filterOtherCard)="assignFilteringAvailable($event)"
     ></cylinder-tracker-assign-cylinders>
   </mat-grid-tile>
 </mat-grid-list>

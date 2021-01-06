@@ -6,14 +6,14 @@
     <div class="gas-selector">
       <div class="gas-title">Select Gases To Unassign:</div>
       <div *ngFor="let gasProfile of data.gasProfiles" class="gas-item">
-        <button mat-raised-button (click)="changeBool(gasProfile.id)">
-          {{ gasProfileSelections[gasProfile.id] ? 'Unassign' : 'Undo' }}
+        <button mat-raised-button (click)="changeBool(gasProfile.tagID)">
+          {{ gasProfileSelections[gasProfile.tagID] ? 'Unassign' : 'Undo' }}
         </button>
         <span
           [ngClass]="
-          gasProfileSelections[gasProfile.id] ? 'gas-name' : 'gas-name-disabled'
+          gasProfileSelections[gasProfile.tagID] ? 'gas-name' : 'gas-name-disabled'
           "
-          >{{ gasProfile.name }}</span
+          >{{ gasProfile.desc }}</span
         >
       </div>
     </div>

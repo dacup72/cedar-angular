@@ -1,6 +1,7 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
 .color-bar-spare {
+  //background-color: $cylinder-tracker-accent;
   background-color: $cylinder-tracker-accent;
   width: 15px;
   border-bottom-left-radius: 6px;
@@ -8,7 +9,8 @@
 }
 
 .color-bar-assigned {
-  background-color: $cylinder-tracker-green;
+  //background-color: $cylinder-tracker-green;
+  background-color: $cylinder-tracker-accent;
   width: 15px;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
@@ -29,21 +31,31 @@ mat-icon {
 
 .cylinder-item-id,
 .cylinder-item-expiration {
-  flex-basis: 40%;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  flex-basis: 30%;
+  margin-top: 8px;
+  //margin-bottom: 6px;
 }
 
 .cylinder-item-gas-codes,
 .cylinder-item-assigned-gases {
-  flex-basis: 60%;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  flex-basis: 70%;
+  //margin-top: 6px;
+  //margin-bottom: 6px;
 }
 
-.cylinder-item-id {
+.cylinder-item-assigned-gases {
+  margin-bottom: 8px;
+}
+
+.cylinder-item-id > h2 {
   font-weight: bold;
 }
+
+.cylinder-item-id > * {
+  margin: 0;
+  margin-left: 6px;
+}
+
 
 .cylinder-item-gas-codes {
   box-sizing: border-box;

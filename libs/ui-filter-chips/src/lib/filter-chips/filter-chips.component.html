@@ -9,7 +9,7 @@
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
       </mat-chip>
       <input
-        placeholder="Filter By {{filterItemName}}"
+        placeholder="{{filterItemName}}"
         #itemInput
         [formControl]="itemCtrl"
         [matAutocomplete]="auto"

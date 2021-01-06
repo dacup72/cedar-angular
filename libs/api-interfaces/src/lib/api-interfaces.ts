@@ -18,6 +18,6 @@ export interface ComponentGas {
 }
 
 export interface ErrorInfo {
-  severity: number;
-  desc: string;
+  severity: string;
+  errorMsg: string;
 }

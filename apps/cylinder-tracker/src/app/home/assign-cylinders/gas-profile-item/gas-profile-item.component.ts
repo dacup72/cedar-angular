@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { QAGasProfile } from '@cedar-all/core-data';
+import { QAGasProfile, GasProfileFilters } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-gas-profile-item',
@@ -12,9 +12,10 @@ export class GasProfileItemComponent {
   counter = 0;
 
   @Input() gasProfiles: QAGasProfile[];
+  @Input() gasProfileFilters: GasProfileFilters;
 
   @Output() cylinderDropped = new EventEmitter();
-  //@Output() unassignGasProfile = new EventEmitter();
+  @Output('filterOtherCard') filterOtherCard = new EventEmitter();
 
   gasDropListID() {
     this.counter++;

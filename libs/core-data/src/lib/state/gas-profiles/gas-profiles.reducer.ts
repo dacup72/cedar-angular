@@ -9,7 +9,9 @@ export interface GasProfilesState extends EntityState<QAGasProfile> {
 
 // Create entity adapter
 // The adapter handles immutability of objects and commiting actions on the state
-export const adapter: EntityAdapter<QAGasProfile> = createEntityAdapter<QAGasProfile>()
+export const adapter: EntityAdapter<QAGasProfile> = createEntityAdapter<QAGasProfile>({
+  selectId: (gasProfileModel: QAGasProfile) => gasProfileModel.tagID
+})
 
 // Define the initial state
 export const initialState: GasProfilesState = adapter.getInitialState({
@@ -30,6 +32,8 @@ export function gasProfilesReducers(
 
     case GasProfilesActionTypes.GasProfileUpdated:
       return adapter.upsertOne(action.payload, state);
+
+      
       
     default:
       return state;

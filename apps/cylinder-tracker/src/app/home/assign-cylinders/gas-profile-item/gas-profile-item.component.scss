@@ -2,9 +2,11 @@
 
 .gas-profile-item {
   margin-bottom: 25px;
-  border: 1px solid $cylinder-tracker-primary2;
+  //border: 1px solid $cylinder-tracker-primary2;
   border-radius: 6px;
-  box-shadow: 0 1px 3px 0 $cylinder-tracker-primary2;
+  //box-shadow: 0 1px 3px 0 $cylinder-tracker-primary2;
+  border: 1px solid $cylinder-tracker-accent;
+  box-shadow: 0 1px 3px 0 $cylinder-tracker-accent;
   display: flex;
   justify-content: space-between;
   background-color: white;
@@ -15,7 +17,8 @@
 }
 
 .gas-item-color-bar {
-  background-color: $cylinder-tracker-primary2;
+  background-color: $cylinder-tracker-accent;
+  // background-color: $cylinder-tracker-primary2;
   width: 15px;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
@@ -77,6 +80,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  
 }
 
 .gas-code-item {
@@ -85,7 +89,6 @@
 }
 
 .gas-code {
-  
   font-weight: bold;
   padding: 10px;
   border-bottom-left-radius: 6px;
@@ -99,6 +102,16 @@
   background-color: $cylinder-tracker-secondary2;
   font-weight: bold;
   padding: 10px;
+  
+}
+
+.max-value, .min-value {
+  background-color: lightgray;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.min-value {
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
 }

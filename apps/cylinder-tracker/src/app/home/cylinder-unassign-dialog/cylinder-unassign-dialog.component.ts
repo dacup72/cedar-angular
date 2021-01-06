@@ -18,7 +18,7 @@ export class CylinderUnassignDialogComponent {
   gasProfileSelections = {};
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private dialogRef: MatDialogRef<CylinderUnassignDialogComponent>) {
-    data.gasProfiles.forEach(gasProfile => this.gasProfileSelections[gasProfile.id] = true)
+    data.gasProfiles.forEach(gasProfile => this.gasProfileSelections[gasProfile.tagID] = true)
   }
 
   close() {

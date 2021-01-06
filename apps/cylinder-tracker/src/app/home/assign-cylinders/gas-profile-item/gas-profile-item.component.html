@@ -1,47 +1,36 @@
 <li
   class="gas-profile-item"
-  *ngFor="let gasProfile of gasProfiles; let i = index"
+  *ngFor="let gasProfile of gasProfiles | gasProfileFilter: gasProfileFilters; let i = index"
   cdkDropList
   id="{{ 'gasProfileDropList' + i }}"
   (cdkDropListDropped)="cylinderDropped.emit($event)"
   [cdkDropListData]="[gasProfile]"
   [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
 >
-<div class="gas-item-color-bar"></div>
-<div class="gas-item-content">
-  <h2 class="gas-item-title">
-    {{ gasProfile.name }}
-  </h2>
-  <div class="gas-profile-gas-codes">
-    <div class="gas-code-item">
-      <span class="gas-code">{{ gasProfile.cedarGasCode }}</span
-      ><span class="gas-concentration"
-        >{{ gasProfile.gasConcentration }}{{ gasProfile.uom }}</span
+  <div class="gas-item-color-bar"></div>
+  <div class="gas-item-content" (click)="filterOtherCard.emit(gasProfile)">
+    <h2 class="gas-item-title">
+      {{ gasProfile.desc }}
+    </h2>
+    <div class="gas-profile-gas-codes">
+      <div class="gas-code-item">
+        <span class="gas-code">{{ gasProfile.cedarGasCode }}</span>
+        <span class="gas-concentration">{{ gasProfile.cylGasConc }} {{ gasProfile.uom }}</span>
+        <span class="max-value">Max: [{{ gasProfile.allowableGasValueMax }} {{gasProfile.uom}}]</span>
+        <span class="min-value">Min: [{{ gasProfile.allowableGasValueMin }} {{gasProfile.uom}}]</span>
+      </div>
+    </div>
+    <div class="gas-item-unit"><span class="unit-text">Unit: {{ gasProfile.unit }}</span></div>
+    
+    <div class="assigned-cylinder">
+      <div *ngIf="gasProfile.cylID; else no_assigned_cylinder">
+        Assigned Cylinder: {{ gasProfile.cylID }}
+      </div>
+      <ng-template #no_assigned_cylinder
+        ><div class="no-cylinder-assigned-text">
+          No Cylinder Assigned
+        </div></ng-template
       >
     </div>
   </div>
-  <div class="gas-item-unit"><span class="unit-text">Unit: {{ gasProfile.unitNumber }}</span></div>
-  
-  <div class="assigned-cylinder">
-    <div *ngIf="gasProfile.cylinderID; else no_assigned_cylinder">
-      Assigned Cylinder: {{ gasProfile.cylinderID }}
-    </div>
-    <ng-template #no_assigned_cylinder
-      ><div class="no-cylinder-assigned-text">
-        No Cylinder Assigned
-      </div></ng-template
-    >
-  </div>
-</div>
-  <!-- <div class="flex3">
-    <button mat-icon-button [matMenuTriggerFor]="gasMenu">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-    <mat-menu #gasMenu="matMenu">
-      <button mat-menu-item (click)="unassignGasProfile.emit(gasProfile)">
-        <mat-icon>assignment_return</mat-icon>
-        <span>Unassign Cylinder</span>
-      </button>
-    </mat-menu>
-  </div> -->
 </li>

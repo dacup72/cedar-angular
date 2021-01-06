@@ -3,30 +3,36 @@
     <div class="cylinder-display">
       <div>Cylinder: {{ data.cylinder1.cylinderID }}</div>
     </div>
-    <div class="directional-action">
-      <div>Replacing</div>
-      <div class="icon"><mat-icon>arrow_right_alt</mat-icon></div>
-    </div>
+    <mat-icon *ngIf="data.cylinder1.state === 'spare'">arrow_right_alt</mat-icon>
+    <mat-icon *ngIf="data.cylinder1.state === 'inUse'">compare_arrows</mat-icon>
     <div class="cylinder-display">
       <div>Cylinder: {{ data.cylinder2.cylinderID }}</div>
     </div>
   </div>
   <div class="dialog-content">
     <div class="gas-selector">
-      <div class="gas-title">Select Gases To Replace</div>
+      <div class="gas-title">Select Gase Profiles To Replace</div>
       <mat-checkbox
         *ngFor="let gasProfile of data.gasProfiles"
         class="gas-item"
         checked="true"
-        name="{{gasProfile.name}}"
+        name="{{gasProfile.tagID}}"
         (change)="gasSelectionChange($event)"
       >
-        {{ gasProfile.name }}
+        {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
       </mat-checkbox>
     </div>
+  <div class="cylinder-action" *ngIf="data.cylinder1.state === 'spare'">
+    <div class="cylinder-action-title">Choose where to move Cylinder: {{ data.cylinder2.cylinderID }}</div>
+    <mat-radio-group aria-label="Select a state" *ngIf="allGasesSelected">
+      <mat-radio-button value="retired" checked="true" (click)="dialogOptions.selectedState = 'retired'">Retire Cylinder</mat-radio-button>
+      <mat-radio-button value="spare" (click)="dialogOptions.selectedState = 'spare'">Move to Spares</mat-radio-button>
+    </mat-radio-group>
+    <div class="cyl-action-remains-inuse" *ngIf="!allGasesSelected">Cylinder: {{ data.cylinder2.cylinderID}} will remain in use.</div>
   </div>
+</div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-button [mat-dialog-close]="replacingGasProfiles" cdkFocusInitial>Confirm</button>
+  <button mat-button [mat-dialog-close]="dialogOptions" cdkFocusInitial>Confirm</button>
 </mat-dialog-actions>

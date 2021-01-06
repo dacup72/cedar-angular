@@ -8,6 +8,7 @@ import { NxModule } from '@nrwl/nx';
 import { reducers } from '.';
 import { CylindersEffects } from './cylinders/cylinders.effects';
 import { GasProfilesEffects } from './gas-profiles/gas-profiles.effects';
+import { UnitDefsEffects } from './unit-defs/unit-defs.effects';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { GasProfilesEffects } from './gas-profiles/gas-profiles.effects';
     StoreDevtoolsModule.instrument({ maxAge: 10 }),
     EffectsModule.forRoot([
       CylindersEffects,
-      GasProfilesEffects
+      GasProfilesEffects,
+      UnitDefsEffects
     ]),
   ],
   declarations: []

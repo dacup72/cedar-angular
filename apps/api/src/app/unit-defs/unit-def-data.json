@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0",
+    "name": "Acme Cogen Facility"
+  },
+  {
+    "id": "1",
+    "name": "Turbine 1A"
+  },
+  {
+    "id": "2",
+    "name": "Turbine 1B"
+  },
+  {
+    "id": "3",
+    "name": "Aux Boiler"
+  },
+  {
+    "id": "9",
+    "name": "Combined Turbines"
+  },
+  {
+    "id": "11",
+    "name": "Emergency Generator"
+  },
+  {
+    "id": "12",
+    "name": "Fire Pump"
+  }
+]

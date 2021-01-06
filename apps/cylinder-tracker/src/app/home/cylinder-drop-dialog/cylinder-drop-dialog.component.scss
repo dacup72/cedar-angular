@@ -12,41 +12,40 @@
   background-color: mat-color(map-get($cisco-theme, primary));
   color: white;
   display: flex;
-  flex-basis: 30%;
+  flex-basis: 35%;
   justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 6px;
+  
 }
 
 .directional-action {
   display: flex;
-  flex-basis: 30%;
+  
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 }
 
-.directional-action > div {
-  flex-basis: 100%;
-  text-align: center;
+.mat-icon {
+  font-size: 75px;
+  flex-basis: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
 }
-
-.icon {
-  font-size: 36px;
-}
-
-.mat-icon { transform: scale(3); } 
 
 .dialog-content {
     display: flex;
     justify-content: center;
     align-content: center;
+    flex-wrap: wrap;
     border-bottom: 1px solid #f2f2f2;
     padding: 8px;
 }
 
-.gas-selector {
+.gas-selector, .cylinder-action {
     background-color: #f2f2f2;
     border: 1px solid #eee;
     border-radius: 6px;
@@ -56,18 +55,35 @@
     justify-content: center;
     flex-wrap: wrap;
     padding: 8px;
+    margin-bottom: 8px;
 }
 
 .gas-item {
     flex-basis: 100%;
-    text-align: center;
+    text-align: left;
     padding: 4px;
 }
 
-.gas-title {
+.gas-item span {
+  color: red;
+}
+
+.gas-title, .cylinder-action-title {
     border-bottom: 1px solid black;
     flex-basis: 100%;
     text-align: center;
     padding: 4px;
 }
 
+.mat-radio-group {
+  padding-top: 10px;
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.cyl-action-remains-inuse {
+  padding-top: 10px;
+  text-align: center;
+  flex-basis: 100%;
+}

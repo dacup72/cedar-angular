@@ -4,7 +4,7 @@ import { Cylinder } from '@cedar-all/core-data';
 @Component({
   selector: 'cylinder-tracker-spares-list2',
   templateUrl: './spares-list.component.html',
-  styleUrls: ['./spares-list.component.css']
+  styleUrls: ['./spares-list.component.scss']
 })
 export class SparesListComponent {
   spareCylinders: Cylinder[];

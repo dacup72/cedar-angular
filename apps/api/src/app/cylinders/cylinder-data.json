@@ -30,12 +30,21 @@
     "hasBeenUsedForQA": false,
     "createdByPartialEdit": false,
     "editHistory": "<history goes here />",
-    "errorList": []
+    "errorList": [
+      {
+        "severity": "4",
+        "errorMsg": "Cylinder is expired"
+      },
+      {
+        "severity": "4",
+        "errorMsg": "Gas concentration (12.3 ppm NOx) is outside allowable ranges (8-10 ppm, 5-6 ppm)"
+      }
+    ]
   },
   {
     "id": "1",
     "cylinderID": "139482",
-    "expirationDate": "2022-05-24",
+    "expirationDate": "2018-05-24",
     "vendorID": "B22020",
     "epaGasTypeCodes": ["NOX", "CO", "BALN"],
     "componentGases": [
@@ -495,38 +504,11 @@
     "errorList": []
   },
   {
-    "id": "16",
-    "cylinderID": "FF732107",
-    "expirationDate": "2022-11-28",
-    "vendorID": "B22020",
-    "epaGasTypeCodes": ["CO2", "BALN"],
-    "componentGases": [
-      {
-        "qaGasDefCode": "CO2",
-        "epaGasCode": "CO2",
-        "gasConcentration": 12.8,
-        "uom": "%CO2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
-      }
-    ],
-    "state": "inUse",
-    "certificationImage": "image url",
-    "hasBeenUsedForQA": false,
-    "createdByPartialEdit": false,
-    "editHistory": "<history goes here />",
-    "errorList": []
-  },
-  {
     "id": "17",
     "cylinderID": "BE880982",
     "expirationDate": "2022-11-28",
     "vendorID": "B22020",
-    "epaGasTypeCodes": ["CO2", "NOX"],
+    "epaGasTypeCodes": ["NOX", "CO2"],
     "componentGases": [
       {
         "qaGasDefCode": "CO2",
@@ -585,7 +567,7 @@
       {
         "qaGasDefCode": "NOX",
         "epaGasCode": "NOX",
-        "gasConcentration": 12.8,
+        "gasConcentration": 9.1,
         "uom": "ppm"
       },
       {
@@ -598,6 +580,33 @@
         "qaGasDefCode": "BALN",
         "epaGasCode": "BALN",
         "gasConcentration": 14.8,
+        "uom": "ppm"
+      }
+    ],
+    "state": "spare",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "20",
+    "cylinderID": "FF732107",
+    "expirationDate": "2022-11-28",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO2",
+        "epaGasCode": "CO2",
+        "gasConcentration": 12.8,
+        "uom": "%CO2"
+      },
+      {
+        "qaGasDefCode": "BALN",
+        "epaGasCode": "BALN",
+        "gasConcentration": 22,
         "uom": "ppm"
       }
     ],

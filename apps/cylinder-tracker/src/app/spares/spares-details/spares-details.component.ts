@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 @Component({
   selector: 'cylinder-tracker-spares-details',
   templateUrl: './spares-details.component.html',
-  styleUrls: ['./spares-details.component.css']
+  styleUrls: ['./spares-details.component.scss']
 })
 export class SparesDetailsComponent {
   currentCylinder: Cylinder;

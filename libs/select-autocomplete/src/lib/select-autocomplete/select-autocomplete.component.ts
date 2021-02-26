@@ -15,8 +15,12 @@ export class SelectAutocompleteComponent implements OnInit {
 
   @Input() selectTitle: string = 'Default Title';
   @Input() options: string[] = [];
+  @Input() set clearItems(value) {
+    if(this.myForm) this.myForm.nativeElement.reset();
+  }
   @Output() selectionChange = new EventEmitter();
   @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+  @ViewChild('myForm') myForm;
 
   filteredOptions: Observable<string[]>;
 

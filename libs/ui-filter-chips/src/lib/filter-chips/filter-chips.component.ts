@@ -5,8 +5,6 @@ import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/a
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { Cylinder } from '@cedar-all/core-data';
-
 
 @Component({
   selector: 'cedar-all-ui-filter-chips',
@@ -24,6 +22,9 @@ export class FilterChipsComponent {
 
   @Input() allItems: string[] = [];
   @Input() filterItemName = "Default Item Name";
+  @Input() set clearItems(value) {
+    this.items = [];
+  }
   @Output() selectionChange = new EventEmitter();
   @ViewChild('itemInput') itemInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;

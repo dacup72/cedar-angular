@@ -13,21 +13,26 @@ export class AssignCylindersComponent {
   unitNums: string[] = [];
   cylinderIDs: string[] = [];
   units: UnitDef[] = [];
+  cylAssignedProfiles = {};
+  testTypes: string[] = [];
+  filterTitleUnits = 'Unit Name';
+  filterTitleTests = 'Test Type';
+  clearFilterItems: boolean = false;
 
-  filterItemName = 'Gas Type';
   gasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
-  selectTitleCylinder = 'Unit #';
   isAssignedCylinder = true;
   filterForOtherCard = false;
 
   cylinderFilters: CylinderFilters = {
     cylinderID: '',
     gasCodes: [],
-    unitNumber: ''
+    unitNumber: '',
+    testType: ''
   }
   gasProfileFilters: GasProfileFilters = {
     gasCodes: [],
-    unitNumber: ''
+    unitNumber: '',
+    testType: ''
   }
   crossCardFilters = {
     gasCodes: [],
@@ -52,7 +57,11 @@ export class AssignCylindersComponent {
       if(!this.unitNums.includes(gas.unit.toString())) {
         this.unitNums.push(gas.unit.toString());
       }
+      if(!this.testTypes.includes(gas.desc)) {
+        this.testTypes.push(gas.desc);
+      }
     })
+    this.findAssignedProfiles();
   }
   @Input() set unitDefs(value: UnitDef[]) {
     if(value) {
@@ -65,6 +74,7 @@ export class AssignCylindersComponent {
   @Output() retireCylinder = new EventEmitter();
   @Output() editCylinder = new EventEmitter();
   @Output('filterOtherCard') filterOtherCard = new EventEmitter();
+  @Output('swapCards') swapCards = new EventEmitter();
 
   gasTypeSelected(gases) {
     // TODO: change this to better detect property change and refrsh component without copying object
@@ -89,9 +99,10 @@ export class AssignCylindersComponent {
   clearFilters() {
     this.filterForOtherCard = false;
     this.cylinderFilters = Object.assign({}, {
-      'cylinderID': '',
-      'gasCodes': [],
-      'unitNumber': ''
+      cylinderID: '',
+      gasCodes: [],
+      unitNumber: '',
+      testType: ''
     })
     this.crossCardFilters = Object.assign({}, {
       gasCodes: [],
@@ -99,7 +110,48 @@ export class AssignCylindersComponent {
     })
     this.gasProfileFilters = Object.assign({}, {
       gasCodes: [],
-      unitNumber: ''
+      unitNumber: '',
+      testType: ''
     })
+    this.clearFilterItems = !this.clearFilterItems;
+    // TODO: find better way to clear items
+  }
+
+  testTypeSelected(event) {
+    const testType = typeof(event) === 'string' ? event : event.option.value;
+    this.cylinderFilters.testType = testType ? testType : '';
+    this.gasProfileFilters.testType = testType ? testType : '';
+    this.refreshFiltersVariable();
+  }
+
+  findAssignedProfiles() {
+    let assignedProfiles = {};
+    this.inUseCylinders.forEach(cyl => {
+      assignedProfiles[cyl.cylinderID] = this.gasProfiles.filter(gasProfile => gasProfile.cylID === cyl.cylinderID);
+    })
+    
+    for (const cyl in assignedProfiles) {
+      if(assignedProfiles[cyl] && assignedProfiles[cyl].length) {
+        let unitArray = [];
+        assignedProfiles[cyl].forEach(profile => {
+          let found = false;
+          for (let i = 0; i < unitArray.length; i++) {
+            if(unitArray[i]['unit'] === profile.unit) {
+              unitArray[i]['desc'] += `,   ${profile.desc}`;
+              found = true;
+            }
+          }
+          if(!found) {
+            unitArray.push({
+              unit: profile.unit,
+              desc: `${profile.desc}`
+            })
+          }
+        })
+        assignedProfiles[cyl] = unitArray;
+      }
+    }
+
+    this.cylAssignedProfiles = assignedProfiles;
   }
 }

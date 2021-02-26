@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Cylinder } from '@cedar-all/core-data';
+import { ErrorInfo } from '@cedar-angular/api-interfaces';
 
 @Injectable()
 export class CylindersService {
@@ -65,7 +66,8 @@ export class CylindersService {
       gasConcentration: number;
       uom: string;
     }[],
-    state: string
+    state: string,
+    errorList: ErrorInfo[]
   ) {
     const { index, cylinder } = this.findCylinder(id);
     const updatedCylinder = { ...cylinder };
@@ -86,6 +88,9 @@ export class CylindersService {
     }
     if (state) {
       updatedCylinder.state = state;
+    }
+    if(errorList) {
+      updatedCylinder.errorList = errorList;
     }
     this.cylinders[index] = updatedCylinder;
     return { ...updatedCylinder };

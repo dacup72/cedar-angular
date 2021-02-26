@@ -1,0 +1,104 @@
+.mat-form-field,
+.mat-checkbox {
+  //margin-left: 8px;
+}
+
+.mat-card-header,
+.mat-list-item {
+  margin-bottom: 10px;
+}
+
+.component-gas-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.component-gas-item.component-gas-item {
+  border: lightgray solid 1px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  flex-basis: 48%;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.component-gas-label {
+  width: 18%;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.gas-check-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    //border-bottom: black solid 1px;
+}
+
+.gas-checkbox {
+  //flex-basis: 8%;
+  // display: flex;
+  // align-content: center;
+  margin: 0 10px;
+}
+
+::ng-deep {
+  .gas-checkbox .mat-checkbox-layout.mat-checkbox-layout {
+    display: flex;
+    align-content: center;
+  }
+
+  .gas-checkbox .mat-checkbox-layout .mat-checkbox-label {
+    align-self: center;
+  }
+
+  .form-header .mat-card-header-text {
+    border: none;
+    margin-left: 0;
+  }
+}
+// TODO get rid of ng-deep
+
+
+.gas-radios {
+  margin-bottom: 16px;
+}
+
+.gas-radios-group {
+  // display: flex;
+  // padding-bottom: 4px;
+  display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.gas-radios-group mat-radio-button {
+  margin: 0 10px;
+}
+
+.main-card {
+    box-shadow: none;
+    overflow: auto;
+    height: 86vh;
+    width: 60vw;
+
+}
+
+mat-card-content > h4 {
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.bal-code-checkbox {
+  margin: 0 10px;
+}
+
+

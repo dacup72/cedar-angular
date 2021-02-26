@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'cylinder-tracker-spares',
   templateUrl: './spares.component.html',
-  styleUrls: ['./spares.component.css']
+  styleUrls: ['./spares.component.scss']
 })
 export class SparesComponent implements OnInit {
   selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;

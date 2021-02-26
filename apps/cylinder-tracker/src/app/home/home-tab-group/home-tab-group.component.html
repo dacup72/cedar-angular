@@ -3,12 +3,15 @@
   (selectedTabChange)="selectedTabChange.emit($event.tab.textLabel)"
 >
   <mat-tab [label]="tabLeftLabel">
+    <ng-content select=".tab-left-top-content"></ng-content>
     <ng-content select=".tab-left-content"></ng-content>
   </mat-tab>
   <mat-tab [label]="tabMiddleLabel" *ngIf="useMiddleTab">
+    <ng-content select=".tab-middle-top-content"></ng-content>
     <ng-content select=".tab-middle-content"></ng-content>
   </mat-tab>
   <mat-tab [label]="tabRightLabel">
+    <ng-content select=".tab-right-top-content"></ng-content>
     <ng-content select=".tab-right-content"></ng-content>
   </mat-tab>
 </mat-tab-group>

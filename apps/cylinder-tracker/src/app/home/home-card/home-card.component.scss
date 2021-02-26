@@ -11,8 +11,6 @@ mat-card {
   color: white;
   display: flex;
   justify-content: space-between;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
   font-weight: bold;
 }
 
@@ -20,11 +18,11 @@ mat-card {
   font-weight: bold;
 }
 
-.filter-section {
-  display: flex;
-  padding: 16px;
-  background-color: $cylinder-tracker-primary;
-  color: white;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+// .filter-section {
+//   display: flex;
+//   padding: 16px;
+//   background-color: $cylinder-tracker-primary;
+//   color: white;
+//   justify-content: space-between;
+//   flex-wrap: wrap;
+// }

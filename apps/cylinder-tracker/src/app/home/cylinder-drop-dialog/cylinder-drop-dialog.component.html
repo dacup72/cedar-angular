@@ -1,37 +1,105 @@
 <mat-dialog-content>
   <div class="dialog-title">
     <div class="cylinder-display">
-      <div>Cylinder: {{ data.cylinder1.cylinderID }}</div>
+      <h3 class="cyl-title">Cylinder: {{ data.cylinder1.cylinderID }}</h3>
+      <div class="cylinder-item-gas-codes">
+        <ng-container *ngFor="let gas of data.cylinder1.componentGases">
+          <div *ngIf="commonGasTypes.includes(gas.epaGasCode.toLocaleUpperCase())" class="gas-code-item mat-elevation-z8">
+            <span 
+              class="gas-code"
+              [ngStyle]="{
+                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
+                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
+              }"
+            >{{ gas.epaGasCode }}</span>
+            <span 
+              class="gas-concentration"
+              [ngStyle]="{
+                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
+                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
+              }"
+            >{{ gas.gasConcentration }} {{ gas.uom }}</span>
+          </div>
+        </ng-container>
+      </div>
     </div>
-    <mat-icon *ngIf="data.cylinder1.state === 'spare'">arrow_right_alt</mat-icon>
-    <mat-icon *ngIf="data.cylinder1.state === 'inUse'">compare_arrows</mat-icon>
+    
+    <mat-icon *ngIf="data.dropType === 'inUse to inUseDropList'; else arrowRight">compare_arrows</mat-icon>
+    <ng-template #arrowRight><mat-icon>arrow_right_alt</mat-icon></ng-template>
+    
     <div class="cylinder-display">
-      <div>Cylinder: {{ data.cylinder2.cylinderID }}</div>
+      <h3 class="cyl-title">Cylinder: {{ data.cylinder2.cylinderID }}</h3>
+      <div class="cylinder-item-gas-codes">
+        <ng-container *ngFor="let gas of data.cylinder2.componentGases">
+          <div *ngIf="commonGasTypes.includes(gas.epaGasCode.toLocaleUpperCase())" class="gas-code-item mat-elevation-z8">
+            <span 
+              class="gas-code"
+              [ngStyle]="{
+                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
+                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
+              }"
+            >{{ gas.epaGasCode }}</span>
+            <span 
+              class="gas-concentration"
+              [ngStyle]="{
+                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
+                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
+              }"
+            >{{ gas.gasConcentration }} {{ gas.uom }}</span>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
+
   <div class="dialog-content">
     <div class="gas-selector">
-      <div class="gas-title">Select Gase Profiles To Replace</div>
-      <mat-checkbox
-        *ngFor="let gasProfile of data.gasProfiles"
-        class="gas-item"
-        checked="true"
-        name="{{gasProfile.tagID}}"
-        (change)="gasSelectionChange($event)"
-      >
-        {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
-      </mat-checkbox>
+      <div class="gas-title">{{ gasSectionTitle }}</div>
+      <div [ngSwitch]="data.dropType" class="gas-content">
+        <div *ngSwitchCase="'spare to inUseDropList'" class="check-box-list">
+          <mat-checkbox
+            *ngFor="let gasProfile of data.gasProfiles"
+            class="gas-item"
+            [(ngModel)]="checkBoxConnections[gasProfile.unit]"
+            name="{{gasProfile.tagID}}"
+            (change)="gasSelectionChange($event)"
+          >
+            <span class="gas-item-unit">Unit: {{ gasProfile.unit }}</span>  {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
+          </mat-checkbox>
+        </div>
+
+        <div *ngSwitchCase="'inUse to inUseDropList'" class="multi-gas-list">
+          <ul>
+            <li *ngFor="let gasProfile2 of data.gasProfiles2" class="gas-item">
+              <span class="gas-item-unit">Unit: {{ gasProfile2.unit }}</span>  {{ gasProfile2.desc }} <span>{{isConcentrationValid(gasProfile2, 'cylinder2')}}</span>
+            </li>
+          </ul>
+          <ul>
+            <li *ngFor="let gasProfile of data.gasProfiles" class="gas-item">
+              <span class="gas-item-unit">Unit: {{ gasProfile.unit }}</span>  {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile, 'cylinder1')}}</span>
+            </li>
+          </ul>
+        </div>
+
+        <ul *ngSwitchDefault>
+          <li *ngFor="let gasProfile of data.gasProfiles" class="gas-item">
+            <span class="gas-item-unit">Unit: {{ gasProfile.unit }}</span>  {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
-  <div class="cylinder-action" *ngIf="data.cylinder1.state === 'spare'">
-    <div class="cylinder-action-title">Choose where to move Cylinder: {{ data.cylinder2.cylinderID }}</div>
-    <mat-radio-group aria-label="Select a state" *ngIf="allGasesSelected">
-      <mat-radio-button value="retired" checked="true" (click)="dialogOptions.selectedState = 'retired'">Retire Cylinder</mat-radio-button>
-      <mat-radio-button value="spare" (click)="dialogOptions.selectedState = 'spare'">Move to Spares</mat-radio-button>
-    </mat-radio-group>
-    <div class="cyl-action-remains-inuse" *ngIf="!allGasesSelected">Cylinder: {{ data.cylinder2.cylinderID}} will remain in use.</div>
+
+    <div class="cylinder-action" *ngIf="!(data.dropType === 'inUse to inUseDropList')">
+      <div class="cylinder-action-title">Choose where to move Cylinder: {{ data.cylinder2.cylinderID }}</div>
+      <mat-radio-group aria-label="Select a state" *ngIf="allGasesSelected">
+        <mat-radio-button value="retired" checked="true" (click)="dialogOptions.selectedState = 'retired'">Retire Cylinder</mat-radio-button>
+        <mat-radio-button value="spare" (click)="dialogOptions.selectedState = 'spare'">Move to Spares</mat-radio-button>
+      </mat-radio-group>
+      <div class="cyl-action-remains-inuse" *ngIf="!allGasesSelected">Cylinder: {{ data.cylinder2.cylinderID}} will remain in use.</div>
+    </div>
   </div>
-</div>
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
   <button mat-button (click)="close()">Cancel</button>
   <button mat-button [mat-dialog-close]="dialogOptions" cdkFocusInitial>Confirm</button>

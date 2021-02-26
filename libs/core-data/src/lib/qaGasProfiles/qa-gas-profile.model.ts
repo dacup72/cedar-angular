@@ -50,4 +50,5 @@ export interface QAGasProfile {
 export interface GasProfileFilters {
     gasCodes: string[];
     unitNumber: string;
+    testType: string;
 }

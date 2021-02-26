@@ -656,9 +656,9 @@
     "qaTestType": "CGA",
     "gasLevel": "LOW",
     "uom": "ppm",
-    "instSpan": "200",
-    "allowableGasValueMin": "40",
-    "allowableGasValueMax": "60",
+    "instSpan": "",
+    "allowableGasValueMin": "",
+    "allowableGasValueMax": "",
     "allowableGasValueMin2": "",
     "allowableGasValueMax2": "",
     "cylGasConc": "48.1",
@@ -667,7 +667,13 @@
     "cylVendorID": "B22020",
     "cylEpaGasTypeCode": "NOX,CO,BALN",
     "cylPressure": "",
-    "cylPressureUOM": ""
+    "cylPressureUOM": "",
+    "errorInfo": [
+      {
+        "severity": "4",
+        "errorMsg": "Can't determine allowable ranges due to missing instrument span"
+      }
+    ]
   },
   {
     "tagID": "214006062",
@@ -969,11 +975,11 @@
     "allowableGasValueMax": "14",
     "allowableGasValueMin2": "",
     "allowableGasValueMax2": "",
-    "cylGasConc": "12.8",
-    "cylID": "FF732107",
-    "cylExpDate": "20221128",
-    "cylVendorID": "B22020",
-    "cylEpaGasTypeCode": "CO2,BALN",
+    "cylGasConc": "",
+    "cylID": "",
+    "cylExpDate": "",
+    "cylVendorID": "",
+    "cylEpaGasTypeCode": "",
     "cylPressure": "",
     "cylPressureUOM": ""
   }

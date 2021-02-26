@@ -1,30 +1,35 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
 ::ng-deep {
-  mat-tab-header {
-    padding-right: 16px;
-    padding-left: 16px;
-  }
-
-  mat-tab-body {
-    padding-right: 16px;
-    padding-left: 16px;
-    padding-bottom: 16px;
-  }
-
   .mat-tab-header {
     background-color: $cylinder-tracker-primary;
   }
 
-  .mat-tab-label-active {
-    background-color: white;
-  }
-
-  .mat-tab-label {
-    border-radius: 6px;
-  }
-
-  .mat-tab-label-content {
+  .mat-tab-label-active.mat-tab-label-active.mat-tab-label-active {
+    background-color: $cylinder-tracker-accent;
+    //background-color: white;
     font-weight: bold;
+    color: black;
+    opacity: 1;
+  }
+
+  .mat-tab-label.mat-tab-label {
+    opacity: 0.8;
+    //background: rgba(177, 128, 42, 0.5);
+    background: rgba( 255, 255, 255, 0.2);
+    margin-right: 4px;
+    color: white;
+  }
+
+  .mat-tab-label.mat-tab-label:first-of-type {
+    margin-left: 4px;
+  }
+
+  .mat-ink-bar.mat-ink-bar.mat-ink-bar {
+    background-color: $cylinder-tracker-accent;
+    //background-color: lightgray;
   }
 }
+
+// TODO: Remove ng deep
+

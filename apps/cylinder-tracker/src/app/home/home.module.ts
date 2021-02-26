@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@cedar-all/material';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -19,6 +19,7 @@ import { UiFilterChipsModule } from '@cedar-all/ui-filter-chips';
 import { SelectAutocompleteModule } from '@cedar-all/select-autocomplete';
 import { PipesModule } from '@cedar-all/pipes';
 import { HomeTabGroupComponent } from './home-tab-group/home-tab-group.component';
+import { EditCylinderDialogComponent } from './edit-cylinder-dialog/edit-cylinder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { HomeTabGroupComponent } from './home-tab-group/home-tab-group.component
     GasProfileUnassignDialogComponent, 
     CylinderUnassignDialogComponent, 
     CylinderRetireDialogComponent, 
-    HomeCardComponent, HomeTabGroupComponent  
+    HomeCardComponent, 
+    HomeTabGroupComponent, 
+    EditCylinderDialogComponent  
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { HomeTabGroupComponent } from './home-tab-group/home-tab-group.component
     FormsModule,
     UiFilterChipsModule,
     SelectAutocompleteModule,
-    PipesModule
+    PipesModule,
+    ReactiveFormsModule
   ],
   exports: [HomeComponent]
 })

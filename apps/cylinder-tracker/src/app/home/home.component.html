@@ -10,7 +10,7 @@
 </div> -->
 
 <mat-grid-list cols="2" gutterSize="10px" rowHeight="91vh">
-  <mat-grid-tile>
+  <mat-grid-tile *ngIf="!reverseCards">
     <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
@@ -20,6 +20,8 @@
       (cylinderDropped)="cylinderDrop($event)"
       (editCylinder)="editCylinder($event)"
       (filterOtherCard)="availableFilteringAssign($event)"
+      (savedSuccess)="openSnackBar($event, '')"
+      (createSimilarCyl)="editCylinder($event, true)"
     >
     </cylinder-tracker-available-cylinders>
   </mat-grid-tile>
@@ -34,6 +36,22 @@
       (retireCylinder)="retireCylinder($event)"
       (editCylinder)="editCylinder($event)"
       (filterOtherCard)="assignFilteringAvailable($event)"
+      (swapCards)="swapCards()"
     ></cylinder-tracker-assign-cylinders>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="reverseCards">
+    <cylinder-tracker-available-cylinders
+      [cylinders]="cylinders$ | async"
+      [qaGasProfiles]="gasProfiles$ | async"
+      [crossCardFilters]="availableCardFiltes"
+      (cylinderSelected)="selectCylinder($event)"
+      (retireCylinder)="retireCylinder($event)"
+      (cylinderDropped)="cylinderDrop($event)"
+      (editCylinder)="editCylinder($event)"
+      (filterOtherCard)="availableFilteringAssign($event)"
+      (savedSuccess)="openSnackBar($event, '')"
+      (createSimilarCyl)="editCylinder($event, true)"
+    >
+    </cylinder-tracker-available-cylinders>
   </mat-grid-tile>
 </mat-grid-list>

@@ -8,6 +8,7 @@ import {
 
 import { QAGasProfile } from '@cedar-all/core-data';
 import { GasProfilesService } from './gas-profiles.service';
+import { ErrorInfo } from '@cedar-angular/api-interfaces';
 
 @Controller('qaGasProfile')
 export class GasProfilesController {
@@ -19,7 +20,7 @@ export class GasProfilesController {
   }
 
   @Patch(':id')
-  updateCylinder(
+  updateGasProfile(
     @Param('id') tagID: string,
     @Body('cylGasConc') cylGasConc: string,
     @Body('cylID') cylID: string,
@@ -27,7 +28,8 @@ export class GasProfilesController {
     @Body('cylVendorID') cylVendorID: string,
     @Body('cylEpaGasTypeCode') cylEpaGasTypeCode: string,
     @Body('cylPressure') cylPressure: string,
-    @Body('cylPressureUOM') cylPressureUOM: string
+    @Body('cylPressureUOM') cylPressureUOM: string,
+    @Body('errorInfo') errorInfo: ErrorInfo[]
   ) {
     return this.gasProfilesService.updateGasProfile(
       tagID, 
@@ -37,7 +39,8 @@ export class GasProfilesController {
       cylVendorID, 
       cylEpaGasTypeCode, 
       cylPressure,
-      cylPressureUOM
+      cylPressureUOM,
+      errorInfo
     );
   }
 }

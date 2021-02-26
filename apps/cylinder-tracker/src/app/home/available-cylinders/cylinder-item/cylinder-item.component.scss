@@ -8,9 +8,24 @@
   border-top-left-radius: 6px;
 }
 
-.color-bar-assigned {
-  //background-color: $cylinder-tracker-green;
-  background-color: $cylinder-tracker-accent;
+.color-bar-inUse {
+  //background-color: $cylinder-tracker-accent;
+  background-color: $cylinder-tracker-accent-light;
+  width: 15px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+// .color-bar-assigned {
+//   //background-color: $cylinder-tracker-green;
+//   background-color: $cylinder-tracker-accent;
+//   width: 15px;
+//   border-bottom-left-radius: 6px;
+//   border-top-left-radius: 6px;
+// }
+
+.color-bar-error {
+  background-color: red;
   width: 15px;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
@@ -23,28 +38,42 @@ mat-icon {
 .cylinder-item-content {
   display: flex;
   justify-content: space-between;
-  flex-basis: 90%;
+  flex-basis: 94%;
   flex-wrap: wrap;
   align-items: center;
   
 }
 
 .cylinder-item-id,
-.cylinder-item-expiration {
+.cylinder-item-error-field,
+.no-errors {
   flex-basis: 30%;
   margin-top: 8px;
-  //margin-bottom: 6px;
 }
 
 .cylinder-item-gas-codes,
 .cylinder-item-assigned-gases {
-  flex-basis: 70%;
-  //margin-top: 6px;
-  //margin-bottom: 6px;
+  flex-basis: 66%;
 }
 
 .cylinder-item-assigned-gases {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+
+  tr:first-of-type {
+    td {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+  }
+  tr:last-of-type {
+    td {
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+      border: none;
+    }
+  }
 }
 
 .cylinder-item-id > h2 {
@@ -68,6 +97,7 @@ mat-icon {
 .gas-code-item {
   display: flex;
   margin: 4px;
+  border-radius: 6px;
 }
 
 .gas-code {
@@ -76,14 +106,15 @@ mat-icon {
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
   //background-color: mat-color(map-get($cisco-theme, primary));
-  background-color: $cylinder-tracker-primary;
-  color: white;
+  //background-color: $cylinder-tracker-primary;
+  //color: white;
 }
 
 .gas-concentration {
-  background-color: $cylinder-tracker-secondary2;
+  //background-color: $cylinder-tracker-secondary2;
   font-weight: bold;
   padding: 10px;
+  padding-left: 0;
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
 }
@@ -95,5 +126,25 @@ mat-icon {
   padding-right: 10px;
   flex-basis: 5%;
 }
+
+.cylinder-item-error-field {
+  background-color: red;
+  padding: 6px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.cyl-unit-desc {
+  background-color: lightgray;
+  padding: 1px;
+  border-radius: 6px;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+
 
 

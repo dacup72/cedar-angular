@@ -10,6 +10,7 @@ import {
 
 import { Cylinder } from '@cedar-all/core-data';
 import { CylindersService } from './cylinders.service';
+import { ErrorInfo } from '@cedar-angular/api-interfaces';
 
 @Controller('cylinder')
 export class CylindersController {
@@ -55,9 +56,10 @@ export class CylindersController {
       gasConcentration: number;
       uom: string;
     }[],
-    @Body('state') state: string
+    @Body('state') state: string,
+    @Body('errorList') errorList: ErrorInfo[]
   ) {
-    return this.cylindersService.updateCylinder(id, cylinderID, expirationDate, vendorID, epaGasTypeCodes, componentGases, state);
+    return this.cylindersService.updateCylinder(id, cylinderID, expirationDate, vendorID, epaGasTypeCodes, componentGases, state, errorList);
   }
 
   @Delete(':id')

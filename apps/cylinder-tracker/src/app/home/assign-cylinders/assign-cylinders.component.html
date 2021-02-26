@@ -1,34 +1,46 @@
-<cylinder-tracker-home-card [cardTitle]="'Assign Cylinders'">
-  <ng-container class="card-filters">
-    <ui-select-autocomplete
-      [selectTitle]="selectTitleCylinder"
-      [options]="unitNums"
-      (selectionChange)="unitNumSelected($event)"
-    >
-    </ui-select-autocomplete>
-    <cedar-all-ui-filter-chips
-      [filterItemName]="filterItemName"
-      [allItems]="gasTypes"
-      (selectionChange)="gasTypeSelected($event)"
-    >
-    </cedar-all-ui-filter-chips>
+<cylinder-tracker-home-card [cardTitle]="'Assigned Cylinders'" class="cylinders-card">
+  <ng-container class="card-title-content">
+    <button mat-raised-button (click)="swapCards.emit()">Swap Panels</button>
   </ng-container>
+
+  <ng-template #filterSection>
+    <div class="card-filters">
+      <div class="filter-input-section">
+        <ui-select-autocomplete
+          *ngIf="!crossCardFilters.filterItem"
+          [selectTitle]="filterTitleUnits"
+          [options]="unitNums"
+          (selectionChange)="unitNumSelected($event)"
+          [clearItems]="clearFilterItems"
+        >
+        </ui-select-autocomplete>
+        <ui-select-autocomplete
+          *ngIf="!crossCardFilters.filterItem"
+          [selectTitle]="filterTitleTests"
+          [options]="testTypes"
+          (selectionChange)="testTypeSelected($event)"
+          [clearItems]="clearFilterItems"
+        >
+        </ui-select-autocomplete>
+
+        <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
+          <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
+        </div>
+      </div>
+      <div class="filter-btn-section">
+        <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
+        <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+  </ng-template>
+
   <cylinder-tracker-home-tab-group
     class="card-content"
     [tabLeftLabel]="'In-Service Cylinders'"
     [tabRightLabel]="'Gas Profiles'"
   >
+    <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
     <ul class="inUseDropList tab-left-content">
-      <div *ngIf="crossCardFilters.filterItem" class="test">
-        <span>Filtered For: {{crossCardFilters.filterItem}}</span>
-        <button
-          mat-raised-button
-          class="clear-filters-button"
-          (click)="clearFilters()"
-        >
-          Clear Filters
-        </button>
-      </div>
       <li>
         <cylinder-tracker-cylinder-item
           *ngFor="
@@ -39,7 +51,9 @@
             let i = index
           "
           cdkDropList
+          class="mat-elevation-z8"
           id="{{ 'inUseDropList' + i }}"
+          [ngClass]="cylinder.errorList.length ? 'border-red' : 'border-inUse'"
           (cdkDropListDropped)="cylinderDropped.emit($event)"
           [cdkDropListData]="[cylinder]"
           [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
@@ -47,6 +61,7 @@
           [isAssignedCylinder]="true"
           [disableItemDrag]="true"
           [gasProfiles]="gasProfiles"
+          [cylAssignedProfiles]="cylAssignedProfiles"
           (cylinderDropped)="cylinderDropped.emit($event)"
           (cylinderSelected)="cylinderSelected.emit($event)"
           (retireCylinder)="retireCylinder.emit($event)"
@@ -57,22 +72,13 @@
         </cylinder-tracker-cylinder-item>
       </li>
     </ul>
+    
+    <ng-container *ngTemplateOutlet="filterSection" class="tab-right-top-content"></ng-container>
     <ul class="gas-profile-list tab-right-content">
-      <div *ngIf="crossCardFilters.filterItem" class="test">
-        <span>Filtered For: {{crossCardFilters.filterItem}}</span>
-        <button
-          mat-raised-button
-          class="clear-filters-button"
-          (click)="clearFilters()"
-        >
-          Clear Filters
-        </button>
-      </div>
       <cylinder-tracker-gas-profile-item
         [gasProfiles]="gasProfiles"
-        [gasProfileFilters]="
-          filterForOtherCard ? crossCardFilters : gasProfileFilters
-        "
+        [gasProfileFilters]="filterForOtherCard ? crossCardFilters : gasProfileFilters"
+        [inUseCylinders]="inUseCylinders"
         (cylinderDropped)="cylinderDropped.emit($event)"
         (filterOtherCard)="filterOtherCard.emit($event)"
       >

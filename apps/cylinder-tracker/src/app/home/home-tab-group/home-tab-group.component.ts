@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 export class HomeTabGroupComponent {
   defaultLabel = 'Default Label';
-
+  @Input('tabTopContent') tabTopContent: string = this.defaultLabel;
   @Input('tabLeftLabel') tabLeftLabel: string = this.defaultLabel;
   @Input('tabRightLabel') tabRightLabel: string = this.defaultLabel;
   @Input('tabMiddleLabel') tabMiddleLabel: string = this.defaultLabel;

@@ -1,0 +1,287 @@
+<mat-card class="main-card">
+    <mat-card-header class="form-header">
+      <mat-card-title>
+        <h1><b>
+          <span *ngIf="cylinderID; else elseBlock">
+            Cylinder: {{ origionalTitle }}
+          </span>
+          <ng-template #elseBlock>Create a Cylinder</ng-template>
+        </b></h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="cylinderForm">
+        <mat-form-field class="full-width m-b-10">
+          <!-- <input
+            matInput
+            placeholder="Cylinder ID"
+            [(ngModel)]="currentCylinder.cylinderID"
+            type="text"
+            name="cylinderID"
+            [formControl]="cylIDFormControl"
+          /> -->
+          <input
+            matInput
+            placeholder="Cylinder ID"
+            formControlName="cylinderID"
+            type="text"
+          />
+          <!-- <mat-error *ngIf="cylIDFormControl.hasError('required')">
+            Cylinder ID is <strong>required</strong>
+          </mat-error> -->
+          <mat-error *ngIf="cylinderID.hasError('required')">
+            Cylinder ID is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width m-b-10">
+          <!-- <input
+            matInput
+            placeholder="Expiration Date"
+            [(ngModel)]="currentCylinder.expirationDate"
+            type="text"
+            name="expirationDate"
+            [formControl]="expDateFormControl"
+          /> -->
+          <input
+            matInput
+            placeholder="Expiration Date"
+            type="text"
+            formControlName="expirationDate"
+          />
+          <!-- <mat-error *ngIf="expDateFormControl.hasError('required')">
+            Expiration date is <strong>required</strong>
+          </mat-error> -->
+          <mat-error *ngIf="expirationDate.hasError('required')">
+            Expiration date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width m-b-10">
+          <!-- <input
+            matInput
+            placeholder="Vendor ID"
+            [(ngModel)]="currentCylinder.vendorID"
+            type="text"
+            name="vendorID"
+            [formControl]="vendorIDFormControl"
+          /> -->
+          <input
+            matInput
+            placeholder="Vendor ID"
+            type="text"
+            formControlName="vendorID"
+          />
+          <!-- <mat-error *ngIf="vendorIDFormControl.hasError('required')">
+            Vendor ID is <strong>required</strong>
+          </mat-error> -->
+          <mat-error *ngIf="vendorID.hasError('required')">
+            Vendor ID is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+            <h3><b>EPA Gas Codes</b></h3>
+            <section class="full-width gas-check-boxes" >
+              <!-- <mat-checkbox class="gas-checkbox"
+                [name]="code"
+                *ngFor="let code of commonGasCodesCodes"
+                (change)="gasCodeChange($event, code)"
+                [(ngModel)]="commonGasCodesCodesOBJ[code]"
+                [ngModelOptions]="{standalone: true}"
+              >{{ code }}</mat-checkbox> -->
+              <mat-checkbox class="gas-checkbox"
+                name="gasCode"
+                *ngFor="let code of commonGasCodes"
+                (change)="newGasCodeChange(gasCodeCheckBox)"
+                [value]="code"
+                [checked]="isGasChecked(code)"
+                #gasCodeCheckBox>
+                {{ code }}
+              </mat-checkbox>
+              <ng-container *ngIf="showMoreGases">
+                <!-- <mat-checkbox class="gas-checkbox" 
+                  [name]="code"
+                  *ngFor="let code of uncommonGasCodes"
+                  (change)="gasCodeChange($event, code)"
+                  [checked]="currentCylinder.epaGasTypeCodes.includes(code)"
+                >{{ code }}</mat-checkbox> -->
+                <mat-checkbox class="gas-checkbox" 
+                  name="gasCode"
+                  *ngFor="let code of uncommonGasCodes"
+                  (change)="newGasCodeChange(gasCodeCheckBox)"
+                  [value]="code"
+                  [checked]="isGasChecked(code)"
+                  #gasCodeCheckBox>
+                  {{ code }}
+                </mat-checkbox>
+              </ng-container>
+              <button 
+                mat-button 
+                class="show-more-btn" 
+                (click)="showMoreGases = !showMoreGases">
+                {{ showMoreGases ? "Show Less" : "Show More" }}
+              </button>
+            </section>
+            <h3><b>Balance Gas codes</b></h3>
+            <section class="full-width gas-radios">
+              <!-- <mat-checkbox
+                  class="bal-code-checkbox"
+                  [name]="code"
+                  *ngFor="let code of balCodes"
+                  (change)="balCodeChange($event, code)"
+                  [(ngModel)]="balCodesOBJ[code]"
+                  [ngModelOptions]="{standalone: true}"
+                  [value]="code"
+                >
+                  {{ code }} ({{code === 'BALN' ? 'Nitrogen' : 'Air'}})
+                </mat-checkbox> -->
+                <mat-checkbox
+                  class="bal-code-checkbox"
+                  name="balCode"
+                  *ngFor="let code of balCodes"
+                  (change)="newGasCodeChange(gasCodeCheckBox)"
+                  [value]="code"
+                  [checked]="isGasChecked(code)"
+                  #gasCodeCheckBox>
+                  {{ code }} ({{code === 'BALN' ? 'Nitrogen' : 'Air'}})
+                </mat-checkbox>
+            </section>
+            <h3><b>Other</b></h3>
+            <section class="full-width gas-radios">
+              <!-- <mat-checkbox
+                  class="bal-code-checkbox"
+                  [name]="code"
+                  *ngFor="let code of otherCodes"
+                  (change)="otherCodeChanged($event, code)"
+                  [(ngModel)]="otherCodesOBJ[code]"
+                  [ngModelOptions]="{standalone: true}"
+                  [value]="code"
+                >
+                  {{ code }}
+                </mat-checkbox> -->
+                <mat-checkbox
+                  class="bal-code-checkbox"
+                  name="otherCode"
+                  *ngFor="let code of otherCodes"
+                  (change)="newGasCodeChange(gasCodeCheckBox)"
+                  [value]="code"
+                  [checked]="isGasChecked(code)"
+                  #gasCodeCheckBox>
+                  {{ code }}
+                </mat-checkbox>
+            </section>
+ 
+            <h3><b>Component Gases</b></h3>
+            <mat-form-field class="full-width">
+              <!-- <input 
+                matInput
+                [(ngModel)]="stringOfGasCodes"
+                type="text"
+                name="gasCodeString"
+                [formControl]="gasCodeStringFormControl"
+                (change)="gasCodeStringChange($event); $event.stopImmediatePropagation()"
+              /> -->
+              <input 
+                matInput
+                type="text"
+                name="gasCodeString"
+                (change)="newGasCodeChange(gasCodeString); $event.stopImmediatePropagation()"
+                #gasCodeString
+                [value]="getGasCodeString()"
+              />
+              <!-- <mat-error *ngIf="gasCodeStringFormControl.hasError('required')">
+                Gas codes are <strong>required</strong>
+              </mat-error> -->
+              <mat-error *ngIf="epaGasTypeCodes.hasError('required')">
+                Gas codes are <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            
+            
+            <section class="full-width">
+              <mat-list class="component-gas-list">
+                <!-- <mat-list-item
+                  class="component-gas-item mat-elevation-z8"
+                  *ngFor="let code of epaGasTypeCodes.controls"
+                  [ngStyle]="{
+                    'background-color': gasColors['$cylindertracker' + code.value.toLowerCase()],
+                    'color': gasColors['$cylindertracker' + code.value.toLowerCase() + 'text']
+                  }"
+                >
+                  <mat-label class="component-gas-label">{{ code.value }}</mat-label>
+                  <mat-divider [inset]="true" [vertical]="true"></mat-divider>
+                  <mat-form-field>
+                    <mat-label>Measurement</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      min="1"
+                      [value]="getMeasurementValue(code.value)"
+                      (change)="measurementValueChange($event, code.value)"
+                    />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Measurement Type</mat-label>
+                    <mat-select
+                      (selectionChange)="measurementTypeChange($event, code.value)"
+                      [value]="getMeasurementType(code.value)"
+                    >
+                      <mat-option
+                        *ngFor="let type of measurementTypes"
+                        [value]="type"
+                      >
+                        {{ type }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-list-item> -->
+                <mat-list-item
+                  class="component-gas-item mat-elevation-z8"
+                  *ngFor="let gas of componentGases.controls"
+                  [formGroup]="gas"
+                >
+                  <mat-label class="component-gas-label">{{ gas.value['qaGasDefCode'] }}</mat-label>
+                  <mat-divider [inset]="true" [vertical]="true"></mat-divider>
+                  <mat-form-field>
+                    <mat-label>Measurement</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      min="1"
+                      formControlName="gasConcentration"
+                    />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Measurement Type</mat-label>
+                    <mat-select
+                      formControlName="uom"
+                    >
+                      <mat-option
+                        *ngFor="let type of measurementTypes"
+                        [value]="type"
+                      >
+                        {{ type }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-list-item>
+              </mat-list>
+            </section>
+      </form>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <!-- <button type="submit" mat-button [mat-dialog-close]="currentCylinder" color="primary">
+        Save
+      </button> -->
+      <button type="submit" mat-button [mat-dialog-close]="cylinderForm.value" color="primary">
+        Save
+      </button>
+      <button type="button" mat-button (click)="newOnClearCylinder()">
+        Clear Form
+      </button>
+      <button type="button" mat-button (click)="onCancel()">
+        Cancel
+      </button>
+    </mat-card-actions>
+    <p>{{ cylinderForm.value | json }}</p>
+  </mat-card>

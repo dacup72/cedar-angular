@@ -2,20 +2,78 @@
 
 @include mat-core();
 
-$cisco-primary: mat-palette($mat-blue, 800); // #1565c0
-$cisco-accent: mat-palette($mat-amber, 900); // #ff6f00
-$cisco-warn: mat-palette($mat-red);
+// $cisco-primary: mat-palette($mat-blue, 800); // #1565c0
+// $cisco-accent: mat-palette($mat-amber, 900); // #ff6f00
+// $cisco-warn: mat-palette($mat-grey);
+
+$cisco-primary: mat-palette($mat-light-blue, 500); // #1565c0
+$cisco-accent: mat-palette($mat-amber, 600); // #ff6f00
+$cisco-warn: mat-palette($mat-red, 500);
 
 $cisco-theme: mat-light-theme($cisco-primary, $cisco-accent, $cisco-warn);
+//$cisco-theme: mat-dark-theme($cisco-primary, $cisco-accent, $cisco-warn);
 
 $cylinder-tracker-primary2: #2a6bb1; // Correct Cisco Primary Color
 $cylinder-tracker-primary: #426b97;
+$cylinder-tracker-accent: #b1802a;
+$cylinder-tracker-accent-light: #e6af58;
+$cylinder-tracker-accent-dark: #7d5400;
+
 $cylinder-tracker-secondary1: #2C2AB1;
 $cylinder-tracker-secondary2: #2AAEB1;
-$cylinder-tracker-accent: #b1802a;
-//$cylinder-tracker-purple: #B12AAF;
 $cylinder-tracker-purple: #2C2AB1;
-//$cylinder-tracker-green: #2AB12C;
 $cylinder-tracker-green: #b13c2a;
+
+//gasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN',
+// 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
+
+$cylinder-tracker-so2: #9DCC5F;
+$cylinder-tracker-so2-text: black;
+$cylinder-tracker-so2-secondary: #8E5FCC;
+$cylinder-tracker-so2-secondary-text: white;
+$cylinder-tracker-no: #36D6E7;
+$cylinder-tracker-no-text: black;
+$cylinder-tracker-no-secondary: #E74736;
+$cylinder-tracker-no-secondary-text: black;
+$cylinder-tracker-no2: #9BCCFD;
+$cylinder-tracker-no2-text: black;
+$cylinder-tracker-no2-secondary: #FDCC9B;
+$cylinder-tracker-no2-secondary-text: black;
+$cylinder-tracker-nox: #0074DD;
+$cylinder-tracker-nox-text: white;
+$cylinder-tracker-nox-secondary: #DD6900;
+$cylinder-tracker-nox-secondary-text: black;
+$cylinder-tracker-n2o: #81599F;
+$cylinder-tracker-n2o-text: white;
+$cylinder-tracker-n2o-secondary: #779F59;
+$cylinder-tracker-n2o-secondary-text: black;
+$cylinder-tracker-co2: #FD7F20;
+$cylinder-tracker-co2-text: black;
+$cylinder-tracker-co2-secondary: #209EFD;
+$cylinder-tracker-co2-secondary-text: black;
+$cylinder-tracker-co: #FDB750;
+$cylinder-tracker-co-text: black;
+$cylinder-tracker-co-secondary: #5096FD;
+$cylinder-tracker-co-secondary-text: black;
+$cylinder-tracker-o2: #335120;
+$cylinder-tracker-o2-text: white;
+$cylinder-tracker-o2-secondary: #3E2051;
+$cylinder-tracker-o2-secondary-text: white;
+$cylinder-tracker-ppn: #660A60;
+$cylinder-tracker-ppn-text: white;
+$cylinder-tracker-ppn-secondary: #0A6610;
+$cylinder-tracker-ppn-secondary-text: white;
+$cylinder-tracker-ch4: #FF5C4D;
+$cylinder-tracker-ch4-text: black;
+$cylinder-tracker-ch4-secondary: #4DF0FF;
+$cylinder-tracker-ch4-secondary-text: black;
+$cylinder-tracker-he: #FFCD58;
+$cylinder-tracker-he-text: black;
+$cylinder-tracker-he-secondary: #588AFF;
+$cylinder-tracker-he-secondary-text: black;
+$cylinder-tracker-h2s: #FF5C4D;
+$cylinder-tracker-h2s-text: black;
+$cylinder-tracker-h2s-secondary: #4DF0FF;
+$cylinder-tracker-h2s-secondary-text: black;
 
 @include angular-material-theme($cisco-theme);

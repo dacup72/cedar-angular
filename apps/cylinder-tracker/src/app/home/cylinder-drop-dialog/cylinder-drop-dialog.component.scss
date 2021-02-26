@@ -5,24 +5,23 @@
   justify-content: space-evenly;
   border-bottom: 1px solid black;
   padding-bottom: 8px;
-
 }
 
 .cylinder-display {
-  background-color: mat-color(map-get($cisco-theme, primary));
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  background-color: $cylinder-tracker-primary;
   color: white;
   display: flex;
   flex-basis: 35%;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  //align-items: center;
   text-align: center;
-  border-radius: 6px;
-  
+  //border-radius: 6px;
+  flex-wrap: wrap;
 }
 
 .directional-action {
   display: flex;
-  
   justify-content: center;
   align-items: center;
 }
@@ -46,27 +45,51 @@
 }
 
 .gas-selector, .cylinder-action {
-    background-color: #f2f2f2;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 8px;
-    margin-bottom: 8px;
-}
+  background-color: #f2f2f2;
+  border: 1px solid #eee;
+  //border-radius: 6px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 8px;
+  margin-bottom: 8px;
 
-.gas-item {
+  .check-box-list {
+    padding-top: 8px;
+  }
+
+  .gas-item {
     flex-basis: 100%;
     text-align: left;
-    padding: 4px;
+    padding: 8px;
+    //border-bottom: gray solid 1px;
+  }
+
+  .gas-item span {
+    color: red;
+  }
+
+  .gas-content {
+    flex-basis: 100%;
+    display: flex;
+  }
+    
+  .multi-gas-list {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
-.gas-item span {
-  color: red;
+::ng-deep {
+  .gas-item .mat-checkbox-layout {
+    margin-bottom: 6px !important;
+  }
 }
+//TODO no ng deep allowed
+
+
 
 .gas-title, .cylinder-action-title {
     border-bottom: 1px solid black;
@@ -86,4 +109,52 @@
   padding-top: 10px;
   text-align: center;
   flex-basis: 100%;
+}
+
+.cyl-title {
+  flex-basis: 98%;
+  font-weight: bold;
+  padding: 6px;
+  margin: 0;
+}
+
+.cylinder-item-gas-codes {
+  box-sizing: border-box;
+  border-radius: 6%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-basis: 100%;
+}
+
+.gas-code-item {
+  display: flex;
+  margin: 4px;
+  border-radius: 6%;
+}
+
+.gas-code {
+  font-weight: bold;
+  padding: 10px;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+  //background-color: mat-color(map-get($cisco-theme, primary));
+  //background-color: $cylinder-tracker-primary;
+  //color: white;
+}
+
+.gas-concentration {
+  //background-color: $cylinder-tracker-secondary2;
+  font-weight: bold;
+  padding: 10px;
+  padding-left: 0;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.gas-item-unit.gas-item-unit.gas-item-unit {
+  background-color: lightgray;
+  padding: 4px;
+  border-radius: 6px;
+  color: black !important;
 }

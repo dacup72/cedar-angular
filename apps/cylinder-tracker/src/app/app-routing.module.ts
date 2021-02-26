@@ -6,8 +6,8 @@ import { AuthGuardService } from '@cedar-all/core-data';
 const routes: Routes = [
     { path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), canActivate: [AuthGuardService] },
     { path: 'cylinders', loadChildren: () => import('./spares/spares.module').then(m => m.SparesModule), canActivate: [AuthGuardService] },
-    {path: 'login', component: LoginComponent},
-    {path: '**', redirectTo: '', pathMatch: 'full'}
+    { path: 'login', component: LoginComponent },
+    { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

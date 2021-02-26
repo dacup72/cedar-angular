@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { QAGasProfile } from '@cedar-all/core-data';
+import { ErrorInfo } from '@cedar-angular/api-interfaces';
 
 @Injectable()
 export class GasProfilesService {
@@ -18,7 +19,8 @@ export class GasProfilesService {
     cylVendorID: string,
     cylEpaGasTypeCode: string,
     cylPressure: string,
-    cylPressureUOM: string
+    cylPressureUOM: string,
+    errorInfo: ErrorInfo[]
   ) {
     const { index, gasProfile } = this.findGasProfile(tagID);
     const updatedGasProfile: QAGasProfile = { ...gasProfile };
@@ -42,6 +44,9 @@ export class GasProfilesService {
     }
     if(cylPressureUOM) {
       updatedGasProfile.cylPressureUOM = cylPressureUOM;
+    }
+    if(errorInfo) {
+      updatedGasProfile.errorInfo = errorInfo;
     }
     
     this.gasProfiles[index] = updatedGasProfile;    

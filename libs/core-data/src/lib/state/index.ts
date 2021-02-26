@@ -55,14 +55,7 @@ export const emptyCylinder: Cylinder = {
   expirationDate: '',
   vendorID: '',
   epaGasTypeCodes: [],
-  componentGases: [
-    {
-      qaGasDefCode: '',
-      epaGasCode: '',
-      gasConcentration: 0,
-      uom: ''
-    }
-  ],
+  componentGases: [],
   state: 'spare',
   certificationImage: '',
   hasBeenUsedForQA: false,

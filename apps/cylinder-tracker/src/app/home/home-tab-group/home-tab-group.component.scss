@@ -7,18 +7,21 @@
 
   .mat-tab-label-active.mat-tab-label-active.mat-tab-label-active {
     background-color: $cylinder-tracker-accent;
-    //background-color: white;
     font-weight: bold;
-    color: black;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: white;
     opacity: 1;
   }
 
   .mat-tab-label.mat-tab-label {
     opacity: 0.8;
-    //background: rgba(177, 128, 42, 0.5);
     background: rgba( 255, 255, 255, 0.2);
     margin-right: 4px;
     color: white;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 2px;
   }
 
   .mat-tab-label.mat-tab-label:first-of-type {

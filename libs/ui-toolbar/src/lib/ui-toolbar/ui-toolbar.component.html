@@ -3,19 +3,25 @@
     <button mat-icon-button (click)="toggleSidenav.emit()">
       <mat-icon>menu</mat-icon>
     </button>
-    <!-- <span class="logo">
+    <span class="logo">
       <img src="assets/CiscoCemsLogo.png" alt="Logo" />
-    </span> -->
+    </span>
     <span class="title">
       {{ title }}
     </span>
   </span>
   <span class="spacer"></span>
+  <!-- <ng-container class="card-title-content">
+    <button mat-raised-button (click)="swapCards.emit()">Swap Panels</button>
+  </ng-container> -->
   <button mat-icon-button>
     <mat-icon>warning</mat-icon>
   </button>
   <button mat-icon-button>
     <mat-icon>notifications</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>settings</mat-icon>
   </button>
   <button class="login" (click)="logout.emit($event)" mat-icon-button>
     <mat-icon>person</mat-icon>

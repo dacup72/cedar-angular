@@ -7,7 +7,7 @@
     <div class="card-filters">
       <div class="filter-input-section">
         <ui-select-autocomplete
-          *ngIf="filtersForSpares && !crossCardFilters.filterItem"
+          [hidden]="!filtersForSpares || crossCardFilters.filterItem"
           [selectTitle]="'Cylinder ID'"
           [options]="cylinderIDs"
           (selectionChange)="cylinderIDSelected($event)"
@@ -15,7 +15,7 @@
         >
         </ui-select-autocomplete>
         <cedar-all-ui-filter-chips
-          *ngIf="filtersForSpares && !crossCardFilters.filterItem"
+          [hidden]="!filtersForSpares || crossCardFilters.filterItem"
           [filterItemName]="'Gas Type'"
           [allItems]="gasTypes"
           (selectionChange)="gasTypeSelected($event)"
@@ -41,14 +41,14 @@
         </ui-select-autocomplete> -->
 
         <cedar-all-ui-filter-chips
-          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
+          [hidden]="filtersForSpares || crossCardFilters.filterItem"
           [filterItemName]="'Unit'"
           [allItems]="unitNames"
           (selectionChange)="unitNameSelected($event)"
           [clearItems]="clearFilterItems">
         </cedar-all-ui-filter-chips>
         <cedar-all-ui-filter-chips
-          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
+          [hidden]="filtersForSpares || crossCardFilters.filterItem"
           [filterItemName]="'Gas Description'"
           [allItems]="testTypes"
           (selectionChange)="testTypeSelected($event)"

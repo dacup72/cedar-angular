@@ -28,7 +28,7 @@ import { cloneDeep } from 'lodash';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
+  //selectedCylinder$: Observable<Cylinder> = this.cylindersFacade.selectedCylinder$;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
   gasProfiles$: Observable<QAGasProfile[]> = this.gasProfilesFacade.allGasProfiles$;
   users: User[];
@@ -39,12 +39,14 @@ export class HomeComponent implements OnInit {
 
   availableCardFiltes = {
     gasCodes: [],
-    filterItem: ''
+    filterItem: '',
+    concentration: []
   }
 
   assignCardFilters = {
     gasCodes: [],
-    filterItem: ''
+    filterItem: '',
+    concentration: []
   }
 
   constructor(
@@ -101,6 +103,15 @@ export class HomeComponent implements OnInit {
     });
     gasProfilesObs.unsubscribe();
     return gasProfilesOutput;
+  }
+
+  getUnitDefsList() {
+    const unitDefsOutput: UnitDef[] = [];
+    const unitDefsObs = this.unitDefs$.subscribe(unitDefs => {
+      unitDefs.forEach(unitDef => unitDefsOutput.push(Object.assign({}, unitDef)));
+    });
+    unitDefsObs.unsubscribe();
+    return unitDefsOutput;
   }
 
   // CYLINDERS ACTIONS
@@ -170,6 +181,7 @@ export class HomeComponent implements OnInit {
       cylinder2: null,
       gasProfiles: [],
       gasProfiles2: [],
+      unitDefs: this.getUnitDefsList(),
       dropType: `${draggedCylinder.state} to ${dropList}`,
       isLastAssignedGasProfile: false
     }
@@ -438,7 +450,8 @@ export class HomeComponent implements OnInit {
   availableFilteringAssign(item) {
     const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : item.cedarGasTypeCodes;
     const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
-    this.assignCardFilters.gasCodes = gases;
+    this.assignCardFilters.gasCodes = ['_ACC_', ...gases];
+    this.assignCardFilters.concentration = item.componentGases;
     this.assignCardFilters.filterItem = filterItem;
     this.assignCardFilters = Object.assign({}, this.assignCardFilters);
   }
@@ -446,7 +459,19 @@ export class HomeComponent implements OnInit {
   assignFilteringAvailable(item) {
     const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : [item.cedarGasCode];
     const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
-    this.availableCardFiltes.gasCodes = gases;
+    this.availableCardFiltes.gasCodes = ['_ACC_', ...gases];
+    if(item.componentGases) {
+      this.availableCardFiltes.concentration = item.componentGases;
+    }
+    else {
+      this.availableCardFiltes.concentration = [{
+        cedarGasCode: item.cedarGasCode,
+        allowableGasValueMin: item.allowableGasValueMin,
+        allowableGasValueMax: item.allowableGasValueMax,
+        allowableGasValueMin2: item.allowableGasValueMin2,
+        allowableGasValueMax2: item.allowableGasValueMax2,
+      }]
+    }
     this.availableCardFiltes.filterItem = filterItem;
     this.availableCardFiltes = Object.assign({}, this.availableCardFiltes);
   }

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
+import { Cylinder, QAGasProfile, UnitDef } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-cylinder-item',
@@ -65,6 +65,7 @@ export class CylinderItemComponent {
   
   @Input('cylinder') cylinder: Cylinder;
   @Input('gasProfiles') gasProfiles: QAGasProfile[] = [];
+  @Input() units: UnitDef[];
   @Input('isAssignedCylinder') isAssignedCylinder: boolean;
   @Input('disableItemDrag') disableItemDrag = false;
   @Input('cylAssignedProfiles') cylAssignedProfiles = {};
@@ -109,6 +110,11 @@ export class CylinderItemComponent {
     });
     
     return resultArr;
+  }
+
+  getUnitName(unitID) {
+    const matchedUnit = this.units.filter(unit => unit.id === unitID)[0];
+    return matchedUnit ? matchedUnit.name : 'Unit name not found';
   }
 }
 

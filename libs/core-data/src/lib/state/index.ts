@@ -98,25 +98,26 @@ export const selectCurrentGasProfileId = createSelector(
 );
 
 export const emptyGasProfile: QAGasProfile = {
-  "tagID": null,
-  "desc": "",
-  "unit": "",
-  "cedarGasCode": "",
-  "analyzerSpanType": "",
-  "qaTestType": "",
-  "gasLevel": "",
-  "uom": "",
-  "instSpan": "",
-  "allowableGasValueMin": "",
-  "allowableGasValueMax": "",
-  "cylGasConc": "",
-  "cylID": "",
-  "cylExpDate": "",
-  "cylVendorID": "",
-  "cylEpaGasTypeCode": "",
-  "cylPressure": "",
-  "cylPressureUOM": "",
-  "errorInfo": []
+  tagID: null,
+  desc: "",
+  unit: "",
+  cedarGasCode: "",
+  analyzerSpanType: "",
+  qaTestType: "",
+  gasLevel: "",
+  uom: "",
+  profileGroupKey: "",
+  instSpan: "",
+  allowableGasValueMin: "",
+  allowableGasValueMax: "",
+  cylGasConc: "",
+  cylID: "",
+  cylExpDate: "",
+  cylVendorID: "",
+  cylEpaGasTypeCode: "",
+  cylPressure: "",
+  cylPressureUOM: "",
+  errorInfo: []
 };
 
 export const selectCurrentGasProfile = createSelector(

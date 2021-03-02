@@ -58,6 +58,8 @@
 
   .check-box-list {
     padding-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .gas-item {

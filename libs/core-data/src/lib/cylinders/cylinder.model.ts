@@ -38,5 +38,7 @@ export interface CylinderFilters {
   cylinderID: string;
   gasCodes: string[];
   unitNumber: string;
-  testType: string;
+  testType: string[];
+  unitIDs: string[];
+  concentration: any[];
 }

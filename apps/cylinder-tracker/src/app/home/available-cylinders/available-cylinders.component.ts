@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder, QAGasProfile, CylinderFilters } from '@cedar-all/core-data';
+import { Cylinder, QAGasProfile, CylinderFilters, UnitDef } from '@cedar-all/core-data';
 //import * as Moment from 'moment';
 
 @Component({
@@ -11,8 +11,9 @@ export class AvailableCylindersComponent {
   spareCylinders: Cylinder[];
   inUseCylinders: Cylinder[];
   gasProfiles: QAGasProfile[];
+  units: UnitDef[] = [];
   cylinderIDs: string[] = [];
-  unitNums: string[] = [];
+  unitNames: string[] = [];
   dropListConnections: string[] = [];
   cylAssignedProfiles = {};
   testTypes: string[] = [];
@@ -26,11 +27,14 @@ export class AvailableCylindersComponent {
     cylinderID: '',
     gasCodes: [],
     unitNumber: '',
-    testType: ''
+    testType: [],
+    unitIDs: [],
+    concentration: []
   }
   crossCardFilters = {
     gasCodes: [],
-    filterItem: ''
+    filterItem: '',
+    concentration: []
   }
 
   @Input('crossCardFilters') set filters(value) {
@@ -57,14 +61,30 @@ export class AvailableCylindersComponent {
       }
       this.gasProfiles = value;
       value.forEach(gas => {
-        if(!this.unitNums.includes(gas.unit.toString())) {
-          this.unitNums.push(gas.unit.toString());
+        if(!this.testTypes.includes(gas.analyzerSpanType)) {
+          this.testTypes.push(gas.analyzerSpanType);
         }
+        if(!this.testTypes.includes(gas.cedarGasCode)) {
+          this.testTypes.push(gas.cedarGasCode);
+        }
+        if(!this.testTypes.includes(gas.qaTestType)) {
+          this.testTypes.push(gas.qaTestType);
+        }
+      })
+      value.forEach(gas => {
         if(!this.testTypes.includes(gas.desc)) {
           this.testTypes.push(gas.desc);
         }
       })
       this.findAssignedProfiles();
+    }
+  }
+  @Input() set unitDefs(value: UnitDef[]) {
+    if(value) {
+      this.units = value;
+      value.forEach(unit => {
+        this.unitNames.push(unit.name);
+      })
     }
   }
   @Output() cylinderDropped = new EventEmitter();
@@ -87,15 +107,29 @@ export class AvailableCylindersComponent {
     this.refreshFiltersVariable();
   }
 
-  unitNumSelected(event) {
-    const unitNum = typeof(event) === 'string' ? event : event.option.value;
-    this.cylinderFilters.unitNumber = unitNum ? unitNum : '';
+  // unitNameSelected(event) {
+  //   const unitNum = typeof(event) === 'string' ? event : this.units.filter(unit => unit.name === event.option.value)[0].id;
+  //   this.cylinderFilters.unitNumber = unitNum ? unitNum : '';
+  //   this.refreshFiltersVariable();
+  // }
+
+  unitNameSelected(unitNames) {
+    const unitIDs = [];
+    unitNames.forEach(name => {
+      unitIDs.push(this.units.filter(unit => unit.name === name)[0].id);
+    })
+    this.cylinderFilters.unitIDs = unitIDs;
     this.refreshFiltersVariable();
   }
 
-  testTypeSelected(event) {
-    const testType = typeof(event) === 'string' ? event : event.option.value;
-    this.cylinderFilters.testType = testType ? testType : '';
+  // testTypeSelected(event) {
+  //   const testType = typeof(event) === 'string' ? event : event.option.value;
+  //   this.cylinderFilters.testType = testType ? testType : '';
+  //   this.refreshFiltersVariable();
+  // }
+
+  testTypeSelected(testTypeSelections) {
+    this.cylinderFilters.testType = testTypeSelections;
     this.refreshFiltersVariable();
   }
 
@@ -116,7 +150,9 @@ export class AvailableCylindersComponent {
       cylinderID: '',
       gasCodes: this.cylinderFilters.gasCodes,
       unitNumber: '',
-      testType: ''
+      testType: [],
+      unitIDs: [],
+      concentration: []
     })
   }
 
@@ -126,11 +162,14 @@ export class AvailableCylindersComponent {
       cylinderID: '',
       gasCodes: [],
       unitNumber: '',
-      testType: ''
+      testType: [],
+      unitIDs: [],
+      concentration: []
     })
     this.crossCardFilters = Object.assign({}, {
       gasCodes: [],
-      filterItem: ''
+      filterItem: '',
+      concentration: []
     })
     this.clearFilterItems = !this.clearFilterItems;
     // TODO: find better way to clear items

@@ -10,15 +10,17 @@
               [ngStyle]="{
                 'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
                 'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }"
-            >{{ gas.epaGasCode }}</span>
+              }">
+              {{ gas.epaGasCode }}
+            </span>
             <span 
               class="gas-concentration"
               [ngStyle]="{
                 'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
                 'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }"
-            >{{ gas.gasConcentration }} {{ gas.uom }}</span>
+              }">
+              {{ gas.gasConcentration }} {{ gas.uom }}
+            </span>
           </div>
         </ng-container>
       </div>
@@ -37,15 +39,17 @@
               [ngStyle]="{
                 'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
                 'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }"
-            >{{ gas.epaGasCode }}</span>
+              }">
+              {{ gas.epaGasCode }}
+            </span>
             <span 
               class="gas-concentration"
               [ngStyle]="{
                 'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
                 'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }"
-            >{{ gas.gasConcentration }} {{ gas.uom }}</span>
+              }">
+              {{ gas.gasConcentration }} {{ gas.uom }}
+            </span>
           </div>
         </ng-container>
       </div>
@@ -60,11 +64,10 @@
           <mat-checkbox
             *ngFor="let gasProfile of data.gasProfiles"
             class="gas-item"
-            [(ngModel)]="checkBoxConnections[gasProfile.unit]"
+            [(ngModel)]="checkBoxConnections[gasProfile.profileGroupKey]"
             name="{{gasProfile.tagID}}"
-            (change)="gasSelectionChange($event)"
-          >
-            <span class="gas-item-unit">Unit: {{ gasProfile.unit }}</span>  {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
+            (change)="gasSelectionChange($event)">
+            <span class="gas-item-unit">{{ getUnitName(gasProfile.unit) }}</span>  {{ gasProfile.desc }} <span>{{isConcentrationValid(gasProfile)}}</span>
           </mat-checkbox>
         </div>
 

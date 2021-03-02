@@ -11,8 +11,8 @@
   <div [ngClass]="gasProfile.errorInfo ? 'color-bar-error' : 'gas-item-color-bar'"></div>
   <div class="gas-item-content" (click)="filterOtherCard.emit(gasProfile)">
     <h2 class="gas-item-title">
+      <span class="unit-text">{{ getUnitName(gasProfile.unit) }}</span>
       <div>{{ gasProfile.desc }}</div>
-      <span class="unit-text">Unit: {{ gasProfile.unit }}</span>
     </h2>
 
     <div class="gas-profile-gas-codes">

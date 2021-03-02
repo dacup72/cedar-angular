@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { QAGasProfile, GasProfileFilters, Cylinder } from '@cedar-all/core-data';
+import { QAGasProfile, GasProfileFilters, Cylinder, UnitDef } from '@cedar-all/core-data';
 
 @Component({
   selector: 'cylinder-tracker-gas-profile-item',
@@ -68,6 +68,7 @@ export class GasProfileItemComponent {
   @Input() gasProfiles: QAGasProfile[];
   @Input() gasProfileFilters: GasProfileFilters;
   @Input() inUseCylinders: Cylinder[];
+  @Input() units: UnitDef[];
 
   @Output() cylinderDropped = new EventEmitter();
   @Output('filterOtherCard') filterOtherCard = new EventEmitter();
@@ -96,5 +97,10 @@ export class GasProfileItemComponent {
 
   parseDate(dateString: string) {
     return Date.parse(dateString);
+  }
+
+  getUnitName(unitID) {
+    const matchedUnit = this.units.filter(unit => unit.id === unitID)[0];
+    return matchedUnit ? matchedUnit.name : 'Error: Unit name not found';
   }
 }

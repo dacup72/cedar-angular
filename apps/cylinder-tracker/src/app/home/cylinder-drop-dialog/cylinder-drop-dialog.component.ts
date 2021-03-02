@@ -1,12 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Cylinder, QAGasProfile } from '@cedar-all/core-data';
+import { Cylinder, QAGasProfile, UnitDef } from '@cedar-all/core-data';
 
 export interface DialogData {
   cylinder1: Cylinder;
   cylinder2: Cylinder;
   gasProfiles: QAGasProfile[];
   gasProfiles2: QAGasProfile[];
+  unitDefs: UnitDef[];
   dropType: string;
   isLastAssignedGasProfile: boolean
 }
@@ -94,9 +95,9 @@ export class CylinderDropDialogComponent {
       }
     }
 
-    data.gasProfiles.forEach(g => {
-      if(!this.checkBoxConnections[g.unit]) {
-        this.checkBoxConnections[g.unit] = true;
+    data.gasProfiles.forEach(gas => {
+      if(!this.checkBoxConnections[gas.profileGroupKey]) {
+        this.checkBoxConnections[gas.profileGroupKey] = true;
       }
     })
   }
@@ -140,5 +141,10 @@ export class CylinderDropDialogComponent {
     else {
       return `-  Cylinder: ${this.data[cylNum].cylinderID} does not have the correct ${gasProfile.cedarGasCode} concentration. ${concMsg}`;
     }
+  }
+
+  getUnitName(unitID) {
+    const matchedUnit = this.data.unitDefs.filter(unit => unit.id === unitID)[0];
+    return matchedUnit ? matchedUnit.name : 'Unit name not found';
   }
 }

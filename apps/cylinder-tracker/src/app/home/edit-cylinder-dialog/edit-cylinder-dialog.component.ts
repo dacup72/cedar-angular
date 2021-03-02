@@ -23,7 +23,7 @@ export class EditCylinderDialogComponent {
   uncommonGasCodes = ['N2O', 'PPN', 'CH4', 'HE', 'H2S'];
   balCodes = ['BALN', 'BALA'];
   otherCodes = ['APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
-  measurementTypes = ['ppm', '%CO2', '%O2', 'ppb', '%'];
+  measurementTypes = ['ppm', 'ppb', '%'];
   showMoreGases = false;
   showMoreOtherGases = false;
   balCodeSelected = false;

@@ -17,12 +17,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 17.2,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -59,12 +53,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 5.66,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -91,12 +79,6 @@
         "qaGasDefCode": "CO",
         "epaGasCode": "CO",
         "gasConcentration": 10.7,
-        "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
         "uom": "ppm"
       }
     ],
@@ -125,12 +107,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 189.0,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -157,12 +133,6 @@
         "qaGasDefCode": "CO",
         "epaGasCode": "CO",
         "gasConcentration": 48.1,
-        "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
         "uom": "ppm"
       }
     ],
@@ -191,12 +161,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 106,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -217,13 +181,7 @@
         "qaGasDefCode": "O2",
         "epaGasCode": "O2",
         "gasConcentration": 18.7,
-        "uom": "%O2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "inUse",
@@ -244,13 +202,7 @@
         "qaGasDefCode": "O2",
         "epaGasCode": "O2",
         "gasConcentration": 5.38,
-        "uom": "%O2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "inUse",
@@ -271,13 +223,7 @@
         "qaGasDefCode": "O2",
         "epaGasCode": "O2",
         "gasConcentration": 11.4,
-        "uom": "%O2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "inUse",
@@ -298,12 +244,6 @@
         "qaGasDefCode": "NOX",
         "epaGasCode": "NOX",
         "gasConcentration": 161,
-        "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
         "uom": "ppm"
       }
     ],
@@ -326,12 +266,6 @@
         "epaGasCode": "NOX",
         "gasConcentration": 51.9,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -352,12 +286,6 @@
         "qaGasDefCode": "NOX",
         "epaGasCode": "NOX",
         "gasConcentration": 113,
-        "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
         "uom": "ppm"
       }
     ],
@@ -380,12 +308,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 470,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -406,12 +328,6 @@
         "qaGasDefCode": "CO",
         "epaGasCode": "CO",
         "gasConcentration": 118,
-        "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
         "uom": "ppm"
       }
     ],
@@ -434,12 +350,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 269,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
       }
     ],
     "state": "inUse",
@@ -460,13 +370,7 @@
         "qaGasDefCode": "CO2",
         "epaGasCode": "CO2",
         "gasConcentration": 17.3,
-        "uom": "%CO2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "inUse",
@@ -487,13 +391,7 @@
         "qaGasDefCode": "CO2",
         "epaGasCode": "CO2",
         "gasConcentration": 6.81,
-        "uom": "%CO2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "inUse",
@@ -514,7 +412,7 @@
         "qaGasDefCode": "CO2",
         "epaGasCode": "CO2",
         "gasConcentration": 49.9,
-        "uom": "%CO2"
+        "uom": "%"
       },
       {
         "qaGasDefCode": "NOX",
@@ -541,13 +439,7 @@
         "qaGasDefCode": "O2",
         "epaGasCode": "O2",
         "gasConcentration": 17.8,
-        "uom": "%O2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "spare",
@@ -575,12 +467,6 @@
         "epaGasCode": "CO",
         "gasConcentration": 17.1,
         "uom": "ppm"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 14.8,
-        "uom": "ppm"
       }
     ],
     "state": "spare",
@@ -601,13 +487,7 @@
         "qaGasDefCode": "CO2",
         "epaGasCode": "CO2",
         "gasConcentration": 12.8,
-        "uom": "%CO2"
-      },
-      {
-        "qaGasDefCode": "BALN",
-        "epaGasCode": "BALN",
-        "gasConcentration": 22,
-        "uom": "ppm"
+        "uom": "%"
       }
     ],
     "state": "spare",

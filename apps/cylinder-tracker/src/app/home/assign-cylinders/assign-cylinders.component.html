@@ -6,22 +6,39 @@
   <ng-template #filterSection>
     <div class="card-filters">
       <div class="filter-input-section">
-        <ui-select-autocomplete
+        <!-- <ui-select-autocomplete
           *ngIf="!crossCardFilters.filterItem"
-          [selectTitle]="filterTitleUnits"
-          [options]="unitNums"
-          (selectionChange)="unitNumSelected($event)"
+          [selectTitle]="'Unit'"
+          [options]="unitNames"
+          (selectionChange)="unitNameSelected($event)"
           [clearItems]="clearFilterItems"
         >
         </ui-select-autocomplete>
         <ui-select-autocomplete
           *ngIf="!crossCardFilters.filterItem"
-          [selectTitle]="filterTitleTests"
+          [selectTitle]="'Gas Description'"
           [options]="testTypes"
           (selectionChange)="testTypeSelected($event)"
           [clearItems]="clearFilterItems"
         >
-        </ui-select-autocomplete>
+        </ui-select-autocomplete> -->
+
+        <cedar-all-ui-filter-chips
+          *ngIf="!crossCardFilters.filterItem"
+          [filterItemName]="'Unit'"
+          [allItems]="unitNames"
+          (selectionChange)="unitNameSelected($event)"
+          [clearItems]="clearFilterItems"
+        >
+        </cedar-all-ui-filter-chips>
+        <cedar-all-ui-filter-chips
+          *ngIf="!crossCardFilters.filterItem"
+          [filterItemName]="'Gas Description'"
+          [allItems]="testTypes"
+          (selectionChange)="testTypeSelected($event)"
+          [clearItems]="clearFilterItems"
+        >
+        </cedar-all-ui-filter-chips>
 
         <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
           <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
@@ -58,6 +75,7 @@
           [cdkDropListData]="[cylinder]"
           [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
           [cylinder]="cylinder"
+          [units]="units"
           [isAssignedCylinder]="true"
           [disableItemDrag]="true"
           [gasProfiles]="gasProfiles"
@@ -78,6 +96,7 @@
       <cylinder-tracker-gas-profile-item
         [gasProfiles]="gasProfiles"
         [gasProfileFilters]="filterForOtherCard ? crossCardFilters : gasProfileFilters"
+        [units]="units"
         [inUseCylinders]="inUseCylinders"
         (cylinderDropped)="cylinderDropped.emit($event)"
         (filterOtherCard)="filterOtherCard.emit($event)"

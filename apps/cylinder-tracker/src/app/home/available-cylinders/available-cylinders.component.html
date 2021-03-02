@@ -23,22 +23,37 @@
         >
         </cedar-all-ui-filter-chips>
 
-        <ui-select-autocomplete
+        <!-- <ui-select-autocomplete
           *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
-          [selectTitle]="'Unit Name'"
-          [options]="unitNums"
-          (selectionChange)="unitNumSelected($event)"
+          [selectTitle]="'Unit'"
+          [options]="unitNames"
+          (selectionChange)="unitNameSelected($event)"
           [clearItems]="clearFilterItems"
         >
         </ui-select-autocomplete>
         <ui-select-autocomplete
           *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
-          [selectTitle]="'Test Type'"
+          [selectTitle]="'Gas Description'"
           [options]="testTypes"
           (selectionChange)="testTypeSelected($event)"
           [clearItems]="clearFilterItems"
         >
-        </ui-select-autocomplete>
+        </ui-select-autocomplete> -->
+
+        <cedar-all-ui-filter-chips
+          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
+          [filterItemName]="'Unit'"
+          [allItems]="unitNames"
+          (selectionChange)="unitNameSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
+        <cedar-all-ui-filter-chips
+          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
+          [filterItemName]="'Gas Description'"
+          [allItems]="testTypes"
+          (selectionChange)="testTypeSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
 
         <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
           <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
@@ -83,6 +98,7 @@
           [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-spare'"
           [cylinder]="cylinder"
           [isAssignedCylinder]="false"
+          [units]="units"
           (cylinderDropped)="cylinderDropped.emit($event)"
           (cylinderSelected)="cylinderSelected.emit($event)"
           (retireCylinder)="retireCylinder.emit($event)"
@@ -104,16 +120,6 @@
       [cdkDropListConnectedTo]="dropListConnections"
       cdkDropListSortingDisabled
     >
-      <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
-        <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
-        <button
-          mat-raised-button
-          class="clear-filters-button"
-          (click)="clearFilters()"
-        >
-          Clear Filters
-        </button>
-      </div>
       <li
         cdkDrag
         *ngFor="
@@ -129,6 +135,7 @@
           class="mat-elevation-z8"
           [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-inUse'"
           [cylinder]="cylinder"
+          [units]="units"
           [isAssignedCylinder]="true"
           [gasProfiles]="gasProfiles"
           [cylAssignedProfiles]="cylAssignedProfiles"

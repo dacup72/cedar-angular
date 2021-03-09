@@ -45,7 +45,9 @@ export class CylinderItemComponent {
     if(this.cylAssignedProfiles[id]) {
       return this.cylAssignedProfiles[id];
     }
-    return [];
+    else {
+      return [];
+    }
   }
 
   gasSorter(array, key) {

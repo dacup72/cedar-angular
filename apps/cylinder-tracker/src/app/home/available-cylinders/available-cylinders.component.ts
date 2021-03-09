@@ -64,6 +64,7 @@ export class AvailableCylindersComponent {
       this.cylinderIDs = value.map(c => c.cylinderID);
       this.savedSuccess.emit('Cylinder Saved Successfully')
     }
+    if(this.inUseCylinders.length) this.findAssignedProfiles();
 
   }
   @Input() set qaGasProfiles(value: QAGasProfile[]) {
@@ -88,7 +89,7 @@ export class AvailableCylindersComponent {
           this.testTypes.push(gas.desc);
         }
       })
-      this.findAssignedProfiles();
+      //if(this.inUseCylinders.length) this.findAssignedProfiles();
     }
   }
   @Input() set unitDefs(value: UnitDef[]) {
@@ -226,7 +227,6 @@ export class AvailableCylindersComponent {
         assignedProfiles[cyl] = unitArray;
       }
     }
-
     this.cylAssignedProfiles = assignedProfiles;
   }
 }

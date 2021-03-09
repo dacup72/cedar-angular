@@ -1,4 +1,502 @@
 [
+  {
+    "id": "0",
+    "cylinderID": "ABC56789",
+    "expirationDate": "2019-08-01",
+    "vendorID": "A12017",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 12.3,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 17.2,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": [
+      {
+        "severity": "4",
+        "errorMsg": "Cylinder is expired"
+      },
+      {
+        "severity": "4",
+        "errorMsg": "Gas concentration (12.3 ppm NOx) is outside allowable ranges (8-10 ppm, 5-6 ppm)"
+      }
+    ]
+  },
+  {
+    "id": "1",
+    "cylinderID": "139482",
+    "expirationDate": "2018-05-24",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 2.57,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 5.66,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "2",
+    "cylinderID": "CC834059",
+    "expirationDate": "2022-05-27",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 5.84,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 10.7,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "3",
+    "cylinderID": "CC832093SS",
+    "expirationDate": "2023-10-03",
+    "vendorID": "F32019",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 87.3,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 189.0,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "4",
+    "cylinderID": "856730BB",
+    "expirationDate": "2024-04-16",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 24.1,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 48.1,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "5",
+    "cylinderID": "270194ALM",
+    "expirationDate": "2024-04-13",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 56.8,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 106,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "6",
+    "cylinderID": "ALM3459",
+    "expirationDate": "2023-06-24",
+    "vendorID": "F32020",
+    "epaGasTypeCodes": ["O2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "O2",
+        "epaGasCode": "O2",
+        "gasConcentration": 18.7,
+        "uom": "%"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "7",
+    "cylinderID": "CC092481",
+    "expirationDate": "2022-01-24",
+    "vendorID": "B22019",
+    "epaGasTypeCodes": ["O2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "O2",
+        "epaGasCode": "O2",
+        "gasConcentration": 5.38,
+        "uom": "%"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "8",
+    "cylinderID": "CC459201",
+    "expirationDate": "2022-11-29",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["O2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "O2",
+        "epaGasCode": "O2",
+        "gasConcentration": 11.4,
+        "uom": "%"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "9",
+    "cylinderID": "RR9830291",
+    "expirationDate": "2022-04-19",
+    "vendorID": "A12019",
+    "epaGasTypeCodes": ["NOX", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 161,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "10",
+    "cylinderID": "YY167901",
+    "expirationDate": "2022-03-22",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 51.9,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "11",
+    "cylinderID": "EF387290",
+    "expirationDate": "2022-06-03",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 113,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "12",
+    "cylinderID": "FF98374220",
+    "expirationDate": "2023-02-13",
+    "vendorID": "A12020",
+    "epaGasTypeCodes": ["CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 470,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "13",
+    "cylinderID": "FF029310",
+    "expirationDate": "2023-05-01",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 118,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "14",
+    "cylinderID": "980293",
+    "expirationDate": "2022-10-09",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 269,
+        "uom": "ppm"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "15",
+    "cylinderID": "CC082034",
+    "expirationDate": "2023-06-24",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO2",
+        "epaGasCode": "CO2",
+        "gasConcentration": 17.3,
+        "uom": "%"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "16",
+    "cylinderID": "CC762039",
+    "expirationDate": "2023-06-24",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO2",
+        "epaGasCode": "CO2",
+        "gasConcentration": 6.81,
+        "uom": "%"
+      }
+    ],
+    "state": "inUse",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "17",
+    "cylinderID": "BE880982",
+    "expirationDate": "2022-11-28",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["NOX", "CO2"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO2",
+        "epaGasCode": "CO2",
+        "gasConcentration": 49.9,
+        "uom": "%"
+      },
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 12,
+        "uom": "ppm"
+      }
+    ],
+    "state": "spare",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "18",
+    "cylinderID": "DH13892",
+    "expirationDate": "2023-06-24",
+    "vendorID": "F32020",
+    "epaGasTypeCodes": ["O2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "O2",
+        "epaGasCode": "O2",
+        "gasConcentration": 17.8,
+        "uom": "%"
+      }
+    ],
+    "state": "spare",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "19",
+    "cylinderID": "HE7dd987",
+    "expirationDate": "2022-07-09",
+    "vendorID": "A12017",
+    "epaGasTypeCodes": ["NOX", "CO", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "NOX",
+        "epaGasCode": "NOX",
+        "gasConcentration": 9.1,
+        "uom": "ppm"
+      },
+      {
+        "qaGasDefCode": "CO",
+        "epaGasCode": "CO",
+        "gasConcentration": 17.1,
+        "uom": "ppm"
+      }
+    ],
+    "state": "spare",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
+  {
+    "id": "20",
+    "cylinderID": "FF732107",
+    "expirationDate": "2022-11-28",
+    "vendorID": "B22020",
+    "epaGasTypeCodes": ["CO2", "BALN"],
+    "componentGases": [
+      {
+        "qaGasDefCode": "CO2",
+        "epaGasCode": "CO2",
+        "gasConcentration": 12.8,
+        "uom": "%"
+      }
+    ],
+    "state": "spare",
+    "certificationImage": "image url",
+    "hasBeenUsedForQA": false,
+    "createdByPartialEdit": false,
+    "editHistory": "<history goes here />",
+    "errorList": []
+  },
     {
       "id": "1EA687F0-D07B-EB11-AFAA-0050B6D14266",
       "cylinderID": "1L1465",

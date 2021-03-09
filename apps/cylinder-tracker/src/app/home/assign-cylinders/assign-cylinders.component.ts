@@ -52,6 +52,7 @@ export class AssignCylindersComponent {
   @Input() set cylinders(value: Cylinder[]) {
     if(value) this.inUseCylinders = value.filter(c => c.state === 'inUse')
     this.cylinderIDs = value.map(c => c.cylinderID);
+    if(this.inUseCylinders.length) this.findAssignedProfiles();
   }
   @Input() set qaGasProfiles(value: QAGasProfile[]) {
     if(value) {
@@ -73,7 +74,7 @@ export class AssignCylindersComponent {
         this.testTypes.push(gas.desc);
       }
     })
-    this.findAssignedProfiles();
+    //if(this.inUseCylinders.length) this.findAssignedProfiles();
   }
   @Input() set unitDefs(value: UnitDef[]) {
     if(value) {

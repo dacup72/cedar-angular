@@ -99,7 +99,7 @@
 
   <div class="card-content cylinder-list">
     <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
-    <div
+    <ul
       cdkDropList
       id="sparesDropList"
       (cdkDropListDropped)="cylinderDropped.emit($event)"
@@ -107,7 +107,7 @@
       [cdkDropListConnectedTo]="dropListConnections"
       cdkDropListSortingDisabled>
       <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test">
-        <div
+        <li
           cdkDrag
           *cdkVirtualFor="let cylinder of allCylinders 
             | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
@@ -128,9 +128,9 @@
             (filterOtherCard)="filterOtherCard.emit($event)"
             (createSimilarCyl)="createSimilarCyl.emit($event)">
           </cylinder-tracker-cylinder-item>
-        </div>
+        </li>
       </cdk-virtual-scroll-viewport>
-    </div>
+    </ul>
   </div>
 
   <!-- <cylinder-tracker-home-tab-group

@@ -49,7 +49,9 @@ export class CylinderFilterPipe implements PipeTransform {
           else {
             // Filtering
             filterValue.forEach(gas => {
-              resultCylinders = resultCylinders.filter(c => c.epaGasTypeCodes.includes(gas))
+              resultCylinders = resultCylinders.filter(c => (
+                c.componentGases.filter(g => g.epaGasCode === gas).length > 0)
+              );
             })
           }
           break;

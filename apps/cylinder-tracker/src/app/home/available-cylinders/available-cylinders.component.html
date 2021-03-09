@@ -7,6 +7,35 @@
     <div class="card-filters">
       <div class="filter-input-section">
         <ui-select-autocomplete
+          [hidden]="crossCardFilters.filterItem"
+          [selectTitle]="'Cylinder State'"
+          [options]="['spare', 'inUse']"
+          (selectionChange)="cylinderStateSelected($event)"
+          [clearItems]="clearFilterItems">
+        </ui-select-autocomplete>
+        <cedar-all-ui-filter-chips
+          [hidden]="crossCardFilters.filterItem"
+          [filterItemName]="'Gas Type'"
+          [allItems]="gasTypes"
+          (selectionChange)="gasTypeSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
+        <cedar-all-ui-filter-chips
+          [hidden]="crossCardFilters.filterItem"
+          [filterItemName]="'Unit'"
+          [allItems]="unitNames"
+          (selectionChange)="unitNameSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
+        <cedar-all-ui-filter-chips
+          [hidden]="crossCardFilters.filterItem"
+          [filterItemName]="'Gas Description'"
+          [allItems]="testTypes"
+          (selectionChange)="testTypeSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
+
+        <!-- <ui-select-autocomplete
           [hidden]="!filtersForSpares || crossCardFilters.filterItem"
           [selectTitle]="'Cylinder ID'"
           [options]="cylinderIDs"
@@ -33,7 +62,7 @@
           [allItems]="testTypes"
           (selectionChange)="testTypeSelected($event)"
           [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
+        </cedar-all-ui-filter-chips> -->
 
         <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
           <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
@@ -68,7 +97,42 @@
     </div>
   </ng-template>
 
-  <cylinder-tracker-home-tab-group
+  <div class="card-content cylinder-list">
+    <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
+    <ul
+      class="tab-left-content"
+      cdkDropList
+      id="sparesDropList"
+      (cdkDropListDropped)="cylinderDropped.emit($event)"
+      [cdkDropListData]="spareCylinders"
+      [cdkDropListConnectedTo]="dropListConnections"
+      cdkDropListSortingDisabled>
+      <li
+        cdkDrag
+        *ngFor="let cylinder of allCylinders 
+          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
+          trackBy: trackCylinder"
+        [cdkDragData]="cylinder"
+        (click)="cylinderSelected.emit(cylinder)">
+        <cylinder-tracker-cylinder-item
+          class="mat-elevation-z8 cylinder-item-border-spare"
+          [cylinder]="cylinder"
+          [isAssignedCylinder]="false"
+          [units]="units"
+          [existingGasTypes]="existingGasTypes"
+          [cylAssignedProfiles]="cylAssignedProfiles"
+          (cylinderDropped)="cylinderDropped.emit($event)"
+          (cylinderSelected)="cylinderSelected.emit($event)"
+          (retireCylinder)="retireCylinder.emit($event)"
+          (editCylinder)="editCylinder.emit($event)"
+          (filterOtherCard)="filterOtherCard.emit($event)"
+          (createSimilarCyl)="createSimilarCyl.emit($event)">
+        </cylinder-tracker-cylinder-item>
+      </li>
+    </ul>
+  </div>
+
+  <!-- <cylinder-tracker-home-tab-group
     class="card-content"
     [tabLeftLabel]="'Spare Cylinders'"
     [tabRightLabel]="'In-Service Cylinders'"
@@ -84,7 +148,7 @@
       cdkDropListSortingDisabled>
       <li
         cdkDrag
-        *ngFor="let cylinder of spareCylinders 
+        *ngFor="let cylinder of allCylinders 
           | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
           trackBy: trackCylinder"
         [cdkDragData]="cylinder"
@@ -125,7 +189,8 @@
           [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-inUse'"
           [cylinder]="cylinder"
           [units]="units"
-          [isAssignedCylinder]="true"
+          [existingGasTypes]="existingGasTypes"
+          [isAssignedCylinder]="false"
           [gasProfiles]="gasProfiles"
           [cylAssignedProfiles]="cylAssignedProfiles"
           (cylinderDropped)="cylinderDropped.emit($event)"
@@ -137,5 +202,5 @@
         </cylinder-tracker-cylinder-item>
       </li>
     </ul>
-  </cylinder-tracker-home-tab-group>
+  </cylinder-tracker-home-tab-group> -->
 </cylinder-tracker-home-card>

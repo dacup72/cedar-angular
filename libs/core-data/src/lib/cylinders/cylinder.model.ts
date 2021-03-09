@@ -41,4 +41,5 @@ export interface CylinderFilters {
   testType: string[];
   unitIDs: string[];
   concentration: any[];
+  state: string;
 }

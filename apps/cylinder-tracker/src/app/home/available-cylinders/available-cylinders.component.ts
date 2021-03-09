@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Cylinder, QAGasProfile, CylinderFilters, UnitDef } from '@cedar-all/core-data';
-//import * as Moment from 'moment';
 
 @Component({
   selector: 'cylinder-tracker-available-cylinders',
@@ -8,6 +7,7 @@ import { Cylinder, QAGasProfile, CylinderFilters, UnitDef } from '@cedar-all/cor
   styleUrls: ['./available-cylinders.component.scss']
 })
 export class AvailableCylindersComponent {
+  allCylinders: Cylinder[];
   spareCylinders: Cylinder[];
   inUseCylinders: Cylinder[];
   gasProfiles: QAGasProfile[];
@@ -30,7 +30,8 @@ export class AvailableCylindersComponent {
     unitNumber: '',
     testType: [],
     unitIDs: [],
-    concentration: []
+    concentration: [],
+    state: ''
   }
   crossCardFilters = {
     gasCodes: [],
@@ -47,6 +48,7 @@ export class AvailableCylindersComponent {
   }
   @Input() set cylinders(value: Cylinder[]) {
     if(value) {
+      this.allCylinders = [...value]
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
       value.forEach(c => {
@@ -115,6 +117,12 @@ export class AvailableCylindersComponent {
     this.refreshFiltersVariable();
   }
 
+  cylinderStateSelected(event) {
+    const cylinderState = typeof(event) === 'string' ? event : event.option.value;
+    this.cylinderFilters.state = cylinderState ? cylinderState : '';
+    this.refreshFiltersVariable();
+  }
+
   // unitNameSelected(event) {
   //   const unitNum = typeof(event) === 'string' ? event : this.units.filter(unit => unit.name === event.option.value)[0].id;
   //   this.cylinderFilters.unitNumber = unitNum ? unitNum : '';
@@ -160,7 +168,8 @@ export class AvailableCylindersComponent {
       unitNumber: '',
       testType: [],
       unitIDs: [],
-      concentration: []
+      concentration: [],
+      state: ''
     })
   }
 
@@ -172,7 +181,8 @@ export class AvailableCylindersComponent {
       unitNumber: '',
       testType: [],
       unitIDs: [],
-      concentration: []
+      concentration: [],
+      state: ''
     })
     this.crossCardFilters = Object.assign({}, {
       gasCodes: [],

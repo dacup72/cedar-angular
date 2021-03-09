@@ -58,13 +58,17 @@ ui-select-autocomplete, cedar-all-ui-filter-chips {
 }
 // TODO: Remove ng deep
 
+.cylinder-list {
+  background-color: white;
+}
+
 button.mat-raised-button:hover {
   background-color: $cylinder-tracker-accent;
 }
 
 #sparesDropList, #inUseDropList {
   overflow: auto;
-  height: 65vh;
+  height: 62vh;
   padding: 0;
   padding-left: 16px;
   padding-right: 16px;
@@ -160,11 +164,10 @@ li {
   justify-content: flex-end;
 }
 
-// #sparesDropList {
-//     padding-right: 16px;
-//     padding-left: 16px;
-//     padding-bottom: 16px;
-// }
+#sparesDropList {
+    margin: 0;
+    padding-top: 2px;
+}
 
 
 

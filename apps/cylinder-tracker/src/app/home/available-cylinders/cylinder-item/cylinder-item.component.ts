@@ -45,9 +45,7 @@ export class CylinderItemComponent {
     if(this.cylAssignedProfiles[id]) {
       return this.cylAssignedProfiles[id];
     }
-    else {
-      return [];
-    }
+    return [];
   }
 
   gasSorter(array, key) {
@@ -76,14 +74,6 @@ export class CylinderItemComponent {
       }
     })
     return result;
-  }
-
-  getGasClasses(gas) {
-    console.log(gas)
-    return {
-      gas: true,
-      'remove-gas-content': this.getGasValue(gas) === ''
-    }
   }
 }
 

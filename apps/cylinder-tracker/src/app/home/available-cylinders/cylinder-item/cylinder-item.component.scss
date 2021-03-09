@@ -58,6 +58,11 @@
   }
 }
 
+.expanded-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 
 
@@ -129,6 +134,7 @@ mat-icon {
 
 .cylinder-item-assigned-gases {
   margin-bottom: 10px;
+  margin-top: 3px;
   border: 1px solid lightgray;
   border-radius: 6px;
 

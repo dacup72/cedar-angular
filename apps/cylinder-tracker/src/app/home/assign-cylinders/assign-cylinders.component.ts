@@ -27,7 +27,8 @@ export class AssignCylindersComponent {
     unitNumber: '',
     testType: [],
     unitIDs: [],
-    concentration: []
+    concentration: [],
+    state: ''
   }
   gasProfileFilters: GasProfileFilters = {
     gasCodes: [],
@@ -128,7 +129,8 @@ export class AssignCylindersComponent {
       unitNumber: '',
       testType: [],
       unitIDs: [],
-      concentration: []
+      concentration: [],
+      state: ''
     })
     this.crossCardFilters = Object.assign({}, {
       gasCodes: [],

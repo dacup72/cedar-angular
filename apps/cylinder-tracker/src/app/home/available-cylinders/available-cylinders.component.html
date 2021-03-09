@@ -99,37 +99,38 @@
 
   <div class="card-content cylinder-list">
     <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
-    <ul
-      class="tab-left-content"
+    <div
       cdkDropList
       id="sparesDropList"
       (cdkDropListDropped)="cylinderDropped.emit($event)"
       [cdkDropListData]="spareCylinders"
       [cdkDropListConnectedTo]="dropListConnections"
       cdkDropListSortingDisabled>
-      <li
-        cdkDrag
-        *ngFor="let cylinder of allCylinders 
-          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
-          trackBy: trackCylinder"
-        [cdkDragData]="cylinder"
-        (click)="cylinderSelected.emit(cylinder)">
-        <cylinder-tracker-cylinder-item
-          class="mat-elevation-z8 cylinder-item-border-spare"
-          [cylinder]="cylinder"
-          [isAssignedCylinder]="false"
-          [units]="units"
-          [existingGasTypes]="existingGasTypes"
-          [cylAssignedProfiles]="cylAssignedProfiles"
-          (cylinderDropped)="cylinderDropped.emit($event)"
-          (cylinderSelected)="cylinderSelected.emit($event)"
-          (retireCylinder)="retireCylinder.emit($event)"
-          (editCylinder)="editCylinder.emit($event)"
-          (filterOtherCard)="filterOtherCard.emit($event)"
-          (createSimilarCyl)="createSimilarCyl.emit($event)">
-        </cylinder-tracker-cylinder-item>
-      </li>
-    </ul>
+      <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test">
+        <div
+          cdkDrag
+          *cdkVirtualFor="let cylinder of allCylinders 
+            | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
+            trackBy: trackCylinder"
+          [cdkDragData]="cylinder"
+          (click)="cylinderSelected.emit(cylinder)">
+          <cylinder-tracker-cylinder-item
+            class="mat-elevation-z8 cylinder-item-border-spare"
+            [cylinder]="cylinder"
+            [isAssignedCylinder]="false"
+            [units]="units"
+            [existingGasTypes]="existingGasTypes"
+            [cylAssignedProfiles]="cylAssignedProfiles"
+            (cylinderDropped)="cylinderDropped.emit($event)"
+            (cylinderSelected)="cylinderSelected.emit($event)"
+            (retireCylinder)="retireCylinder.emit($event)"
+            (editCylinder)="editCylinder.emit($event)"
+            (filterOtherCard)="filterOtherCard.emit($event)"
+            (createSimilarCyl)="createSimilarCyl.emit($event)">
+          </cylinder-tracker-cylinder-item>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
   </div>
 
   <!-- <cylinder-tracker-home-tab-group

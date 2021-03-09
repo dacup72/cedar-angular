@@ -5,8 +5,8 @@ import { ErrorInfo } from '@cedar-angular/api-interfaces';
 @Injectable()
 export class CylindersService {
   // Temporary database
-  private cylinders: Cylinder[] = require('./cylinder-data.json');
-  //private cylinders: Cylinder[] = require('./cylinder-data2.json');
+  //private cylinders: Cylinder[] = require('./cylinder-data.json');
+  private cylinders: Cylinder[] = require('./cylinder-data2.json');
 
   getAllCylinders(): Cylinder[] {
     return [...this.cylinders];

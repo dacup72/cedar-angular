@@ -68,13 +68,17 @@ button.mat-raised-button:hover {
 
 #sparesDropList, #inUseDropList {
   overflow: auto;
-  height: 62vh;
+  height: 69vh;
   padding: 0;
   padding-left: 16px;
   padding-right: 16px;
 }
 
-#sparesDropList::-webkit-scrollbar, #inUseDropList::-webkit-scrollbar {
+.test {
+  height: 69vh;
+}
+
+#sparesDropList::-webkit-scrollbar, #inUseDropList::-webkit-scrollbar, .test::-webkit-scrollbar {
   display: none;
 }
 

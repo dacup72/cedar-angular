@@ -52,9 +52,11 @@ export class AvailableCylindersComponent {
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
       value.forEach(c => {
-        c.componentGases.forEach(g => {
-          if(!this.existingGasTypes.includes(g.epaGasCode)) this.existingGasTypes.push(g.epaGasCode);
-        })
+        if(c.state !== 'retired') {
+          c.componentGases.forEach(g => {
+            if(!this.existingGasTypes.includes(g.epaGasCode)) this.existingGasTypes.push(g.epaGasCode);
+          })
+        }
       })
       for (let i = 0; i < this.inUseCylinders.length; i++) {
         this.dropListConnections.push('inUseDropList' + i);

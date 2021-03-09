@@ -1,6 +1,6 @@
 <cylinder-tracker-home-card [cardTitle]="'Assigned Cylinders'" class="cylinders-card">
   <ng-container class="card-title-content">
-    <button mat-raised-button (click)="swapCards.emit()">Swap Panels</button>
+    <button mat-raised-button (click)="swapCards.emit(); $event.stopImmediatePropagation()">Swap Panels</button>
   </ng-container>
 
   <ng-template #filterSection>
@@ -28,16 +28,14 @@
           [filterItemName]="'Unit'"
           [allItems]="unitNames"
           (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
+          [clearItems]="clearFilterItems">
         </cedar-all-ui-filter-chips>
         <cedar-all-ui-filter-chips
           *ngIf="!crossCardFilters.filterItem"
           [filterItemName]="'Gas Description'"
           [allItems]="testTypes"
           (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
+          [clearItems]="clearFilterItems">
         </cedar-all-ui-filter-chips>
 
         <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
@@ -54,19 +52,14 @@
   <cylinder-tracker-home-tab-group
     class="card-content"
     [tabLeftLabel]="'In-Service Cylinders'"
-    [tabRightLabel]="'Gas Profiles'"
-  >
+    [tabRightLabel]="'Gas Profiles'">
     <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
     <ul class="inUseDropList tab-left-content">
       <li>
         <cylinder-tracker-cylinder-item
-          *ngFor="
-            let cylinder of inUseCylinders
-              | cylinderFilter
-                : (filterForOtherCard ? crossCardFilters : cylinderFilters)
-                : gasProfiles;
-            let i = index
-          "
+          *ngFor="let cylinder of inUseCylinders 
+            | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters) : gasProfiles;
+            let i = index"
           cdkDropList
           class="mat-elevation-z8"
           id="{{ 'inUseDropList' + i }}"
@@ -85,8 +78,7 @@
           (retireCylinder)="retireCylinder.emit($event)"
           (unassignCylinder)="unassignCylinder.emit($event)"
           (editCylinder)="editCylinder.emit($event)"
-          (filterOtherCard)="filterOtherCard.emit($event)"
-        >
+          (filterOtherCard)="filterOtherCard.emit($event)">
         </cylinder-tracker-cylinder-item>
       </li>
     </ul>
@@ -99,8 +91,7 @@
         [units]="units"
         [inUseCylinders]="inUseCylinders"
         (cylinderDropped)="cylinderDropped.emit($event)"
-        (filterOtherCard)="filterOtherCard.emit($event)"
-      >
+        (filterOtherCard)="filterOtherCard.emit($event)">
       </cylinder-tracker-gas-profile-item>
     </ul>
   </cylinder-tracker-home-tab-group>

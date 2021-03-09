@@ -27,59 +27,6 @@ export class CylinderDropDialogComponent {
   commonGasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S'];
   checkBoxConnections = {}
 
-  gasColors = {
-    $cylindertrackerso2: '#9DCC5F',
-    $cylindertrackerso2text: 'black',
-    $cylindertrackerso2secondary: '#8E5FCC',
-    $cylindertrackerso2secondarytext: 'white',
-    $cylindertrackerno: '#36D6E7',
-    $cylindertrackernotext: 'black',
-    $cylindertrackernosecondary: '#E74736',
-    $cylindertrackernosecondarytext: 'black',
-    $cylindertrackerno2: '#9BCCFD',
-    $cylindertrackerno2text: 'black',
-    $cylindertrackerno2secondary: '#FDCC9B',
-    $cylindertrackerno2secondarytext: 'black',
-    $cylindertrackernox: '#0074DD',
-    $cylindertrackernoxtext: 'white',
-    $cylindertrackernoxsecondary: '#DD6900',
-    $cylindertrackernoxsecondarytext: 'black',
-    $cylindertrackern2o: '#81599F',
-    $cylindertrackern2otext: 'white',
-    $cylindertrackern2osecondary: '#779F59',
-    $cylindertrackern2osecondarytext: 'black',
-    $cylindertrackerco2: '#FD7F20',
-    $cylindertrackerco2text: 'black',
-    $cylindertrackerco2secondary: '#209EFD',
-    $cylindertrackerco2secondarytext: 'black',
-    $cylindertrackerco: '#FDB750',
-    $cylindertrackercotext: 'black',
-    $cylindertrackercosecondary: '#5096FD',
-    $cylindertrackercosecondarytext: 'black',
-    $cylindertrackero2: '#335120',
-    $cylindertrackero2text: 'white',
-    $cylindertrackero2secondary: '#3E2051',
-    $cylindertrackero2secondarytext: 'white',
-    $cylindertrackerppn: '#660A60',
-    $cylindertrackerppntext: 'white',
-    $cylindertrackerppnsecondary: '#0A6610',
-    $cylindertrackerppnsecondarytext: 'white',
-    $cylindertrackerch4: '#FF5C4D',
-    $cylindertrackerch4text: 'black',
-    $cylindertrackerch4secondary: '#4DF0FF',
-    $cylindertrackerch4secondarytext: 'black',
-    $cylindertrackerhe: '#FFCD58',
-    $cylindertrackerhetext: 'black',
-    $cylindertrackerhesecondary: '#588AFF',
-    $cylindertrackerhesecondarytext: 'black',
-    $cylindertrackerh2s: '#FF5C4D',
-    $cylindertrackerh2stext: 'black',
-    $cylindertrackerh2ssecondary: '#4DF0FF',
-    $cylindertrackerh2ssecondarytext: 'black',
-  }
-    // TODO find better way to make dynamic colors for gases
-
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, private dialogRef: MatDialogRef<CylinderDropDialogComponent>) {
     this.dialogOptions.gasProfilesBeingChanged = this.data.gasProfiles.map(gasProfile => gasProfile.tagID);
     this.dialogOptions.selectedState = data.cylinder1.state === 'spare' ? 'retired' : null;

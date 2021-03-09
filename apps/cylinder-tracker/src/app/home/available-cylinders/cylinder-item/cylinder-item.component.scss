@@ -1,32 +1,103 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
+.cylinder-expansion-panel {
+  width: 100%;
+}
+
+.cylinder-item {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 93%;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+::ng-deep {
+  .panel-content {
+    min-height: 48px;
+    height: auto !important;
+  }
+  
+  .panel-content .mat-content {
+    justify-content: space-around;
+  }
+
+  .panel-content .mat-content {
+    flex-basis: 93%;
+    display: flex;
+    align-items: center;
+    
+  
+    span {
+      flex-basis: 12%;
+      text-align: center;
+      word-break: break-all;
+    }
+  
+    .panel-gases {
+      flex-basis: 60%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      div {
+        text-align: center;
+        flex-basis: 15%;
+        font-size: 11px;
+        border-radius: 6px;
+      }
+
+      div.remove-gas-content {
+        background-color: transparent !important;
+      }
+
+      div.remove-gas-color {
+        //background-color: white;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .color-bar-spare {
-  //background-color: $cylinder-tracker-accent;
   background-color: $cylinder-tracker-accent;
-  width: 15px;
+  //width: 15px;
+  flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
 }
 
 .color-bar-inUse {
-  //background-color: $cylinder-tracker-accent;
   background-color: $cylinder-tracker-accent-light;
-  width: 15px;
+  //width: 15px;
+  flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
 }
 
-// .color-bar-assigned {
-//   //background-color: $cylinder-tracker-green;
-//   background-color: $cylinder-tracker-accent;
-//   width: 15px;
-//   border-bottom-left-radius: 6px;
-//   border-top-left-radius: 6px;
-// }
-
 .color-bar-error {
   background-color: red;
-  width: 15px;
+  //width: 15px;
+  flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
 }
@@ -105,13 +176,9 @@ mat-icon {
   padding: 10px;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
-  //background-color: mat-color(map-get($cisco-theme, primary));
-  //background-color: $cylinder-tracker-primary;
-  //color: white;
 }
 
 .gas-concentration {
-  //background-color: $cylinder-tracker-secondary2;
   font-weight: bold;
   padding: 10px;
   padding-left: 0;
@@ -145,6 +212,174 @@ mat-icon {
   justify-content: center;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .color-bar-spare {
+//   //background-color: $cylinder-tracker-accent;
+//   background-color: $cylinder-tracker-accent;
+//   width: 15px;
+//   border-bottom-left-radius: 6px;
+//   border-top-left-radius: 6px;
+// }
+
+// .color-bar-inUse {
+//   //background-color: $cylinder-tracker-accent;
+//   background-color: $cylinder-tracker-accent-light;
+//   width: 15px;
+//   border-bottom-left-radius: 6px;
+//   border-top-left-radius: 6px;
+// }
+
+// // .color-bar-assigned {
+// //   //background-color: $cylinder-tracker-green;
+// //   background-color: $cylinder-tracker-accent;
+// //   width: 15px;
+// //   border-bottom-left-radius: 6px;
+// //   border-top-left-radius: 6px;
+// // }
+
+// .color-bar-error {
+//   background-color: red;
+//   width: 15px;
+//   border-bottom-left-radius: 6px;
+//   border-top-left-radius: 6px;
+// }
+
+// mat-icon {
+//   font-size: 34px;
+// }
+
+// .cylinder-item-content {
+//   display: flex;
+//   justify-content: space-between;
+//   flex-basis: 94%;
+//   flex-wrap: wrap;
+//   align-items: center;
+  
+// }
+
+// .cylinder-item-id,
+// .cylinder-item-error-field,
+// .no-errors {
+//   flex-basis: 30%;
+//   margin-top: 8px;
+// }
+
+// .cylinder-item-gas-codes,
+// .cylinder-item-assigned-gases {
+//   flex-basis: 66%;
+// }
+
+// .cylinder-item-assigned-gases {
+//   margin-bottom: 10px;
+//   border: 1px solid lightgray;
+//   border-radius: 6px;
+
+//   tr:first-of-type {
+//     td {
+//       border-top-left-radius: 6px;
+//       border-top-right-radius: 6px;
+//     }
+//   }
+//   tr:last-of-type {
+//     td {
+//       border-bottom-right-radius: 6px;
+//       border-bottom-left-radius: 6px;
+//       border: none;
+//     }
+//   }
+// }
+
+// .cylinder-item-id > h2 {
+//   font-weight: bold;
+// }
+
+// .cylinder-item-id > * {
+//   margin: 0;
+//   margin-left: 6px;
+// }
+
+
+// .cylinder-item-gas-codes {
+//   box-sizing: border-box;
+//   border-radius: 6px;
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: flex-start;
+// }
+
+// .gas-code-item {
+//   display: flex;
+//   margin: 4px;
+//   border-radius: 6px;
+// }
+
+// .gas-code {
+//   font-weight: bold;
+//   padding: 10px;
+//   border-bottom-left-radius: 6px;
+//   border-top-left-radius: 6px;
+//   //background-color: mat-color(map-get($cisco-theme, primary));
+//   //background-color: $cylinder-tracker-primary;
+//   //color: white;
+// }
+
+// .gas-concentration {
+//   //background-color: $cylinder-tracker-secondary2;
+//   font-weight: bold;
+//   padding: 10px;
+//   padding-left: 0;
+//   border-bottom-right-radius: 6px;
+//   border-top-right-radius: 6px;
+// }
+
+// .options-menu {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding-right: 10px;
+//   flex-basis: 5%;
+// }
+
+// .cylinder-item-error-field {
+//   background-color: red;
+//   padding: 6px;
+//   border-top-right-radius: 6px;
+//   border-bottom-right-radius: 6px;
+//   color: white;
+//   margin-bottom: 10px;
+// }
+
+// .cyl-unit-desc {
+//   background-color: lightgray;
+//   padding: 1px;
+//   border-radius: 6px;
+//   margin: 3px;
+//   display: flex;
+//   justify-content: center;
+// }
 
 
 

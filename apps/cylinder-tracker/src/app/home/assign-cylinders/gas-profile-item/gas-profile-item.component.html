@@ -1,13 +1,14 @@
 <li
   class="gas-profile-item mat-elevation-z8"
   [ngClass]="gasProfile.errorInfo ? 'border-red' : 'border-normal'"
-  *ngFor="let gasProfile of gasProfiles | gasProfileFilter: gasProfileFilters; let i = index"
+  *ngFor="let gasProfile of gasProfiles 
+    | gasProfileFilter: gasProfileFilters; 
+    let i = index"
   cdkDropList
   id="{{ 'gasProfileDropList' + i }}"
   (cdkDropListDropped)="cylinderDropped.emit($event)"
   [cdkDropListData]="[gasProfile]"
-  [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']"
->
+  [cdkDropListConnectedTo]="['sparesDropList', 'inUseDropList']">
   <div [ngClass]="gasProfile.errorInfo ? 'color-bar-error' : 'gas-item-color-bar'"></div>
   <div class="gas-item-content" (click)="filterOtherCard.emit(gasProfile)">
     <h2 class="gas-item-title">
@@ -17,17 +18,9 @@
 
     <div class="gas-profile-gas-codes">
       <div class="gas-code-item mat-elevation-z8"
-        [ngStyle]="{
-          'background-color': gasColors['$cylindertracker' + gasProfile.cedarGasCode.toLocaleLowerCase()],
-          'color': gasColors['$cylindertracker' + gasProfile.cedarGasCode.toLocaleLowerCase() + 'text']
-        }"
-      >
+        [class]="gasProfile.cedarGasCode">
         <span class="gas-code">{{ gasProfile.cedarGasCode }}</span>
-        <!-- <span class="gas-concentration">{{ gasProfile.cylGasConc }} {{ gasProfile.uom }}</span> -->
         <span class="min-value">Allowable:  {{ gasProfile.allowableGasValueMin }} - {{ gasProfile.allowableGasValueMax }} {{gasProfile.uom}}</span>
-        <!-- <span class="min-value">Min: [{{ gasProfile.allowableGasValueMin }} {{gasProfile.uom}}]</span>
-        <span class="max-value">Max: [{{ gasProfile.allowableGasValueMax }} {{gasProfile.uom}}]</span>
-         -->
       </div>
     </div>
 
@@ -37,16 +30,6 @@
     <ng-template #noErrors><div class="no-errors"></div></ng-template>
     
     <div class="assigned-cylinder mat-elevation-z8" *ngFor="let cyl of findAssignedCyl(gasProfile.cylID)">
-      <!-- <div *ngIf="gasProfile.cylID; else no_assigned_cylinder">
-        Assigned Cylinder: {{ gasProfile.cylID }}
-      </div>
-      <ng-template #no_assigned_cylinder>
-        <div class="no-cylinder-assigned-text mat-elevation-z8">
-          No Cylinder Assigned
-        </div>
-      </ng-template> -->
-
-
       <div class="cylinder-item-id">
         <h2>Cylinder ID: {{ cyl.cylinderID }}</h2>
         <h3>Expires: {{ parseDate(cyl.expirationDate) | date }}</h3>
@@ -57,19 +40,15 @@
           <span 
             class="gas-code"
             *ngIf="commonGasTypes.includes(gas.epaGasCode.toUpperCase())"
-            [ngStyle]="{
-              'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLowerCase()],
-              'color': gasColors['$cylindertracker' + gas.epaGasCode.toLowerCase() + 'text']
-            }"
-          >{{ gas.epaGasCode }}</span>
+            [class]="gas.epaGasCode">
+            {{ gas.epaGasCode }}
+          </span>
           <span 
             *ngIf="commonGasTypes.includes(gas.epaGasCode.toUpperCase())"
             class="gas-concentration"
-            [ngStyle]="{
-              'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLowerCase()],
-              'color': gasColors['$cylindertracker' + gas.epaGasCode.toLowerCase() + 'text']
-            }"
-          >{{ gas.gasConcentration }} {{ gas.uom }}</span>
+            [class]="gas.epaGasCode">
+            {{ gas.gasConcentration }} {{ gas.uom }}
+          </span>
         </div>
       </div>
     </div>

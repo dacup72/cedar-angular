@@ -75,7 +75,8 @@ button.mat-raised-button:hover {
 }
 
 cylinder-tracker-cylinder-item {
-  margin-bottom: 25px;
+  //margin-bottom: 25px;
+  margin-bottom: 3px;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
@@ -84,7 +85,8 @@ cylinder-tracker-cylinder-item {
 }
 
 .cylinder-item-border-spare {
-  border: 1px solid $cylinder-tracker-accent;
+  border: 1px solid #E1E1E1;
+  // border: 1px solid $cylinder-tracker-accent;
   // box-shadow: 0 1px 3px 0 $cylinder-tracker-accent;
 }
 
@@ -159,10 +161,66 @@ li {
 }
 
 // #sparesDropList {
-
 //     padding-right: 16px;
 //     padding-left: 16px;
 //     padding-bottom: 16px;
-  
-  
 // }
+
+
+
+.cylinders-header-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 17px;
+  padding-right: 17px;
+  background-color: #E1E1E1;
+
+  .color-bar-space {
+    flex-basis: 2%;
+  }
+
+  .cylinders-header-row-content {
+    flex-basis: 93%;
+    display: flex;
+    justify-content: space-between;
+
+    .cylinders-header-row-padding {
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+      display: flex;
+
+      .cylinder-header-info {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+
+        span {
+          text-align: center;
+          background-color: gray;
+          flex-basis: 12%;
+        }
+    
+        .cylinders-header-gases {
+          flex-basis: 60%;
+          display: flex;
+          justify-content: space-around;
+      
+          div {
+            text-align: center;
+            flex-basis: 15%;
+          }
+        }
+      }
+      .expansion-icon-space {
+        width: 8px;
+      }
+    }
+  }
+  .options-button-space {
+    flex-basis: 5%;
+    padding-right: 10px;
+  }
+}

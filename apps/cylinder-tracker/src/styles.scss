@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'apps/cylinder-tracker/src/cisco-theme.scss';
+
 
 html {
     height: 100%;
@@ -191,6 +193,67 @@ mat-toolbar {
             height: auto;
         }
     }
+}
+
+// GAS COLORS
+.SO2 {
+    background-color:  $cylinder-tracker-so2;
+    color: $cylinder-tracker-so2-text;
+}
+
+.NO {
+    background-color:  $cylinder-tracker-no;
+    color: $cylinder-tracker-no-text;
+}
+
+.NO2 {
+    background-color:  $cylinder-tracker-no2;
+    color: $cylinder-tracker-no2-text;
+}
+
+.NOX {
+    background-color:  $cylinder-tracker-nox;
+    color: $cylinder-tracker-nox-text;
+}
+
+.N2O {
+    background-color:  $cylinder-tracker-n2o;
+    color: $cylinder-tracker-n2o-text;
+}
+
+.CO2 {
+    background-color:  $cylinder-tracker-co2;
+    color: $cylinder-tracker-co2-text;
+}
+
+.CO {
+    background-color:  $cylinder-tracker-co;
+    color: $cylinder-tracker-co-text;
+}
+
+.O2 {
+    background-color:  $cylinder-tracker-o2;
+    color: $cylinder-tracker-o2-text;
+}
+
+.PPN {
+    background-color:  $cylinder-tracker-ppn;
+    color: $cylinder-tracker-ppn-text;
+}
+
+.CH4 {
+    background-color:  $cylinder-tracker-ch4;
+    color: $cylinder-tracker-ch4-text;
+}
+
+.HE {
+    background-color:  $cylinder-tracker-he;
+    color: $cylinder-tracker-he-text;
+}
+
+.H2S {
+    background-color:  $cylinder-tracker-h2s;
+    color: $cylinder-tracker-h2s-text;
 }
 
 html, body { height: 100%; }

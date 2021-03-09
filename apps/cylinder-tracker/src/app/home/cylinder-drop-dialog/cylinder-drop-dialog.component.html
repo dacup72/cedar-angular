@@ -7,18 +7,12 @@
           <div *ngIf="commonGasTypes.includes(gas.epaGasCode.toLocaleUpperCase())" class="gas-code-item mat-elevation-z8">
             <span 
               class="gas-code"
-              [ngStyle]="{
-                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
-                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }">
+              [class]="gas.epaGasCode">
               {{ gas.epaGasCode }}
             </span>
             <span 
               class="gas-concentration"
-              [ngStyle]="{
-                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
-                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }">
+              [class]="gas.epaGasCode">
               {{ gas.gasConcentration }} {{ gas.uom }}
             </span>
           </div>
@@ -36,18 +30,12 @@
           <div *ngIf="commonGasTypes.includes(gas.epaGasCode.toLocaleUpperCase())" class="gas-code-item mat-elevation-z8">
             <span 
               class="gas-code"
-              [ngStyle]="{
-                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
-                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }">
+              [class]="gas.epaGasCode">
               {{ gas.epaGasCode }}
             </span>
             <span 
               class="gas-concentration"
-              [ngStyle]="{
-                'background-color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase()],
-                'color': gasColors['$cylindertracker' + gas.epaGasCode.toLocaleLowerCase() + 'text']
-              }">
+              [class]="gas.epaGasCode">
               {{ gas.gasConcentration }} {{ gas.uom }}
             </span>
           </div>

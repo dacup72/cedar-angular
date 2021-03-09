@@ -11,35 +11,15 @@
           [selectTitle]="'Cylinder ID'"
           [options]="cylinderIDs"
           (selectionChange)="cylinderIDSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
+          [clearItems]="clearFilterItems">
         </ui-select-autocomplete>
         <cedar-all-ui-filter-chips
           [hidden]="!filtersForSpares || crossCardFilters.filterItem"
           [filterItemName]="'Gas Type'"
           [allItems]="gasTypes"
           (selectionChange)="gasTypeSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
+          [clearItems]="clearFilterItems">
         </cedar-all-ui-filter-chips>
-
-        <!-- <ui-select-autocomplete
-          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
-          [selectTitle]="'Unit'"
-          [options]="unitNames"
-          (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
-        </ui-select-autocomplete>
-        <ui-select-autocomplete
-          *ngIf="!filtersForSpares && !crossCardFilters.filterItem"
-          [selectTitle]="'Gas Description'"
-          [options]="testTypes"
-          (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
-        </ui-select-autocomplete> -->
-
         <cedar-all-ui-filter-chips
           [hidden]="filtersForSpares || crossCardFilters.filterItem"
           [filterItemName]="'Unit'"
@@ -64,14 +44,35 @@
         <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
       </div>
     </div>
+
+    <div class="cylinders-header-row">
+      <div class="color-bar-space"></div>
+      <div class="cylinders-header-row-content">
+        <div class="cylinders-header-row-padding">
+          <span class="cylinder-header-info">
+            <span>Cylinder ID</span>
+            <span>Exp Date</span>
+            <span>Vendor ID</span>
+            <div class="cylinders-header-gases">
+              <div 
+                *ngFor="let gas of existingGasTypes"
+                [class]="gas">
+                {{ gas }}
+              </div>
+            </div>
+          </span>
+          <span class="expansion-icon-space"></span>
+        </div>
+      </div>
+      <div class="options-button-space"></div>
+    </div>
   </ng-template>
 
   <cylinder-tracker-home-tab-group
     class="card-content"
     [tabLeftLabel]="'Spare Cylinders'"
     [tabRightLabel]="'In-Service Cylinders'"
-    (selectedTabChange)="tabChanged($event)"
-  >
+    (selectedTabChange)="tabChanged($event)">
     <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
     <ul
       class="tab-left-content"
@@ -80,32 +81,26 @@
       (cdkDropListDropped)="cylinderDropped.emit($event)"
       [cdkDropListData]="spareCylinders"
       [cdkDropListConnectedTo]="dropListConnections"
-      cdkDropListSortingDisabled
-    >
+      cdkDropListSortingDisabled>
       <li
         cdkDrag
-        *ngFor="
-          let cylinder of spareCylinders
-            | cylinderFilter
-              : (filterForOtherCard ? crossCardFilters : cylinderFilters);
-          trackBy: trackCylinder
-        "
+        *ngFor="let cylinder of spareCylinders 
+          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
+          trackBy: trackCylinder"
         [cdkDragData]="cylinder"
-        (click)="cylinderSelected.emit(cylinder)"
-      >
+        (click)="cylinderSelected.emit(cylinder)">
         <cylinder-tracker-cylinder-item
-          class="mat-elevation-z8"
-          [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-spare'"
+          class="mat-elevation-z8 cylinder-item-border-spare"
           [cylinder]="cylinder"
           [isAssignedCylinder]="false"
           [units]="units"
+          [existingGasTypes]="existingGasTypes"
           (cylinderDropped)="cylinderDropped.emit($event)"
           (cylinderSelected)="cylinderSelected.emit($event)"
           (retireCylinder)="retireCylinder.emit($event)"
           (editCylinder)="editCylinder.emit($event)"
           (filterOtherCard)="filterOtherCard.emit($event)"
-          (createSimilarCyl)="createSimilarCyl.emit($event)"
-        >
+          (createSimilarCyl)="createSimilarCyl.emit($event)">
         </cylinder-tracker-cylinder-item>
       </li>
     </ul>
@@ -118,19 +113,13 @@
       (cdkDropListDropped)="cylinderDropped.emit($event)"
       [cdkDropListData]="inUseCylinders"
       [cdkDropListConnectedTo]="dropListConnections"
-      cdkDropListSortingDisabled
-    >
+      cdkDropListSortingDisabled>
       <li
         cdkDrag
-        *ngFor="
-          let cylinder of inUseCylinders
-            | cylinderFilter
-              : (filterForOtherCard ? crossCardFilters : cylinderFilters)
-              : gasProfiles
-        "
+        *ngFor="let cylinder of inUseCylinders 
+          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters) : gasProfiles"
         [cdkDragData]="cylinder"
-        (click)="cylinderSelected.emit(cylinder)"
-      >
+        (click)="cylinderSelected.emit(cylinder)">
         <cylinder-tracker-cylinder-item
           class="mat-elevation-z8"
           [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-inUse'"
@@ -144,8 +133,7 @@
           (retireCylinder)="retireCylinder.emit($event)"
           (editCylinder)="editCylinder.emit($event)"
           (filterOtherCard)="filterOtherCard.emit($event)"
-          (createSimilarCyl)="createSimilarCyl.emit($event)"
-        >
+          (createSimilarCyl)="createSimilarCyl.emit($event)">
         </cylinder-tracker-cylinder-item>
       </li>
     </ul>

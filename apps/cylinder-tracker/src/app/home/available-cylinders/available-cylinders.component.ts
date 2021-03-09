@@ -20,6 +20,7 @@ export class AvailableCylindersComponent {
   clearFilterItems: boolean = false;
 
   gasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
+  existingGasTypes = [];
   filtersForSpares = true;
   filterForOtherCard = false;
 
@@ -36,6 +37,7 @@ export class AvailableCylindersComponent {
     filterItem: '',
     concentration: []
   }
+    
 
   @Input('crossCardFilters') set filters(value) {
     if(value.gasCodes.length) {
@@ -47,12 +49,18 @@ export class AvailableCylindersComponent {
     if(value) {
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
+      value.forEach(c => {
+        c.componentGases.forEach(g => {
+          if(!this.existingGasTypes.includes(g.epaGasCode)) this.existingGasTypes.push(g.epaGasCode);
+        })
+      })
       for (let i = 0; i < this.inUseCylinders.length; i++) {
         this.dropListConnections.push('inUseDropList' + i);
       }
       this.cylinderIDs = value.map(c => c.cylinderID);
       this.savedSuccess.emit('Cylinder Saved Successfully')
     }
+
   }
   @Input() set qaGasProfiles(value: QAGasProfile[]) {
     if(value) {

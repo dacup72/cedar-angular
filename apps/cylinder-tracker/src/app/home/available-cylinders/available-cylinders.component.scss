@@ -78,6 +78,10 @@ button.mat-raised-button:hover {
   height: 69vh;
 }
 
+.empty-bottom-item {
+  height: 25px;
+}
+
 #sparesDropList::-webkit-scrollbar, #inUseDropList::-webkit-scrollbar, .test::-webkit-scrollbar {
   display: none;
 }

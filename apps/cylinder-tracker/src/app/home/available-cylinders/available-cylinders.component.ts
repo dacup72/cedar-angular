@@ -19,7 +19,7 @@ export class AvailableCylindersComponent {
   testTypes: string[] = [];
   clearFilterItems: boolean = false;
 
-  gasTypes = ['SO2', 'NO', 'NO2', 'NOX', 'N2O', 'CO2', 'CO', 'O2', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
+  gasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
   existingGasTypes = [];
   filtersForSpares = true;
   filterForOtherCard = false;
@@ -48,9 +48,10 @@ export class AvailableCylindersComponent {
   }
   @Input() set cylinders(value: Cylinder[]) {
     if(value) {
-      this.allCylinders = [...value]
+      this.allCylinders = value.filter(c => c.state !== 'retired');
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
+
       value.forEach(c => {
         if(c.state !== 'retired') {
           c.componentGases.forEach(g => {
@@ -58,14 +59,16 @@ export class AvailableCylindersComponent {
           })
         }
       })
+      this.existingGasTypes = this.gasSorter(this.existingGasTypes);
+
       for (let i = 0; i < this.inUseCylinders.length; i++) {
         this.dropListConnections.push('inUseDropList' + i);
       }
+      
       this.cylinderIDs = value.map(c => c.cylinderID);
-      this.savedSuccess.emit('Cylinder Saved Successfully')
+      this.savedSuccess.emit('Cylinder Saved Successfully');
+      if(this.inUseCylinders.length) this.findAssignedProfiles();
     }
-    if(this.inUseCylinders.length) this.findAssignedProfiles();
-
   }
   @Input() set qaGasProfiles(value: QAGasProfile[]) {
     if(value) {
@@ -89,7 +92,8 @@ export class AvailableCylindersComponent {
           this.testTypes.push(gas.desc);
         }
       })
-      //if(this.inUseCylinders.length) this.findAssignedProfiles();
+      if(this.inUseCylinders.length) this.findAssignedProfiles();
+      //TODO: this is not consistent in populating the assigned profiles
     }
   }
   @Input() set unitDefs(value: UnitDef[]) {
@@ -228,5 +232,10 @@ export class AvailableCylindersComponent {
       }
     }
     this.cylAssignedProfiles = assignedProfiles;
+  }
+
+
+  gasSorter(array) {
+    return this.gasTypes.filter(el => array.indexOf(el) > -1);
   }
 }

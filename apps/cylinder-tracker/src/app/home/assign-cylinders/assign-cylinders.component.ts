@@ -74,7 +74,7 @@ export class AssignCylindersComponent {
         this.testTypes.push(gas.desc);
       }
     })
-    //if(this.inUseCylinders.length) this.findAssignedProfiles();
+    if(this.inUseCylinders.length) this.findAssignedProfiles();
   }
   @Input() set unitDefs(value: UnitDef[]) {
     if(value) {

@@ -4,6 +4,7 @@
         *ngFor="let item of items"
         [selectable]="selectable"
         [removable]="removable"
+        (select)="true"
         (removed)="remove(item);">
         {{item}}
         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>

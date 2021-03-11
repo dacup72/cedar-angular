@@ -25,7 +25,7 @@
           </mat-expansion-panel-header>
           <div *ngFor="let gas of this.cylinderFilters.gasCodes" class="test-gas-filter-concs">
             <span [class]="gas">{{ gas }}:</span>
-            <div class="concentration-input" *ngFor="let range of testGasRange">
+            <div class="concentration-input mat-elevation-z8" *ngFor="let range of testGasRange">
               <mat-form-field>
                 <mat-label>Max</mat-label>
                 <input matInput placeholder="Ex. 45.6" [value]="range.max + ' ppm'">

@@ -35,8 +35,10 @@ ui-select-autocomplete {
   flex-basis: 5%;
   //display: flex;
   //justify-content: space-between;
-  border: 1px black solid;
+  //border: 1px black solid;
   margin: 3px;
+  padding: 3px;
+  border-radius: 6px;
 }
 
 .concentration-input mat-form-field {

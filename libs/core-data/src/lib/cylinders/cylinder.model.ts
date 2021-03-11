@@ -43,3 +43,25 @@ export interface CylinderFilters {
   concentration: any[];
   state: string;
 }
+
+export const emptyCylinderFilters: CylinderFilters = {
+  cylinderID: '',
+  gasCodes: [],
+  unitNumber: '',
+  testType: [],
+  unitIDs: [],
+  concentration: [],
+  state: ''
+}
+
+export interface CrossCardFilters {
+  gasCodes: string[],
+  filterItem: string,
+  concentration: any[]
+}
+
+export const emptyCrossCardFilters: CrossCardFilters = {
+  gasCodes: [],
+  filterItem: '',
+  concentration: []
+}

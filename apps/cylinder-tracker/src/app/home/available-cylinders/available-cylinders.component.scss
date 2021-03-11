@@ -1,8 +1,50 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
-ui-select-autocomplete, cedar-all-ui-filter-chips {
-  flex-basis: 49%;
+// ui-select-autocomplete, cedar-all-ui-filter-chips {
+//   flex-basis: 49%;
+// }
+
+ui-select-autocomplete {
+  flex-basis: 19%;
 }
+
+.test-panel {
+  padding-top: 15px;
+  flex-basis: 79%;
+}
+
+.test-panel-content cedar-all-ui-filter-chips {
+  width: 100%;
+}
+
+.test-gas-filter-concs {
+  display: flex;
+  //justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.test-gas-filter-concs > span {
+  padding: 3px;
+  border-radius: 6px;
+  flex-basis: 5%;
+}
+
+.concentration-input {
+  //width: 5%;
+  flex-basis: 5%;
+  //display: flex;
+  //justify-content: space-between;
+  border: 1px black solid;
+  margin: 3px;
+}
+
+.concentration-input mat-form-field {
+  width: 75px !important;
+}
+
+
+
 
 .clear-filters-button {
   flex-basis: 12%;
@@ -164,6 +206,7 @@ li {
   flex-basis: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .filter-btn-section {
@@ -177,16 +220,25 @@ li {
     padding-top: 2px;
 }
 
+.header-row-less-padding {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+  margin-left: 17px;
+  margin-right: 16px;
+}
 
-
-.cylinders-header-row {
-  display: flex;
-  justify-content: space-between;
+.header-row-padding {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-right: 21px;
   margin-left: 17px;
   margin-right: 16px;
+}
+
+.cylinders-header-row {
+  display: flex;
+  justify-content: space-between;
   background-color: #E1E1E1;
 
   .color-bar-space {
@@ -223,6 +275,7 @@ li {
           div {
             text-align: center;
             flex-basis: 15%;
+            cursor: pointer;
           }
         }
       }

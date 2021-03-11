@@ -1,6 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Cylinder, QAGasProfile, CylinderFilters, GasProfileFilters, UnitDef } from '@cedar-all/core-data';
-//import * as Moment from 'moment';
+import { 
+  Cylinder, 
+  QAGasProfile, 
+  CylinderFilters, 
+  GasProfileFilters, 
+  CrossCardFilters,
+  UnitDef, 
+  emptyCylinderFilters, 
+  emptyGasProfileFilters,
+  emptyCrossCardFilters  
+} from '@cedar-all/core-data';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'cylinder-tracker-assign-cylinders',
@@ -21,27 +31,9 @@ export class AssignCylindersComponent {
   isAssignedCylinder = true;
   filterForOtherCard = false;
 
-  cylinderFilters: CylinderFilters = {
-    cylinderID: '',
-    gasCodes: [],
-    unitNumber: '',
-    testType: [],
-    unitIDs: [],
-    concentration: [],
-    state: ''
-  }
-  gasProfileFilters: GasProfileFilters = {
-    gasCodes: [],
-    unitNumber: '',
-    testType: [],
-    unitIDs: [],
-    concentration: []
-  }
-  crossCardFilters = {
-    gasCodes: [],
-    filterItem: '',
-    concentration: []
-  }
+  cylinderFilters: CylinderFilters = cloneDeep(emptyCylinderFilters);
+  gasProfileFilters: GasProfileFilters = cloneDeep(emptyGasProfileFilters);
+  crossCardFilters: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
 
   @Input('crossCardFilters') set filters(value) {
     if(value.gasCodes.length) {
@@ -118,33 +110,15 @@ export class AssignCylindersComponent {
 
   refreshFiltersVariable() {
     this.filterForOtherCard = false;
-    this.cylinderFilters = Object.assign({}, this.cylinderFilters);
-    this.gasProfileFilters = Object.assign({}, this.gasProfileFilters);
+    this.cylinderFilters = cloneDeep(this.cylinderFilters);
+    this.gasProfileFilters = cloneDeep(this.gasProfileFilters);
   }
 
   clearFilters() {
     this.filterForOtherCard = false;
-    this.cylinderFilters = Object.assign({}, {
-      cylinderID: '',
-      gasCodes: [],
-      unitNumber: '',
-      testType: [],
-      unitIDs: [],
-      concentration: [],
-      state: ''
-    })
-    this.crossCardFilters = Object.assign({}, {
-      gasCodes: [],
-      filterItem: '',
-      concentration: []
-    })
-    this.gasProfileFilters = Object.assign({}, {
-      gasCodes: [],
-      unitNumber: '',
-      testType: [],
-      unitIDs: [],
-      concentration: []
-    })
+    this.cylinderFilters = cloneDeep(emptyCylinderFilters);
+    this.crossCardFilters = cloneDeep(emptyCrossCardFilters);
+    this.gasProfileFilters = cloneDeep(emptyGasProfileFilters);
     this.clearFilterItems = !this.clearFilterItems;
     // TODO: find better way to clear items
   }

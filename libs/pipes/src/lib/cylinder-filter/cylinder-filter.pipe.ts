@@ -71,7 +71,6 @@ export class CylinderFilterPipe implements PipeTransform {
           break;
         
         case('state'):
-          console.log(filterValue)
           resultCylinders = resultCylinders.filter(c => c[filter] === filterValue);
           break;
 

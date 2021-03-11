@@ -5,7 +5,9 @@ import {
   GasProfilesFacade,
   QAGasProfile,
   UnitDefsFacade,
-  UnitDef
+  UnitDef,
+  CrossCardFilters,
+  emptyCrossCardFilters
 } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -18,7 +20,7 @@ import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog
 //import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
 import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { cloneDeep } from 'lodash';
 
 
@@ -37,17 +39,8 @@ export class HomeComponent implements OnInit {
   loading = false;
   reverseCards = false;
 
-  availableCardFiltes = {
-    gasCodes: [],
-    filterItem: '',
-    concentration: []
-  }
-
-  assignCardFilters = {
-    gasCodes: [],
-    filterItem: '',
-    concentration: []
-  }
+  availableCardFiltes: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
+  assignCardFilters: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
 
   constructor(
     private cylindersFacade: CylindersFacade,
@@ -90,7 +83,7 @@ export class HomeComponent implements OnInit {
   getCylindersList() {
     const cylindersOutput: Cylinder[] = [];
     const cylindersObs = this.cylinders$.subscribe(cylinders => {
-      cylinders.forEach(cylinder => cylindersOutput.push(Object.assign({}, cylinder)));
+      cylinders.forEach(cylinder => cylindersOutput.push(cloneDeep(cylinder)));
     });
     cylindersObs.unsubscribe();
     return cylindersOutput;
@@ -99,7 +92,7 @@ export class HomeComponent implements OnInit {
   getGasProfilesList() {
     const gasProfilesOutput: QAGasProfile[] = [];
     const gasProfilesObs = this.gasProfiles$.subscribe(gasProfiles => {
-      gasProfiles.forEach(gasProfile => gasProfilesOutput.push(Object.assign({}, gasProfile)));
+      gasProfiles.forEach(gasProfile => gasProfilesOutput.push(cloneDeep(gasProfile)));
     });
     gasProfilesObs.unsubscribe();
     return gasProfilesOutput;
@@ -108,7 +101,7 @@ export class HomeComponent implements OnInit {
   getUnitDefsList() {
     const unitDefsOutput: UnitDef[] = [];
     const unitDefsObs = this.unitDefs$.subscribe(unitDefs => {
-      unitDefs.forEach(unitDef => unitDefsOutput.push(Object.assign({}, unitDef)));
+      unitDefs.forEach(unitDef => unitDefsOutput.push(cloneDeep(unitDef)));
     });
     unitDefsObs.unsubscribe();
     return unitDefsOutput;
@@ -157,8 +150,8 @@ export class HomeComponent implements OnInit {
     if (event.previousContainer === event.container) return;
 
     const dropContainerID = event.container.id;
-    const draggedCylinder: Cylinder = Object.assign({}, event.item.data);
-    const dropContainerItem = Object.assign({}, event.container.data[0]);
+    const draggedCylinder: Cylinder = cloneDeep(event.item.data);
+    const dropContainerItem = cloneDeep(event.container.data[0]);
 
     if(draggedCylinder.cylinderID === dropContainerItem['cylinderID'] || draggedCylinder.cylinderID === dropContainerItem['cylID'])  return;
 
@@ -417,7 +410,7 @@ export class HomeComponent implements OnInit {
           }
         })
 
-        const changedCylinder = Object.assign({}, cylinder);
+        const changedCylinder = cloneDeep(cylinder);
         changedCylinder.state = 'retired';
         this.saveCylinder(changedCylinder);
       }
@@ -440,7 +433,7 @@ export class HomeComponent implements OnInit {
   finishUassignCylinder(assignedCylinder: Cylinder, gasProfile: QAGasProfile, action: string) {
     assignedCylinder.state = action;
 
-    const gasProfileChange = Object.assign({}, gasProfile);
+    const gasProfileChange = cloneDeep(gasProfile);
     gasProfileChange.cylID = '';
 
     this.updateGasProfile(gasProfileChange);
@@ -453,7 +446,7 @@ export class HomeComponent implements OnInit {
     this.assignCardFilters.gasCodes = ['_ACC_', ...gases];
     this.assignCardFilters.concentration = item.componentGases;
     this.assignCardFilters.filterItem = filterItem;
-    this.assignCardFilters = Object.assign({}, this.assignCardFilters);
+    this.assignCardFilters = cloneDeep(this.assignCardFilters);
   }
 
   assignFilteringAvailable(item) {
@@ -473,7 +466,7 @@ export class HomeComponent implements OnInit {
       }]
     }
     this.availableCardFiltes.filterItem = filterItem;
-    this.availableCardFiltes = Object.assign({}, this.availableCardFiltes);
+    this.availableCardFiltes = cloneDeep(this.availableCardFiltes);
   }
 
   openSnackBar(message: string, action: string) {

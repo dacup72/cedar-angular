@@ -7,19 +7,37 @@
     <div class="card-filters">
       <div class="filter-input-section">
         <ui-select-autocomplete
-          [hidden]="crossCardFilters.filterItem"
           [selectTitle]="'Cylinder State'"
           [options]="['spare', 'inUse']"
-          (selectionChange)="cylinderStateSelected($event)"
+          (selectionChange)="cylinderStateSelected($event);"
           [clearItems]="clearFilterItems">
         </ui-select-autocomplete>
-        <cedar-all-ui-filter-chips
-          [hidden]="crossCardFilters.filterItem"
-          [filterItemName]="'Gas Type'"
-          [allItems]="gasTypes"
-          (selectionChange)="gasTypeSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
+
+        <mat-expansion-panel class="test-panel">
+          <mat-expansion-panel-header class="test-panel-content">
+            <cedar-all-ui-filter-chips
+              #gasFilterChips
+              [filterItemName]="'Gas Type'"
+              [allItems]="gasTypes"
+              (selectionChange)="gasTypeSelected($event);"
+              [clearItems]="clearFilterItems">
+            </cedar-all-ui-filter-chips>
+          </mat-expansion-panel-header>
+          <div *ngFor="let gas of this.cylinderFilters.gasCodes" class="test-gas-filter-concs">
+            <span [class]="gas">{{ gas }}:</span>
+            <div class="concentration-input" *ngFor="let range of testGasRange">
+              <mat-form-field>
+                <mat-label>Max</mat-label>
+                <input matInput placeholder="Ex. 45.6" [value]="range.max + ' ppm'">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Min</mat-label>
+                <input matInput placeholder="Ex. 23.4" [value]="range.min + ' ppm'">
+              </mat-form-field>
+          </div>
+          </div>
+        </mat-expansion-panel>
+        
         <!-- <cedar-all-ui-filter-chips
           [hidden]="crossCardFilters.filterItem"
           [filterItemName]="'Unit'"
@@ -66,9 +84,9 @@
           [clearItems]="clearFilterItems">
         </cedar-all-ui-filter-chips> -->
 
-        <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
+        <!-- <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
           <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
-        </div>
+        </div> -->
       </div>
       <div class="filter-btn-section">
         <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
@@ -76,7 +94,8 @@
       </div>
     </div>
 
-    <div class="cylinders-header-row">
+    <div class="cylinders-header-row" [class.header-row-less-padding]="!scrollBarVisible" [class.header-row-padding]="scrollBarVisible">
+    <!-- <div class="cylinders-header-row header-row-padding"> -->
       <div class="color-bar-space"></div>
       <div class="cylinders-header-row-content">
         <div class="cylinders-header-row-padding">
@@ -87,6 +106,7 @@
             <div class="cylinders-header-gases">
               <div 
                 *ngFor="let gas of existingGasTypes"
+                (click)="onGasHeaderClick(gas)"
                 [class]="gas">
                 {{ gas }}
               </div>
@@ -108,12 +128,12 @@
       [cdkDropListData]="spareCylinders"
       [cdkDropListConnectedTo]="dropListConnections"
       cdkDropListSortingDisabled>
-      <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test">
+      <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test" (resize)="measureScrollWindow(scroller.getElementRef().nativeElement.scrollHeight, scroller.getViewportSize())">
         <li
           cdkDrag
           *cdkVirtualFor="let cylinder of allCylinders 
             | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
-            trackBy: trackCylinder"
+            trackBy: trackCylinder;"
           [cdkDragData]="cylinder"
           (click)="cylinderSelected.emit(cylinder)">
           <cylinder-tracker-cylinder-item
@@ -127,7 +147,7 @@
             (cylinderSelected)="cylinderSelected.emit($event)"
             (retireCylinder)="retireCylinder.emit($event)"
             (editCylinder)="editCylinder.emit($event)"
-            (filterOtherCard)="filterOtherCard.emit($event)"
+            (filterOtherCard)="filterOtherCardCall($event)"
             (createSimilarCyl)="createSimilarCyl.emit($event)">
           </cylinder-tracker-cylinder-item>
         </li>

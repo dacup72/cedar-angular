@@ -32,3 +32,11 @@ export interface GasProfileFilters {
     unitIDs: string[];
     concentration: any[];
 }
+
+export const emptyGasProfileFilters: GasProfileFilters = {
+    gasCodes: [],
+    unitNumber: '',
+    testType: [],
+    unitIDs: [],
+    concentration: []
+}

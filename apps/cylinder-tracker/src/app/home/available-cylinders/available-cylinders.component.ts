@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { 
   Cylinder, 
   QAGasProfile, 
@@ -15,7 +15,7 @@ import { cloneDeep } from 'lodash';
   templateUrl: './available-cylinders.component.html',
   styleUrls: ['./available-cylinders.component.scss']
 })
-export class AvailableCylindersComponent {
+export class AvailableCylindersComponent implements AfterContentChecked {
   allCylinders: Cylinder[];
   spareCylinders: Cylinder[];
   inUseCylinders: Cylinder[];
@@ -36,7 +36,7 @@ export class AvailableCylindersComponent {
   ]
 
   gasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
-  commonGasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S']
+  commonGasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S'];
   existingGasTypes = [];
   filtersForSpares = true;
   filterForOtherCard = false;
@@ -44,13 +44,19 @@ export class AvailableCylindersComponent {
   cylinderFilters: CylinderFilters = cloneDeep(emptyCylinderFilters);
   crossCardFilters: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
 
-  // TODO: needs to update when data changes 
+
+  
+  // TODO: ngAfterContentChecked gets called too often, find better fix
+  @ViewChild('scroller') scroller: ElementRef;
   scrollBarVisible = true;
   measureScrollWindow(scrollHeight, viewPortHeight) {
-    console.log('hello')
-    this.scrollBarVisible = scrollHeight !== viewPortHeight;
+    this.scrollBarVisible = scrollHeight > viewPortHeight;
   }
-    
+  ngAfterContentChecked(): void {
+    if(this.scroller) this.measureScrollWindow(this.scroller['_totalContentSize'], this.scroller['_viewportSize']);
+  }
+
+
 
   @Input('crossCardFilters') set filters(value) {
     if(value.gasCodes.length) {

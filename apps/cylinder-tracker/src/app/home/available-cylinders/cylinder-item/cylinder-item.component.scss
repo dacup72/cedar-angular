@@ -2,6 +2,11 @@
 
 .cylinder-expansion-panel {
   width: 100%;
+  
+}
+
+.cylinder-expansion-panel:hover {
+  background-color: #E1E1E1;
 }
 
 .cylinder-item {
@@ -16,6 +21,7 @@
   .panel-content {
     min-height: 48px;
     height: auto !important;
+    color: black !important;
   }
   
   .panel-content .mat-content {
@@ -43,8 +49,10 @@
       div {
         text-align: center;
         flex-basis: 15%;
-        font-size: 11px;
+        font-size: 15px;
         border-radius: 6px;
+        padding-top: 6px;
+        padding-bottom: 6px;
       }
 
       div.remove-gas-content {
@@ -62,6 +70,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.expansion-icon-space {
+  padding-right: 32px;
 }
 
 

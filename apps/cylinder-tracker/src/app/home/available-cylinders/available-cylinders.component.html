@@ -3,6 +3,7 @@
     <button mat-raised-button (click)="editCylinder.emit(null)">Add Cylinder</button>
   </ng-container>
 
+  <!-- FILTERS SECTION -->
   <ng-template #filterSection>
     <div class="card-filters">
       <div class="filter-input-section">
@@ -13,89 +14,70 @@
           [clearItems]="clearFilterItems">
         </ui-select-autocomplete>
 
-        <mat-expansion-panel class="test-panel">
+        <mat-expansion-panel class="test-panel" #myPanel>
           <mat-expansion-panel-header class="test-panel-content">
-            <cedar-all-ui-filter-chips
+            <cedar-all-ui-filter-chips 
+              (click)="$event.stopPropagation()"
               #gasFilterChips
               [filterItemName]="'Gas Type'"
-              [allItems]="gasTypes"
+              [allItems]="commonGasTypes"
               (selectionChange)="gasTypeSelected($event);"
               [clearItems]="clearFilterItems">
             </cedar-all-ui-filter-chips>
           </mat-expansion-panel-header>
-          <div *ngFor="let gas of this.cylinderFilters.gasCodes" class="test-gas-filter-concs">
-            <span [class]="gas">{{ gas }}:</span>
-            <div class="concentration-input mat-elevation-z8" *ngFor="let range of testGasRange">
-              <mat-form-field>
-                <mat-label>Max</mat-label>
-                <input matInput placeholder="Ex. 45.6" [value]="range.max + ' ppm'">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Min</mat-label>
-                <input matInput placeholder="Ex. 23.4" [value]="range.min + ' ppm'">
-              </mat-form-field>
-          </div>
+          <div class="concentration-inputs mat-elevation-z8" *ngFor="let gasConc of this.cylinderFilters.concentrations">
+            <div [class]="gasConc.cedarGasCode"><span>{{ gasConc.cedarGasCode }}</span></div>
+            <mat-form-field class="conc-input">
+              <mat-label>Min</mat-label>
+              <input matInput 
+                placeholder="Ex. 10" 
+                [(ngModel)]="gasConc.allowableGasValueMin" 
+                (ngModelChange)="gasConc.changed = true"
+                [ngModelOptions]="{standalone: true}" 
+                type="number">
+            </mat-form-field>
+            <mat-form-field class="conc-input">
+              <mat-label>Max</mat-label>
+              <input matInput 
+                placeholder="Ex. 45" 
+                [(ngModel)]="gasConc.allowableGasValueMax" 
+                (ngModelChange)="gasConc.changed = true"
+                [ngModelOptions]="{standalone: true}" 
+                type="number">
+            </mat-form-field>
+            <mat-form-field class="conc-uom-input">
+              <mat-label>UOM</mat-label>
+              <input matInput 
+                placeholder="Ex. ppm"
+                [(ngModel)]="gasConc.uom" 
+                (ngModelChange)="gasConc.changed = true"
+                [ngModelOptions]="{standalone: true}" 
+                [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of ['ppm', 'ppb', '%']" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          
+            <button mat-button class="apply-conc-btn" [disabled]="!gasConc.changed" (click)="gasConc.changed = false; refreshFiltersVariables()">
+              Apply Changes
+            </button>
+            <button mat-button class="clear-concs-btn" (click)="clearConcInputs(gasConc)">
+              Clear
+            </button>
           </div>
         </mat-expansion-panel>
-        
-        <!-- <cedar-all-ui-filter-chips
-          [hidden]="crossCardFilters.filterItem"
-          [filterItemName]="'Unit'"
-          [allItems]="unitNames"
-          (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
-        <cedar-all-ui-filter-chips
-          [hidden]="crossCardFilters.filterItem"
-          [filterItemName]="'Gas Description'"
-          [allItems]="testTypes"
-          (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips> -->
-
-
-
-        <!-- <ui-select-autocomplete
-          [hidden]="!filtersForSpares || crossCardFilters.filterItem"
-          [selectTitle]="'Cylinder ID'"
-          [options]="cylinderIDs"
-          (selectionChange)="cylinderIDSelected($event)"
-          [clearItems]="clearFilterItems">
-        </ui-select-autocomplete>
-        <cedar-all-ui-filter-chips
-          [hidden]="!filtersForSpares || crossCardFilters.filterItem"
-          [filterItemName]="'Gas Type'"
-          [allItems]="gasTypes"
-          (selectionChange)="gasTypeSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
-        <cedar-all-ui-filter-chips
-          [hidden]="filtersForSpares || crossCardFilters.filterItem"
-          [filterItemName]="'Unit'"
-          [allItems]="unitNames"
-          (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
-        <cedar-all-ui-filter-chips
-          [hidden]="filtersForSpares || crossCardFilters.filterItem"
-          [filterItemName]="'Gas Description'"
-          [allItems]="testTypes"
-          (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips> -->
-
-        <!-- <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
-          <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
-        </div> -->
       </div>
+
       <div class="filter-btn-section">
         <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
         <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
       </div>
     </div>
 
+    <!-- HEADER ROW FOR CYLINDRS LIST -->
     <div class="cylinders-header-row" [class.header-row-less-padding]="!scrollBarVisible" [class.header-row-padding]="scrollBarVisible">
-    <!-- <div class="cylinders-header-row header-row-padding"> -->
       <div class="color-bar-space"></div>
       <div class="cylinders-header-row-content">
         <div class="cylinders-header-row-padding">
@@ -119,6 +101,7 @@
     </div>
   </ng-template>
 
+  <!-- LIST OF CYLINDER ITEMS -->
   <div class="card-content cylinder-list">
     <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
     <ul
@@ -128,12 +111,12 @@
       [cdkDropListData]="spareCylinders"
       [cdkDropListConnectedTo]="dropListConnections"
       cdkDropListSortingDisabled>
-      <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test" (resize)="measureScrollWindow(scroller.getElementRef().nativeElement.scrollHeight, scroller.getViewportSize())">
+      <cdk-virtual-scroll-viewport #scroller itemSize="50" class="test">
         <li
           cdkDrag
           *cdkVirtualFor="let cylinder of allCylinders 
-            | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
-            trackBy: trackCylinder;"
+            | cylinderFilter : cylinderFilters;
+            trackBy: trackCylinder"
           [cdkDragData]="cylinder"
           (click)="cylinderSelected.emit(cylinder)">
           <cylinder-tracker-cylinder-item
@@ -152,79 +135,11 @@
           </cylinder-tracker-cylinder-item>
         </li>
         <li class="empty-bottom-item"></li>
+        <li *ngIf="cylindersListEmpty" class="no-matches-message">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <b>NO CYLINDERS MATCH YOUR SEARCH</b>
+        </li>
       </cdk-virtual-scroll-viewport>
     </ul>
   </div>
-
-  <!-- <cylinder-tracker-home-tab-group
-    class="card-content"
-    [tabLeftLabel]="'Spare Cylinders'"
-    [tabRightLabel]="'In-Service Cylinders'"
-    (selectedTabChange)="tabChanged($event)">
-    <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
-    <ul
-      class="tab-left-content"
-      cdkDropList
-      id="sparesDropList"
-      (cdkDropListDropped)="cylinderDropped.emit($event)"
-      [cdkDropListData]="spareCylinders"
-      [cdkDropListConnectedTo]="dropListConnections"
-      cdkDropListSortingDisabled>
-      <li
-        cdkDrag
-        *ngFor="let cylinder of allCylinders 
-          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters);
-          trackBy: trackCylinder"
-        [cdkDragData]="cylinder"
-        (click)="cylinderSelected.emit(cylinder)">
-        <cylinder-tracker-cylinder-item
-          class="mat-elevation-z8 cylinder-item-border-spare"
-          [cylinder]="cylinder"
-          [isAssignedCylinder]="false"
-          [units]="units"
-          [existingGasTypes]="existingGasTypes"
-          (cylinderDropped)="cylinderDropped.emit($event)"
-          (cylinderSelected)="cylinderSelected.emit($event)"
-          (retireCylinder)="retireCylinder.emit($event)"
-          (editCylinder)="editCylinder.emit($event)"
-          (filterOtherCard)="filterOtherCard.emit($event)"
-          (createSimilarCyl)="createSimilarCyl.emit($event)">
-        </cylinder-tracker-cylinder-item>
-      </li>
-    </ul>
-
-    <ng-container *ngTemplateOutlet="filterSection" class="tab-right-top-content"></ng-container>
-    <ul
-      class="tab-right-content"
-      cdkDropList
-      id="inUseDropList"
-      (cdkDropListDropped)="cylinderDropped.emit($event)"
-      [cdkDropListData]="inUseCylinders"
-      [cdkDropListConnectedTo]="dropListConnections"
-      cdkDropListSortingDisabled>
-      <li
-        cdkDrag
-        *ngFor="let cylinder of inUseCylinders 
-          | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters) : gasProfiles"
-        [cdkDragData]="cylinder"
-        (click)="cylinderSelected.emit(cylinder)">
-        <cylinder-tracker-cylinder-item
-          class="mat-elevation-z8"
-          [ngClass]="cylinder.errorList.length ? 'border-red' : 'cylinder-item-border-inUse'"
-          [cylinder]="cylinder"
-          [units]="units"
-          [existingGasTypes]="existingGasTypes"
-          [isAssignedCylinder]="false"
-          [gasProfiles]="gasProfiles"
-          [cylAssignedProfiles]="cylAssignedProfiles"
-          (cylinderDropped)="cylinderDropped.emit($event)"
-          (cylinderSelected)="cylinderSelected.emit($event)"
-          (retireCylinder)="retireCylinder.emit($event)"
-          (editCylinder)="editCylinder.emit($event)"
-          (filterOtherCard)="filterOtherCard.emit($event)"
-          (createSimilarCyl)="createSimilarCyl.emit($event)">
-        </cylinder-tracker-cylinder-item>
-      </li>
-    </ul>
-  </cylinder-tracker-home-tab-group> -->
 </cylinder-tracker-home-card>

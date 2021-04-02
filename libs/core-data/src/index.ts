@@ -1,6 +1,6 @@
 export { CylindersService } from './lib/cylinders/cylinders.service';
-export { Cylinder, CylinderFilters, emptyCylinderFilters, CrossCardFilters, emptyCrossCardFilters } from './lib/cylinders/cylinder.model';
-export { QAGasProfile, GasProfileFilters, emptyGasProfileFilters } from './lib/qaGasProfiles/qa-gas-profile.model';
+export { Cylinder, CylinderFilters, emptyCylinderFilters } from './lib/cylinders/cylinder.model';
+export { QAGasProfile, GasProfileFilters, emptyGasProfileFilters, emptyGasProfile } from './lib/qaGasProfiles/qa-gas-profile.model';
 export { UnitDef } from './lib/unit-defs/unit-def.model';
 export { CoreDataModule } from './lib/core-data.module';
 export { CylindersFacade } from './lib/state/cylinders/cylinders.facade';

@@ -1,4 +1,6 @@
 import { ComponentGas, ErrorInfo } from '@cedar-angular/api-interfaces';
+import { QAGasProfile } from '../qaGasProfiles/qa-gas-profile.model';
+
 
 export interface Cylinder {
   id: string;
@@ -35,33 +37,32 @@ export interface Cylinder {
 // }
 
 export interface CylinderFilters {
-  cylinderID: string;
-  gasCodes: string[];
-  unitNumber: string;
-  testType: string[];
-  unitIDs: string[];
-  concentration: any[];
+  cylinderID: string,
+  gasCodes: string[],
+  testType: string[],
+  unitIDs: string[],
+  concentrations: {
+    cedarGasCode: string,
+    allowableGasValueMin: string,
+    allowableGasValueMax: string,
+    uom: string,
+    changed: boolean
+  }[],
   state: string;
+  singleConcentrations: {
+    cedarGasCode: string,
+    concentration: string,
+    uom: string,
+    changed: boolean
+  }[]
 }
 
 export const emptyCylinderFilters: CylinderFilters = {
   cylinderID: '',
   gasCodes: [],
-  unitNumber: '',
   testType: [],
   unitIDs: [],
-  concentration: [],
-  state: ''
-}
-
-export interface CrossCardFilters {
-  gasCodes: string[],
-  filterItem: string,
-  concentration: any[]
-}
-
-export const emptyCrossCardFilters: CrossCardFilters = {
-  gasCodes: [],
-  filterItem: '',
-  concentration: []
+  concentrations: [],
+  state: '',
+  singleConcentrations: []
 }

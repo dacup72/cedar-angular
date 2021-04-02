@@ -19,8 +19,14 @@ export class FilterChipsComponent {
   itemCtrl = new FormControl();
   filteredItems: Observable<string[]>;
   items: string[] = [];
+  allItems: string[] = [];
 
-  @Input() allItems: string[] = [];
+  @Input('allItems') set allOptions(value) {
+    if(value && value.length) {
+      this.allItems = value;
+      this.resetFilterItems()
+    }
+  }
   @Input() filterItemName = "Default Item Name";
   @Input() set clearItems(value) {
     this.items = [];
@@ -30,9 +36,13 @@ export class FilterChipsComponent {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor() {
+    this.resetFilterItems();
+  }
+
+  resetFilterItems() {
     this.filteredItems = this.itemCtrl.valueChanges.pipe(
-        startWith(null),
-        map((item: string | null) => item ? this._filter(item) : this.allItems.slice()));
+      startWith(null),
+      map((item: string | null) => item ? this._filter(item) : this.allItems.slice()));
   }
 
   add(event: MatChipInputEvent): void {

@@ -3,12 +3,13 @@ import {
   Cylinder, 
   QAGasProfile, 
   CylinderFilters,
-  CrossCardFilters, 
   UnitDef, 
-  emptyCylinderFilters, 
-  emptyCrossCardFilters 
+  emptyCylinderFilters
 } from '@cedar-all/core-data';
-import { cloneDeep } from 'lodash';
+import { 
+  cloneDeep as _cloneDeep,
+  remove as _remove 
+} from 'lodash';
 
 @Component({
   selector: 'cylinder-tracker-available-cylinders',
@@ -27,62 +28,46 @@ export class AvailableCylindersComponent implements AfterContentChecked {
   cylAssignedProfiles = {};
   testTypes: string[] = [];
   clearFilterItems: boolean = false;
-
-  testGasRange = [
-    {min: '2', max: '8'},
-    {min: '26', max: '42'},
-    {min: '103', max: '233'},
-    {min: '1030', max: '2443'},
-  ]
+  cylindersListEmpty: boolean = false;
 
   gasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S', 'BALA', 'BALN', 'APPVD', 'AIR', 'SRM', 'NTRM', 'GMIS', 'RGM', 'PRM', 'ZERO'];
   commonGasTypes = ['NO', 'NO2', 'NOX', 'CO', 'O2', 'SO2', 'CO2', 'N2O', 'PPN', 'CH4', 'HE', 'H2S'];
   existingGasTypes = [];
-  filtersForSpares = true;
-  filterForOtherCard = false;
 
-  cylinderFilters: CylinderFilters = cloneDeep(emptyCylinderFilters);
-  crossCardFilters: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
-
-
+  cylinderFilters: CylinderFilters = _cloneDeep(emptyCylinderFilters);
   
   // TODO: ngAfterContentChecked gets called too often, find better fix
   @ViewChild('scroller') scroller: ElementRef;
+  @ViewChild('cylindersElementList') cylindersElementList: ElementRef;
   scrollBarVisible = true;
   measureScrollWindow(scrollHeight, viewPortHeight) {
     this.scrollBarVisible = scrollHeight > viewPortHeight;
   }
   ngAfterContentChecked(): void {
-    if(this.scroller) this.measureScrollWindow(this.scroller['_totalContentSize'], this.scroller['_viewportSize']);
+    if(this.scroller) {
+      this.measureScrollWindow(this.scroller['_totalContentSize'], this.scroller['_viewportSize']);
+      this.cylindersListEmpty = this.scroller['_dataLength'] < 1;
+    } 
   }
 
 
-
   @Input('crossCardFilters') set filters(value) {
-    if(value.gasCodes.length) {
-      this.cylinderFilters = cloneDeep(emptyCylinderFilters);
+    if(value && value.cylinderFilters.gasCodes.length) {
+      this.cylinderFilters = _cloneDeep(value.cylinderFilters);
       this.gasFilterChips['items'] = [];
 
-      value.gasCodes.forEach(gas => {
-        if(this.commonGasTypes.includes(gas)){
-          if(!this.gasFilterChips['items'].includes(gas)) {
-            this.gasFilterChips['items'].push(gas);
-          }
-          if(!this.cylinderFilters.gasCodes.includes(gas)) {
-            this.cylinderFilters.gasCodes.push(gas)
-          }
+      this.cylinderFilters.gasCodes.forEach(gas => {
+        if(this.commonGasTypes.includes(gas) && !this.gasFilterChips['items'].includes(gas)){
+          this.gasFilterChips['items'].push(gas);
         }
       })
-      this.cylinderFilters = cloneDeep(this.cylinderFilters);
-      //this.filterForOtherCard = true;
-      //this.crossCardFilters = value;
     }
   }
   @Input() set cylinders(value: Cylinder[]) {
     if(value) {
-      this.allCylinders = value.filter(c => c.state !== 'retired');
       this.spareCylinders = value.filter(c => c.state === 'spare');
       this.inUseCylinders = value.filter(c => c.state === 'inUse');
+      this.allCylinders = [...this.spareCylinders, ...this.inUseCylinders];
 
       value.forEach(c => {
         if(c.state !== 'retired') {
@@ -125,7 +110,6 @@ export class AvailableCylindersComponent implements AfterContentChecked {
         }
       })
       if(this.inUseCylinders.length) this.findAssignedProfiles();
-      //TODO: this is not consistent in populating the assigned profiles
     }
   }
   @Input() set unitDefs(value: UnitDef[]) {
@@ -136,9 +120,9 @@ export class AvailableCylindersComponent implements AfterContentChecked {
       })
     }
   }
-  @Output() cylinderDropped = new EventEmitter();
-  @Output() cylinderSelected = new EventEmitter();
-  @Output() retireCylinder = new EventEmitter();
+  @Output('cylinderDropped') cylinderDropped = new EventEmitter();
+  @Output('cylinderSelected') cylinderSelected = new EventEmitter();
+  @Output('retireCylinder') retireCylinder = new EventEmitter();
   @Output('filterOtherCard') filterOtherCard = new EventEmitter();
   @Output('editCylinder') editCylinder = new EventEmitter();
   @Output('savedSuccess') savedSuccess = new EventEmitter();
@@ -147,71 +131,29 @@ export class AvailableCylindersComponent implements AfterContentChecked {
   @ViewChild('gasFilterChips') gasFilterChips: ElementRef;
 
   gasTypeSelected(gases) {
-    // TODO: change this to better detect property change and refresh component without copying object
     this.cylinderFilters.gasCodes = gases;
-    this.refreshFiltersVariable();
-  }
-
-  cylinderIDSelected(event) {
-    const cylinderID = typeof(event) === 'string' ? event : event.option.value;
-    this.cylinderFilters.cylinderID = cylinderID ? cylinderID : '';
-    this.refreshFiltersVariable();
+    gases.forEach(gas => {
+      if(!(this.cylinderFilters.concentrations.filter(conc => conc.cedarGasCode === gas).length > 0)) {
+        this.addNewConcentration(gas);
+      }
+    })
+    this.cylinderFilters.concentrations = this.cylinderFilters.concentrations.filter(conc => gases.includes(conc.cedarGasCode));
+    this.refreshFiltersVariables();
   }
 
   cylinderStateSelected(event) {
     const cylinderState = typeof(event) === 'string' ? event : event.option.value;
     this.cylinderFilters.state = cylinderState ? cylinderState : '';
-    this.refreshFiltersVariable();
+    this.refreshFiltersVariables();
   }
 
-  // unitNameSelected(event) {
-  //   const unitNum = typeof(event) === 'string' ? event : this.units.filter(unit => unit.name === event.option.value)[0].id;
-  //   this.cylinderFilters.unitNumber = unitNum ? unitNum : '';
-  //   this.refreshFiltersVariable();
-  // }
-
-  unitNameSelected(unitNames) {
-    const unitIDs = [];
-    unitNames.forEach(name => {
-      unitIDs.push(this.units.filter(unit => unit.name === name)[0].id);
-    })
-    this.cylinderFilters.unitIDs = unitIDs;
-    this.refreshFiltersVariable();
-  }
-
-  // testTypeSelected(event) {
-  //   const testType = typeof(event) === 'string' ? event : event.option.value;
-  //   this.cylinderFilters.testType = testType ? testType : '';
-  //   this.refreshFiltersVariable();
-  // }
-
-  testTypeSelected(testTypeSelections) {
-    this.cylinderFilters.testType = testTypeSelections;
-    this.refreshFiltersVariable();
-  }
-
-  refreshFiltersVariable() {
-    this.filterForOtherCard = false;
-    this.cylinderFilters = cloneDeep(this.cylinderFilters);
-  }
-
-  tabChanged(currentTab) {
-    if(currentTab === 'Spare Cylinders') {
-      this.filtersForSpares = true;
-    }
-    else {
-      this.filtersForSpares = false;
-    }
-
-    this.cylinderFilters = cloneDeep(emptyCylinderFilters);
+  refreshFiltersVariables() {
+    this.cylinderFilters = _cloneDeep(this.cylinderFilters);
   }
 
   clearFilters() {
-    this.filterForOtherCard = false;
-    this.cylinderFilters = cloneDeep(emptyCylinderFilters);
-    this.crossCardFilters = cloneDeep(emptyCrossCardFilters);
+    this.cylinderFilters = _cloneDeep(emptyCylinderFilters);
     this.clearFilterItems = !this.clearFilterItems;
-    // TODO: find better way to clear items
   }
 
   trackCylinder(index, cylinder: Cylinder) {
@@ -220,9 +162,11 @@ export class AvailableCylindersComponent implements AfterContentChecked {
 
   findAssignedProfiles() {
     let assignedProfiles = {};
-    this.inUseCylinders.forEach(cyl => {
-      assignedProfiles[cyl.cylinderID] = this.gasProfiles.filter(gasProfile => gasProfile.cylID === cyl.cylinderID);
-    })
+    if(this.gasProfiles) {
+      this.inUseCylinders.forEach(cyl => {
+        assignedProfiles[cyl.cylinderID] = this.gasProfiles.filter(gasProfile => gasProfile.cylID === cyl.cylinderID);
+      })
+    }
     
     for (const cyl in assignedProfiles) {
       if(assignedProfiles[cyl] && assignedProfiles[cyl].length) {
@@ -254,8 +198,6 @@ export class AvailableCylindersComponent implements AfterContentChecked {
   }
 
   filterOtherCardCall($event) {
-    //console.log(this.gasFilterChips)
-    //this.gasFilterChips['items'].push('SO2')
     this.filterOtherCard.emit($event);
   }
 
@@ -266,6 +208,36 @@ export class AvailableCylindersComponent implements AfterContentChecked {
     if(!this.cylinderFilters.gasCodes.includes(gas)) {
       this.cylinderFilters.gasCodes.push(gas)
     }
-    this.cylinderFilters = cloneDeep(this.cylinderFilters);
+    if(!(this.cylinderFilters.concentrations.filter(conc => conc.cedarGasCode === gas).length > 0)) {
+      this.addNewConcentration(gas);
+    }
+    this.refreshFiltersVariables();
+  }
+
+  addNewConcentration(gas: string) {
+    this.cylinderFilters.concentrations.push({
+      cedarGasCode: gas,
+      allowableGasValueMin: '',
+      allowableGasValueMax: '',
+      uom: '',
+      changed: false
+    })
+  }
+
+  deleteConcentration(gasConc) {
+    _remove(this.cylinderFilters.concentrations, gasConc);
+    this.refreshFiltersVariables();
+  }
+
+  clearConcInputs(gasConc) {
+    for (let i = 0; i < this.cylinderFilters.concentrations.length; i++) {
+      let conc = this.cylinderFilters.concentrations[i];
+      if(conc === gasConc) {
+        conc.allowableGasValueMax = null;
+        conc.allowableGasValueMax = null;
+        conc.changed = false;
+      }
+    }
+    this.refreshFiltersVariables();
   }
 }

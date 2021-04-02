@@ -1,64 +1,91 @@
 <cylinder-tracker-home-card [cardTitle]="'Assigned Cylinders'" class="cylinders-card">
   <ng-container class="card-title-content">
-    <button mat-raised-button (click)="swapCards.emit(); $event.stopImmediatePropagation()">Swap Panels</button>
+    <button mat-raised-button (click)="swapCards.emit()">Swap Panels</button>
   </ng-container>
 
-  <ng-template #filterSection>
-    <div class="card-filters">
+
+  <!-- IN SERVICE CYLINDERS SECTION -->
+  <cylinder-tracker-home-tab-group
+    class="card-content"
+    [tabLeftLabel]="'In-Service Cylinders'"
+    [tabRightLabel]="'Gas Profiles'">
+    <div class="card-filters tab-left-top-content">
       <div class="filter-input-section">
-        <!-- <ui-select-autocomplete
-          *ngIf="!crossCardFilters.filterItem"
-          [selectTitle]="'Unit'"
-          [options]="unitNames"
-          (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
-        </ui-select-autocomplete>
-        <ui-select-autocomplete
-          *ngIf="!crossCardFilters.filterItem"
-          [selectTitle]="'Gas Description'"
-          [options]="testTypes"
-          (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems"
-        >
-        </ui-select-autocomplete> -->
+        <div class="unit-gas-desc-section">
+          <cedar-all-ui-filter-chips
+            class="unit-filter"
+            [filterItemName]="'Unit'"
+            [allItems]="unitNames"
+            (selectionChange)="cylindersUnitNameSelected($event)"
+            [clearItems]="clearFilterItems">
+          </cedar-all-ui-filter-chips>
 
-        <cedar-all-ui-filter-chips
-          *ngIf="!crossCardFilters.filterItem"
-          [filterItemName]="'Unit'"
-          [allItems]="unitNames"
-          (selectionChange)="unitNameSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
-        <cedar-all-ui-filter-chips
-          *ngIf="!crossCardFilters.filterItem"
-          [filterItemName]="'Gas Description'"
-          [allItems]="testTypes"
-          (selectionChange)="testTypeSelected($event)"
-          [clearItems]="clearFilterItems">
-        </cedar-all-ui-filter-chips>
-
-        <div *ngIf="crossCardFilters.filterItem" class="filtered-by-click mat-elevation-z8">
-          <span>Filtered For: {{ crossCardFilters.filterItem }}</span>
+          <cedar-all-ui-filter-chips
+            class="gas-desc-filter"
+            [filterItemName]="'Gas Description'"
+            [allItems]="testTypes"
+            (selectionChange)="cylindersTestTypeSelected($event)"
+            [clearItems]="clearFilterItems">
+          </cedar-all-ui-filter-chips>
         </div>
+        
+        <mat-expansion-panel class="test-panel2">
+          <mat-expansion-panel-header class="test-panel-content">
+            <cedar-all-ui-filter-chips
+              (click)="$event.stopPropagation()"
+              #gasFilterChipsCylinders
+              [filterItemName]="'Gas Type'"
+              [allItems]="commonGasTypes"
+              (selectionChange)="cylindersGasTypeSelected($event);"
+              [clearItems]="clearFilterItems">
+            </cedar-all-ui-filter-chips>
+          </mat-expansion-panel-header>
+
+          <div class="concentration-inputs mat-elevation-z8" *ngFor="let gasConc of this.cylinderFilters.singleConcentrations">
+            <div [class]="gasConc.cedarGasCode"><span>{{ gasConc.cedarGasCode }}</span></div>
+            <mat-form-field class="conc-input">
+              <mat-label>Conc</mat-label>
+              <input matInput 
+                placeholder="Ex. 45.6" 
+                [(ngModel)]="gasConc.concentration" 
+                (ngModelChange)="gasConc.changed = true"
+                type="number">
+            </mat-form-field>
+            <mat-form-field class="conc-uom-input">
+              <mat-label>UOM</mat-label>
+              <input matInput 
+                placeholder="Ex. ppm" 
+                [(ngModel)]="gasConc.uom" 
+                (ngModelChange)="gasConc.changed = true" 
+                [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of ['ppm', 'ppb', '%']" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          
+            <button mat-button class="apply-conc-btn" [disabled]="!gasConc.changed" (click)="gasConc.changed = false; refreshFiltersVariables()">
+              Apply Changes
+            </button>
+            <button mat-button class="clear-concs-btn" (click)="clearConcInputs(gasConc, 'cylindersList')">
+              Clear
+            </button>
+          </div>
+        </mat-expansion-panel>
       </div>
+
       <div class="filter-btn-section">
         <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
         <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
       </div>
     </div>
-  </ng-template>
 
-  <cylinder-tracker-home-tab-group
-    class="card-content"
-    [tabLeftLabel]="'In-Service Cylinders'"
-    [tabRightLabel]="'Gas Profiles'">
-    <ng-container *ngTemplateOutlet="filterSection" class="tab-left-top-content"></ng-container>
-    <ul class="inUseDropList tab-left-content">
+    <ul class="inUseDropList tab-left-content" #inServiceCylindersElementList>
       <li>
         <cylinder-tracker-cylinder-item
           *ngFor="let cylinder of inUseCylinders 
-            | cylinderFilter : (filterForOtherCard ? crossCardFilters : cylinderFilters) : gasProfiles;
+            | cylinderFilter : cylinderFilters : gasProfiles;
             let i = index"
           cdkDropList
           class="mat-elevation-z8"
@@ -81,18 +108,107 @@
           (filterOtherCard)="filterOtherCard.emit($event)">
         </cylinder-tracker-cylinder-item>
       </li>
+      <li class="empty-bottom-item"></li>
+      <li *ngIf="cylindersListEmpty" class="no-matches-message">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <b>NO CYLINDERS MATCH YOUR SEARCH</b>
+      </li>
     </ul>
-    
-    <ng-container *ngTemplateOutlet="filterSection" class="tab-right-top-content"></ng-container>
-    <ul class="gas-profile-list tab-right-content">
+
+
+    <!-- GAS PROFILES SECTION -->
+    <div class="card-filters tab-right-top-content">
+      <div class="filter-input-section">
+        <div class="unit-gas-desc-section">
+          <cedar-all-ui-filter-chips
+            class="unit-filter"
+            [filterItemName]="'Unit'"
+            [allItems]="unitNames"
+            (selectionChange)="gasProfilesUnitNameSelected($event)"
+            [clearItems]="clearFilterItems">
+          </cedar-all-ui-filter-chips>
+
+          <cedar-all-ui-filter-chips
+            class="gas-desc-filter"
+            [filterItemName]="'Gas Description'"
+            [allItems]="testTypes"
+            (selectionChange)="gasProfilesTestTypeSelected($event)"
+            [clearItems]="clearFilterItems">
+          </cedar-all-ui-filter-chips>
+        </div>
+
+        <mat-expansion-panel class="test-panel2">
+          <mat-expansion-panel-header class="test-panel-content">
+            <cedar-all-ui-filter-chips
+              (click)="$event.stopPropagation()"
+              #gasFilterChipsGasProfiles
+              [filterItemName]="'Gas Type'"
+              [allItems]="commonGasTypes"
+              (selectionChange)="gasProfilesGasTypeSelected($event);"
+              [clearItems]="clearFilterItems">
+            </cedar-all-ui-filter-chips>
+          </mat-expansion-panel-header>
+
+          <div class="concentration-inputs mat-elevation-z8" *ngFor="let gasConc of this.gasProfileFilters.singleConcentrations">
+            <div [class]="gasConc.cedarGasCode"><span>{{ gasConc.cedarGasCode }}</span></div>
+            <mat-form-field class="conc-input">
+              <mat-label>Conc</mat-label>
+              <input matInput 
+                placeholder="Ex. 45.6" 
+                [(ngModel)]="gasConc.concentration" 
+                (ngModelChange)="gasConc.changed = true"
+                type="number">
+            </mat-form-field>
+            <mat-form-field class="conc-uom-input">
+              <mat-label>UOM</mat-label>
+              <input matInput 
+                placeholder="Ex. ppm" 
+                [(ngModel)]="gasConc.uom" 
+                (ngModelChange)="gasConc.changed = true" 
+                [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of ['ppm', 'ppb', '%']" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          
+            <button mat-button class="apply-conc-btn" [disabled]="!gasConc.changed" (click)="gasConc.changed = false; refreshFiltersVariables()">
+              Apply Changes
+            </button>
+            <button mat-button class="clear-concs-btn" (click)="clearConcInputs(gasConc, 'gasProfilesList')">
+              Clear
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+      <div class="filter-btn-section">
+        <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
+        <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+
+    <ul class="gas-profile-list tab-right-content" #gasProfileElementList>
       <cylinder-tracker-gas-profile-item
         [gasProfiles]="gasProfiles"
-        [gasProfileFilters]="filterForOtherCard ? crossCardFilters : gasProfileFilters"
+        [gasProfileFilters]="gasProfileFilters"
         [units]="units"
         [inUseCylinders]="inUseCylinders"
         (cylinderDropped)="cylinderDropped.emit($event)"
         (filterOtherCard)="filterOtherCard.emit($event)">
       </cylinder-tracker-gas-profile-item>
+      <li class="empty-bottom-item"></li>
+      <li *ngIf="gasProfileListEmpty" class="no-matches-message">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <b>NO GAS PROFILES MATCH YOUR SEARCH</b>
+      </li>
     </ul>
   </cylinder-tracker-home-tab-group>
 </cylinder-tracker-home-card>
+
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let option of ['ppm', 'ppb', '%']" [value]="option">
+    {{option}}
+  </mat-option>
+</mat-autocomplete>

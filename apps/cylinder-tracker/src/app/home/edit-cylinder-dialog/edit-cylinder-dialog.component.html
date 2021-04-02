@@ -19,8 +19,7 @@
             matInput
             placeholder="Cylinder ID"
             formControlName="cylinderID"
-            type="text"
-          />
+            type="text"/>
           <mat-error *ngIf="cylinderID.hasError('required')">
             Cylinder ID is <strong>required</strong>
           </mat-error>
@@ -32,8 +31,7 @@
             matInput 
             [matDatepicker]="picker"
             formControlName="expirationDate"
-            placeholder="Expiration Date - ex: 2/11/2023"
-          />
+            placeholder="Expiration Date - ex: 2/11/2023"/>
           <mat-datepicker-toggle matSuffix [for]="picker">
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </mat-datepicker-toggle>
@@ -49,8 +47,7 @@
             matInput
             placeholder="Vendor ID"
             type="text"
-            formControlName="vendorID"
-          />
+            formControlName="vendorID"/>
           <mat-error *ngIf="vendorID.hasError('required')">
             Vendor ID is <strong>required</strong>
           </mat-error>
@@ -138,8 +135,7 @@
             name="gasCodeString"
             (change)="gasCodeChange(gasCodeString); $event.stopImmediatePropagation()"
             #gasCodeString
-            [value]="getGasCodeString()"
-          />
+            [value]="getGasCodeString()"/>
           <mat-error *ngIf="epaGasTypeCodes.hasError('required')">
             Gas codes are <strong>required</strong>
           </mat-error>
@@ -162,8 +158,7 @@
                   matInput
                   type="number"
                   min="1"
-                  formControlName="gasConcentration"
-                />
+                  formControlName="gasConcentration"/>
               </mat-form-field>
 
               <!-- ===== UNIT OF MEASURE ===== -->

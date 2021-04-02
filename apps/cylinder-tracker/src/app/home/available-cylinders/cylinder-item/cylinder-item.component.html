@@ -4,10 +4,13 @@
   <div class="cylinder-item">
 
     <mat-expansion-panel 
+      [disabled]="!cylinder.errorList.length && !(cylinder.state === 'inUse')"
       class="cylinder-expansion-panel"
       (opened)="panelOpenState = true" 
       (closed)="panelOpenState = false">
-      <mat-expansion-panel-header class="panel-content">
+      <mat-expansion-panel-header 
+        class="panel-content" 
+        [class.expansion-icon-space]="!cylinder.errorList.length && !(cylinder.state === 'inUse')">
         <span>{{ cylinder.cylinderID }}</span>
         <span>{{ cylinder.expirationDate }}</span>
         <span>{{ cylinder.vendorID }}</span>
@@ -64,7 +67,7 @@
       </button>
       <button mat-menu-item (click)="createSimilarCyl.emit(cylinder)">
         <mat-icon>add</mat-icon>
-        <span>Create Similar Cylinder</span>
+        <span>Clone Cylinder</span>
       </button>
       <button
         mat-menu-item
@@ -154,7 +157,7 @@
         mat-menu-item
         (click)="createSimilarCyl.emit(cylinder)">
         <mat-icon>add</mat-icon>
-        <span>Create Similar Cylinder</span>
+        <span>Clone Cylinder</span>
       </button>
       <button
         mat-menu-item

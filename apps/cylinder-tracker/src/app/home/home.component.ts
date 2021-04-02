@@ -6,8 +6,10 @@ import {
   QAGasProfile,
   UnitDefsFacade,
   UnitDef,
-  CrossCardFilters,
-  emptyCrossCardFilters
+  CylinderFilters,
+  emptyCylinderFilters,
+  GasProfileFilters,
+  emptyGasProfileFilters
 } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -21,7 +23,11 @@ import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog
 import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { cloneDeep } from 'lodash';
+import { 
+  cloneDeep as _cloneDeep,
+  uniqWith as _uniqWith,
+  isEqual as _isEqual 
+} from 'lodash';
 
 
 @Component({
@@ -39,8 +45,10 @@ export class HomeComponent implements OnInit {
   loading = false;
   reverseCards = false;
 
-  availableCardFiltes: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
-  assignCardFilters: CrossCardFilters = cloneDeep(emptyCrossCardFilters);
+  availableCardFiltes: {cylinderFilters: CylinderFilters};
+  assignCardFilters: {cylinderFilters: CylinderFilters, gasProfileFilters: GasProfileFilters};
+
+
 
   constructor(
     private cylindersFacade: CylindersFacade,
@@ -83,7 +91,7 @@ export class HomeComponent implements OnInit {
   getCylindersList() {
     const cylindersOutput: Cylinder[] = [];
     const cylindersObs = this.cylinders$.subscribe(cylinders => {
-      cylinders.forEach(cylinder => cylindersOutput.push(cloneDeep(cylinder)));
+      cylinders.forEach(cylinder => cylindersOutput.push(_cloneDeep(cylinder)));
     });
     cylindersObs.unsubscribe();
     return cylindersOutput;
@@ -92,7 +100,7 @@ export class HomeComponent implements OnInit {
   getGasProfilesList() {
     const gasProfilesOutput: QAGasProfile[] = [];
     const gasProfilesObs = this.gasProfiles$.subscribe(gasProfiles => {
-      gasProfiles.forEach(gasProfile => gasProfilesOutput.push(cloneDeep(gasProfile)));
+      gasProfiles.forEach(gasProfile => gasProfilesOutput.push(_cloneDeep(gasProfile)));
     });
     gasProfilesObs.unsubscribe();
     return gasProfilesOutput;
@@ -101,7 +109,7 @@ export class HomeComponent implements OnInit {
   getUnitDefsList() {
     const unitDefsOutput: UnitDef[] = [];
     const unitDefsObs = this.unitDefs$.subscribe(unitDefs => {
-      unitDefs.forEach(unitDef => unitDefsOutput.push(cloneDeep(unitDef)));
+      unitDefs.forEach(unitDef => unitDefsOutput.push(_cloneDeep(unitDef)));
     });
     unitDefsObs.unsubscribe();
     return unitDefsOutput;
@@ -150,8 +158,8 @@ export class HomeComponent implements OnInit {
     if (event.previousContainer === event.container) return;
 
     const dropContainerID = event.container.id;
-    const draggedCylinder: Cylinder = cloneDeep(event.item.data);
-    const dropContainerItem = cloneDeep(event.container.data[0]);
+    const draggedCylinder: Cylinder = _cloneDeep(event.item.data);
+    const dropContainerItem = _cloneDeep(event.container.data[0]);
 
     if(draggedCylinder.cylinderID === dropContainerItem['cylinderID'] || draggedCylinder.cylinderID === dropContainerItem['cylID'])  return;
 
@@ -253,7 +261,6 @@ export class HomeComponent implements OnInit {
         this.getGasProfilesList().forEach(gasProfile => {
           if(dialogOptions.gasProfilesBeingChanged.includes(gasProfile.tagID)) {
             gasProfile.cylID = draggedCylinder.cylinderID;
-            console.log(gasProfile)
             this.updateGasProfile(gasProfile);
           }
         });
@@ -374,7 +381,7 @@ export class HomeComponent implements OnInit {
 
   editCylinder(cylinder: Cylinder, editSimilar = false) {
     const dialogData = {
-      cylinder: cloneDeep(cylinder)
+      cylinder: _cloneDeep(cylinder)
     }
 
     if(editSimilar) {
@@ -410,7 +417,7 @@ export class HomeComponent implements OnInit {
           }
         })
 
-        const changedCylinder = cloneDeep(cylinder);
+        const changedCylinder = _cloneDeep(cylinder);
         changedCylinder.state = 'retired';
         this.saveCylinder(changedCylinder);
       }
@@ -433,7 +440,7 @@ export class HomeComponent implements OnInit {
   finishUassignCylinder(assignedCylinder: Cylinder, gasProfile: QAGasProfile, action: string) {
     assignedCylinder.state = action;
 
-    const gasProfileChange = cloneDeep(gasProfile);
+    const gasProfileChange = _cloneDeep(gasProfile);
     gasProfileChange.cylID = '';
 
     this.updateGasProfile(gasProfileChange);
@@ -441,32 +448,90 @@ export class HomeComponent implements OnInit {
   }
 
   availableFilteringAssign(item) {
-    const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : item.cedarGasTypeCodes;
-    const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
-    this.assignCardFilters.gasCodes = ['_ACC_', ...gases];
-    this.assignCardFilters.concentration = item.componentGases;
-    this.assignCardFilters.filterItem = filterItem;
-    this.assignCardFilters = cloneDeep(this.assignCardFilters);
+    this.resetCrossCardFilters();
+
+    item.componentGases.forEach(gas => {
+      const newSingleConcentration = {
+        cedarGasCode: gas.epaGasCode,
+        concentration: gas.gasConcentration,
+        uom: gas.uom,
+        changed: null
+      }
+      this.assignCardFilters.cylinderFilters.gasCodes.push(gas.epaGasCode);
+      this.assignCardFilters.cylinderFilters.singleConcentrations.push(newSingleConcentration);
+      this.assignCardFilters.gasProfileFilters.gasCodes.push(gas.epaGasCode);
+      this.assignCardFilters.gasProfileFilters.singleConcentrations.push(newSingleConcentration);
+    });
+    this.assignCardFilters = _cloneDeep(this.assignCardFilters);
   }
 
   assignFilteringAvailable(item) {
-    const gases = item.epaGasTypeCodes ? item.epaGasTypeCodes : [item.cedarGasCode];
-    const filterItem = item.epaGasTypeCodes ? item.cylinderID : item.desc;
-    this.availableCardFiltes.gasCodes = ['_ACC_', ...gases];
-    if(item.componentGases) {
-      this.availableCardFiltes.concentration = item.componentGases;
+    this.resetCrossCardFilters();
+
+    // filtering for gas profile
+    if(item.tagID) {
+      if(item.allowableGasValueMin && item.allowableGasValueMax) {
+        this.availableCardFiltes.cylinderFilters.concentrations.push({
+          cedarGasCode: item.cedarGasCode,
+          allowableGasValueMin: item.allowableGasValueMin,
+          allowableGasValueMax: item.allowableGasValueMax,
+          uom: item.uom,
+          changed: null
+        });
+      }
+      if(item.allowableGasValueMin2 && item.allowableGasValueMax2) {
+        this.availableCardFiltes.cylinderFilters.concentrations.push({
+          cedarGasCode: item.cedarGasCode,
+          allowableGasValueMin: item.allowableGasValueMin2,
+          allowableGasValueMax: item.allowableGasValueMax2,
+          uom: item.uom,
+          changed: null
+        });
+      }
+      this.availableCardFiltes.cylinderFilters.gasCodes.push(item.cedarGasCode);
     }
+    // filtering for cylinder
     else {
-      this.availableCardFiltes.concentration = [{
-        cedarGasCode: item.cedarGasCode,
-        allowableGasValueMin: item.allowableGasValueMin,
-        allowableGasValueMax: item.allowableGasValueMax,
-        allowableGasValueMin2: item.allowableGasValueMin2,
-        allowableGasValueMax2: item.allowableGasValueMax2,
-      }]
+      this.getGasProfilesList().forEach(gas => {
+        if(gas.cylID === item.cylinderID) {
+          if(gas.allowableGasValueMin && gas.allowableGasValueMax) {
+            this.availableCardFiltes.cylinderFilters.concentrations.push({
+              cedarGasCode: gas.cedarGasCode,
+              allowableGasValueMin: gas.allowableGasValueMin,
+              allowableGasValueMax: gas.allowableGasValueMax,
+              uom: gas.uom,
+              changed: null
+            })
+          }
+          if(gas.allowableGasValueMin2 && gas.allowableGasValueMax2) {
+            this.availableCardFiltes.cylinderFilters.concentrations.push({
+              cedarGasCode: gas.cedarGasCode,
+              allowableGasValueMin: gas.allowableGasValueMin2,
+              allowableGasValueMax: gas.allowableGasValueMax2,
+              uom: gas.uom,
+              changed: null
+            })
+          }
+        }
+      })
+
+      item.componentGases.forEach(gas => {
+        this.availableCardFiltes.cylinderFilters.gasCodes.push(gas.epaGasCode);
+      })
     }
-    this.availableCardFiltes.filterItem = filterItem;
-    this.availableCardFiltes = cloneDeep(this.availableCardFiltes);
+    // remove duplicate concentration objects
+    this.availableCardFiltes.cylinderFilters.concentrations = _uniqWith(this.availableCardFiltes.cylinderFilters.concentrations, _isEqual);
+    this.availableCardFiltes = _cloneDeep(this.availableCardFiltes);
+  }
+
+  resetCrossCardFilters() {
+    this.availableCardFiltes = {
+      cylinderFilters: _cloneDeep(emptyCylinderFilters)
+    };
+    this.assignCardFilters = {
+      cylinderFilters: _cloneDeep(emptyCylinderFilters),
+      gasProfileFilters: _cloneDeep(emptyGasProfileFilters)
+    };
   }
 
   openSnackBar(message: string, action: string) {

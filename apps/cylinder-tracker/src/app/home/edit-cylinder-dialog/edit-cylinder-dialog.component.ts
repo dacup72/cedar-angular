@@ -84,14 +84,30 @@ export class EditCylinderDialogComponent {
     return this.cylinderForm.get('certificationImage');
   }
 
+  setCylinderID(id: string) {
+    this.cylinderID.setValue(id);
+  }
+
+  setExpirationDate(date: Date) {
+    this.expirationDate.setValue(date);
+  }
+
+  setVendorID(id: string) {
+    this.vendorID.setValue(id);
+  }
+
+  setCertificationImage(imgURL: string) {
+    this.certificationImage.setValue(imgURL);
+  }
+
   addEPAGasTypeCode(gasCode: string) {
     this.epaGasTypeCodes.push(new FormControl(gasCode));
   }
 
   removeEPAGasTypeCodes(gasCodes: string[]) {
-    const matchedFormControls = this.epaGasTypeCodes.controls.filter(gas => gasCodes.includes(gas.value));
-    matchedFormControls.forEach(g => {
-      const index = this.epaGasTypeCodes.controls.indexOf(g);
+    const matchedFormControls = this.epaGasTypeCodes.controls.filter(gasCode => gasCodes.includes(gasCode.value));
+    matchedFormControls.forEach(gasCode => {
+      const index = this.epaGasTypeCodes.controls.indexOf(gasCode);
       this.epaGasTypeCodes.removeAt(index);
     });
   }
@@ -171,29 +187,23 @@ export class EditCylinderDialogComponent {
 
           if (componentGas.value === 'AIR') {
             this.addComponentGas('O2', 'O2', 20.9, '%O2');
-            this.addEPAGasTypeCode('O2');
             this.addEPAGasTypeCode('AIR');
-            this.cylinderID.setValue('Inst Air');
-
-            // Update to create real date time / fix to auto select from date picker
-            this.expirationDate.setValue('1/1/2200');
+            this.setCylinderID('Inst Air');
+            this.setVendorID('Inst Air');
+            this.setExpirationDate(new Date(new Date().setFullYear(new Date().getFullYear() + 200)));
           }
           else {
             this.addComponentGas(componentGas.value);
             this.addEPAGasTypeCode(componentGas.value);
-
-            // This is required since AIR has different value "O2"
-            this.removeEPAGasTypeCodes(['AIR']);
           }
         }
         else {
           if (componentGas.value === 'AIR') {
-            this.removeComponentGases(['O2']);
-            this.removeEPAGasTypeCodes(['O2']);
-            this.cylinderID.setValue(this.origionalTitle);
-
-            // Needs to deselect from date picker
-            this.expirationDate.setValue('');
+            this.removeComponentGases(['O2', 'AIR']);
+            this.removeEPAGasTypeCodes(['AIR']);
+            this.setCylinderID(this.origionalTitle);
+            this.setVendorID(null);
+            this.setExpirationDate(null);
           }
           else {
             this.removeComponentGases([componentGas.value]);
@@ -242,10 +252,10 @@ export class EditCylinderDialogComponent {
   }
 
   clearCylinderInputs() {
-    this.cylinderID.setValue('');
-    this.vendorID.setValue('');
-    this.expirationDate.setValue('');
-    this.certificationImage.setValue('');
+    this.setCylinderID(null);
+    this.setExpirationDate(null);
+    this.setVendorID(null);
+    this.setCertificationImage(null);
   }
 
   isGasChecked(code) {

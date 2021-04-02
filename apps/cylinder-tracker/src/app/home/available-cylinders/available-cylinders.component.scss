@@ -1,63 +1,85 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
-// ui-select-autocomplete, cedar-all-ui-filter-chips {
-//   flex-basis: 49%;
-// }
-
 ui-select-autocomplete {
   flex-basis: 19%;
+  padding-top: 12px;
 }
 
+
+
+// Gas Type Filter / Expansion Panel
 .test-panel {
   padding-top: 15px;
-  flex-basis: 79%;
+  flex-basis: 76%;
+  box-shadow: none !important;
+  background: none;
+  
+  cedar-all-ui-filter-chips {
+    width: 100%;
+  }
+
+  .concentration-inputs {
+    display: flex;
+    justify-content: space-between;
+    margin: 3px;
+    border-radius: 6px;
+    border: 1px solid #E1E1E1;
+
+    div {
+      display: flex;
+      justify-content: center;
+      padding: 3px;
+      border-bottom-left-radius: 6px;
+      border-top-left-radius: 6px;
+      width: 35px;
+
+      span {
+        align-self: center;
+      }
+    }
+      
+    .conc-input {
+      width: 125px;
+      padding-top: 5px;
+    }
+
+    .conc-uom-input {
+      width: 50px;
+      padding-top: 5px;
+    }
+  
+    .apply-conc-btn {
+      width: 125px;
+    }
+
+    .clear-concs-btn {
+      width: 50px;
+    }
+  }
+
+  .test-gas-filter-concs {
+    display: flex;
+    align-items: center;
+  }
 }
-
-.test-panel-content cedar-all-ui-filter-chips {
-  width: 100%;
-}
-
-.test-gas-filter-concs {
-  display: flex;
-  //justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.test-gas-filter-concs > span {
-  padding: 3px;
-  border-radius: 6px;
-  flex-basis: 5%;
-}
-
-.concentration-input {
-  //width: 5%;
-  flex-basis: 5%;
-  //display: flex;
-  //justify-content: space-between;
-  //border: 1px black solid;
-  margin: 3px;
-  padding: 3px;
-  border-radius: 6px;
-}
-
-.concentration-input mat-form-field {
-  width: 75px !important;
-}
-
-
 
 
 .clear-filters-button {
   flex-basis: 12%;
 }
 
-::ng-deep {
 
+
+::ng-deep {
   .cylinders-card {
     .mat-card {
       background-color: $cylinder-tracker-primary !important;
     }
+  }
+
+  .test-panel .mat-expansion-panel-body {
+    overflow: auto;
+    max-height: 40vh;
   }
 
   .mat-tab-body {
@@ -67,40 +89,11 @@ ui-select-autocomplete {
   .mat-form-field-infix.mat-form-field-infix.mat-form-field-infix {
     opacity: 1 !important;
   }
-
-  // .mat-form-field-wrapper.mat-form-field-wrapper {
-  //   padding: 0;
-  // }
-
-  // .select-autocomplete .mat-form-field-wrapper, .chip-list .mat-form-field-wrapper {
-  //   padding: 0 0.75em 0.84375em 0.75em;
-  // }
-
-  // .chip-list {
-  //   background-color: white;
-  //   color: black;
-  //   border: 1px solid #eee;
-  //   border-radius: 4px;
-  //   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
-  // }
-
-  // .mat-form-field-underline {
-  //   display: none;
-  // }
-
-  // .mat-form-field-appearance-fill .mat-form-field-flex {
-  //   background-color: white;
-  // }
-
-  // .select-autocomplete {
-  //   background-color: white;
-  //   color: black;
-  //   border: 1px solid #eee;
-  //   border-radius: 4px;
-  //   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.09);
-  // }
 }
 // TODO: Remove ng deep
+
+
+
 
 .cylinder-list {
   background-color: white;
@@ -112,7 +105,6 @@ button.mat-raised-button:hover {
 
 #sparesDropList, #inUseDropList {
   overflow: auto;
-  //height: 69vh;
   padding: 0;
   padding-left: 16px;
   padding-right: 16px;
@@ -126,10 +118,6 @@ button.mat-raised-button:hover {
   height: 25px;
 }
 
-// #sparesDropList::-webkit-scrollbar, #inUseDropList::-webkit-scrollbar, .test::-webkit-scrollbar {
-//   display: none;
-// }
-
 cylinder-tracker-cylinder-item {
   margin-bottom: 3px;
   margin-right: 3px;
@@ -142,18 +130,14 @@ cylinder-tracker-cylinder-item {
 
 .cylinder-item-border-spare {
   border: 1px solid #E1E1E1;
-  // border: 1px solid $cylinder-tracker-accent;
-  // box-shadow: 0 1px 3px 0 $cylinder-tracker-accent;
 }
 
 .cylinder-item-border-inUse {
   border: 1px solid $cylinder-tracker-accent-light;
-  // box-shadow: 0 1px 3px 0 $cylinder-tracker-accent;
 }
 
 .border-red {
   border: 1px solid red;
-  //box-shadow: 0 1px 3px 0 red;
 }
 
 cylinder-tracker-cylinder-item:hover {
@@ -173,7 +157,6 @@ li {
 }
 
 .filtered-by-click {
-  //background-color: $cylinder-tracker-accent;
   background-color: white;
   border: 1px solid gray;
   padding: 5px;
@@ -198,7 +181,6 @@ li {
   background-color: #E8E8E8;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 8px;
   padding-left: 16px;
   padding-right: 16px;
   border-bottom: lightgray solid 1px;
@@ -208,7 +190,6 @@ li {
   flex-basis: 100%;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .filter-btn-section {
@@ -289,5 +270,17 @@ li {
   .options-button-space {
     flex-basis: 5%;
     padding-right: 10px;
+  }
+}
+
+.no-matches-message {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  mat-icon {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
   }
 }

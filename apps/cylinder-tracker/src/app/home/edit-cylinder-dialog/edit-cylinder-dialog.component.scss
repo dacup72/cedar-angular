@@ -33,13 +33,9 @@
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 16px;
-    //border-bottom: black solid 1px;
 }
 
 .gas-checkbox {
-  //flex-basis: 8%;
-  // display: flex;
-  // align-content: center;
   margin: 0 10px;
 }
 
@@ -66,11 +62,9 @@
 }
 
 .gas-radios-group {
-  // display: flex;
-  // padding-bottom: 4px;
   display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .gas-radios-group mat-radio-button {
@@ -82,7 +76,6 @@
     overflow: auto;
     height: 86vh;
     width: 60vw;
-
 }
 
 mat-card-content > h4 {

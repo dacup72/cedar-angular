@@ -1025,5 +1025,28 @@
     "cylEpaGasTypeCode": "",
     "cylPressure": "",
     "cylPressureUOM": ""
+  },
+  {
+    "tagID": "1100555050",
+    "desc": "NO/L Cal Span Gas",
+    "unit": "1",
+    "cedarGasCode": "NO",
+    "analyzerSpanType": "LOW",
+    "qaTestType": "CAL",
+    "gasLevel": "UPSCALE",
+    "uom": "ppm",
+    "profileGroupKey": "U12_NOLCOL_HIGH",
+    "instSpan": "10",
+    "allowableGasValueMin": "20",
+    "allowableGasValueMax": "40",
+    "allowableGasValueMin2": "80",
+    "allowableGasValueMax2": "100",
+    "cylGasConc": "22.14",
+    "cylID": "AAL069576",
+    "cylExpDate": "20200822",
+    "cylVendorID": "A32017",
+    "cylEpaGasTypeCode": "NO,BALN",
+    "cylPressure": "1659",
+    "cylPressureUOM": "psi"
   }
 ]

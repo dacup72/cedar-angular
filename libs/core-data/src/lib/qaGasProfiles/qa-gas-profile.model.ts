@@ -25,18 +25,44 @@ export interface QAGasProfile {
     errorInfo: ErrorInfo[];
 }
 
+export const emptyGasProfile = {
+    tagID: '',
+    desc: '',
+    unit: '',
+    cedarGasCode: '',
+    analyzerSpanType: '',
+    qaTestType: '',
+    gasLevel: '',
+    uom: '',
+    profileGroupKey: '',
+    instSpan: '',
+    allowableGasValueMin: '',
+    allowableGasValueMax: '',
+    cylGasConc: '',
+    cylID: '',
+    cylExpDate: '',
+    cylVendorID: '',
+    cylEpaGasTypeCode: '',
+    cylPressure: '',
+    cylPressureUOM: '',
+    errorInfo: []
+}
+
 export interface GasProfileFilters {
     gasCodes: string[];
-    unitNumber: string;
     testType: string[];
     unitIDs: string[];
-    concentration: any[];
+    singleConcentrations: {
+        cedarGasCode: string,
+        concentration: string,
+        uom: string,
+        changed: boolean
+    }[];
 }
 
 export const emptyGasProfileFilters: GasProfileFilters = {
     gasCodes: [],
-    unitNumber: '',
     testType: [],
     unitIDs: [],
-    concentration: []
+    singleConcentrations: []
 }

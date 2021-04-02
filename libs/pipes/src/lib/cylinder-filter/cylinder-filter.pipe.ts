@@ -1,85 +1,68 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Cylinder, CylinderFilters, QAGasProfile } from '@cedar-all/core-data';
-import { parse } from 'querystring';
+import { 
+  filter as _filter,
+  cloneDeep as _cloneDeep 
+} from 'lodash';
 
 @Pipe({
   name: 'cylinderFilter'
 })
 
 export class CylinderFilterPipe implements PipeTransform {
+  analyzerSpanTypes = ['LOW', 'MID', 'HIGH'];
 
   transform(cylinderList: Cylinder[], filterArgs: CylinderFilters, gasProfiles: QAGasProfile[] = []): Cylinder[] {
     let resultCylinders = [...cylinderList];
-    let matchedCylIDs = [];
-    let matchedGasProfileTagIDs = [];
-    let cedarGasCodes = [];
-    const analyzerSpanTypes = ['LOW', 'MID', 'HIGH'];
-    
-    gasProfiles.forEach(gasProfile => {
-      if(!cedarGasCodes.includes(gasProfile.cedarGasCode)) {
-        cedarGasCodes.push(gasProfile.cedarGasCode);
-      }
-    })
 
     if(cylinderList.length === 0 || !filterArgs) {
       return resultCylinders;
     }
 
     for(const filter in filterArgs) {
-      const filterValue = filterArgs[filter];
-      
+      let filterValue = _cloneDeep(filterArgs[filter]);
       if(!filterValue.length) continue;
 
       switch(filter) {
         case('gasCodes'):
-          // TODO add sort for gas code order
-          if(filterValue.includes('_ACC_')) {
-            // This is applied when using smart filter
-            // Accumulating
-            matchedCylIDs = [];
-            filterValue.forEach(gas => {
-              cylinderList.forEach(c => {
-                if(c.epaGasTypeCodes.includes(gas) && !matchedCylIDs.includes(c.cylinderID)) {
-                  matchedCylIDs.push(c.cylinderID);
-                }
-              })
-            })
-            resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
+          // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for
+          const includesNOX = filterValue.includes('NOX');
+          if(includesNOX) {
+            if(!filterValue.includes('NO')) filterValue.push('NO');
+            if(!filterValue.includes('NO2')) filterValue.push('NO2');
           }
-          else {
-            // Filtering
-            filterValue.forEach(gas => {
-              resultCylinders = resultCylinders.filter(c => (
-                c.componentGases.filter(g => g.epaGasCode === gas).length > 0)
-              );
-            })
-          }
-          break;
 
-        case('unitNumber'):
-          matchedCylIDs = [];
-          gasProfiles.forEach(gasProfile => {
-            if((gasProfile.unit.toString() === filterValue) && !matchedCylIDs.includes(gasProfile.cylID)) {
-              matchedCylIDs.push(gasProfile.cylID);
+          resultCylinders = resultCylinders.filter(cyl => {
+            if(includesNOX) {
+             return filterValue.filter(gas => 
+                cyl.componentGases.filter(cylGas => 
+                  cylGas.epaGasCode === gas
+                ).length > 0
+              ).length > 0
             }
-          })
-          resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
-          break;
-
-        case('cylinderID'):
-          resultCylinders = resultCylinders.filter(c => c[filter] === filterValue);
-          break;
-        
-        case('state'):
-          resultCylinders = resultCylinders.filter(c => c[filter] === filterValue);
+            else {
+              return filterValue.filter(gas => 
+                cyl.componentGases.filter(cylGas => 
+                  cylGas.epaGasCode === gas
+                ).length > 0
+              ).length === filterValue.length
+            }
+          });
           break;
 
         case('testType'):
-          // Filtering
-          filterValue.forEach(item => {
-            matchedCylIDs = [];
+          let cedarGasCodes = [];
+          
+          gasProfiles.forEach(gasProfile => {
+            if(!cedarGasCodes.includes(gasProfile.cedarGasCode)) {
+              cedarGasCodes.push(gasProfile.cedarGasCode);
+            }
+          })
 
-            if(analyzerSpanTypes.includes(item)) {
+          filterValue.forEach(item => {
+            let matchedCylIDs = [];
+
+            if(this.analyzerSpanTypes.includes(item)) {
               gasProfiles.forEach(gasProfile => {
                 if(gasProfile.analyzerSpanType === item && !matchedCylIDs.includes(gasProfile.cylID)) {
                   matchedCylIDs.push(gasProfile.cylID);
@@ -102,138 +85,142 @@ export class CylinderFilterPipe implements PipeTransform {
               })
               resultCylinders = resultCylinders.filter(cylinder => matchedCylIDs.includes(cylinder.cylinderID));
             }
-          })
-
-
-          // // Accumulating
-          // matchedCylIDs = [];
-          // filterValue.forEach(item => {
-          //   if(analyzerSpanTypes.includes(item)) {
-          //     gasProfiles.forEach(gasProfile => {
-          //       if(gasProfile.analyzerSpanType === item && !matchedCylIDs.includes(gasProfile.cylID)) {
-          //         matchedCylIDs.push(gasProfile.cylID);
-          //       }
-          //     })
-          //   }
-          //   else if(cedarGasCodes.includes(item)) {
-          //     gasProfiles.forEach(gasProfile => {
-          //       if(gasProfile.cedarGasCode === item && !matchedCylIDs.includes(gasProfile.cylID)) {
-          //         matchedCylIDs.push(gasProfile.cylID);
-          //       }
-          //     })
-          //   }
-          //   else {
-          //     gasProfiles.forEach(gasProfile => {
-          //       if(gasProfile.desc.toLowerCase().indexOf(item.toLowerCase()) !== -1 && !matchedCylIDs.includes(gasProfile.cylID)) {
-          //         matchedCylIDs.push(gasProfile.cylID);
-          //       }
-          //     })
-          //   }
-          // })
-          // resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
+          });
           break;
 
         case('unitIDs'):
-          // Filtering
-          filterValue.forEach(id => {
-            matchedCylIDs = [];
-            gasProfiles.forEach(gasProfile => {
-              if(gasProfile.unit.toString() === id && !matchedCylIDs.includes(gasProfile.cylID)) {
-                matchedCylIDs.push(gasProfile.cylID);
-              }
-            })
-            resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
-          })
-
-          // // Accumulating
-          // matchedCylIDs = [];
-          // gasProfiles.forEach(gasProfile => {
-          //   if(filterValue.includes(gasProfile.unit.toString()) && !matchedCylIDs.includes(gasProfile.cylID)) {
-          //     matchedCylIDs.push(gasProfile.cylID);
-          //   }
-          // })
-          // resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
+          resultCylinders = resultCylinders.filter(cyl =>
+            filterValue.filter(unit => 
+              gasProfiles.filter(gas => 
+                gas.unit === unit
+                && gas.cylID === cyl.cylinderID
+              ).length > 0
+            ).length === filterValue.length
+          );
           break;
 
-        case('concentration'):
-          // Clicked Gas Profile
-          if(filterValue[0].cedarGasCode) {
-            matchedCylIDs = [];
-            resultCylinders.forEach(c => {
-              c.componentGases.forEach(g => {
-                // Compare gas concentrations
-                const min = parseInt(filterValue[0].allowableGasValueMin) 
-                const max = parseInt(filterValue[0].allowableGasValueMax) 
-                const min2 = parseInt(filterValue[0].allowableGasValueMin2) 
-                const max2 = parseInt(filterValue[0].allowableGasValueMax2) 
-                const filteredGas = filterValue[0].cedarGasCode;
+        case('concentrations'):
+          // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for
+          filterValue.forEach(conc => {
+            if(conc.cedarGasCode === 'NOX') {
+              let noConc = _cloneDeep(conc);
+              let no2Conc = _cloneDeep(conc);
+              noConc.cedarGasCode = 'NO';
+              no2Conc.cedarGasCode = 'NO2';
+              filterValue.push(noConc);
+              filterValue.push(no2Conc);
+            }
+          })
 
-                let validConc = false;
-                c.componentGases.forEach(componentGas => {
-                  const conc = componentGas.gasConcentration;
-                  if(min2 && max2 && componentGas.epaGasCode === filteredGas) {
-                    if((conc > min && conc < max) || (conc > min2 && conc < max2)) {
-                      validConc = true;
-                    }
-                  }
-                  else if(componentGas.epaGasCode === filteredGas) {
-                    if((conc > min && conc < max)) {
-                      validConc = true;
-                    }
-                  }
-                })
-                if(validConc) {
-                  matchedCylIDs.push(c.cylinderID);
-                }
-              })
-            })
-            resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
+          console.log(filterValue)
+
+
+          // Filtering from assigned panel to available panel
+          if(!gasProfiles.length) {
+            resultCylinders = resultCylinders.filter(cyl => 
+              cyl.componentGases.filter(gas => 
+                filterValue.filter(conc => {
+                  const min = conc.allowableGasValueMin ? parseInt(conc.allowableGasValueMin) : 0;
+                  const max = conc.allowableGasValueMax ? parseInt(conc.allowableGasValueMax) : Infinity;
+                  const uom = conc.uom ? conc.uom : gas.uom;
+
+                  return conc.cedarGasCode === gas.epaGasCode
+                  && min <= gas.gasConcentration
+                  && max >= gas.gasConcentration
+                  && uom === gas.uom
+                }).length > 0
+              ).length > 0
+            );
           }
-          // Clicked Cylinder
+          // Filtering from available panel to assigned panel
           else {
-            matchedCylIDs = [];
-            filterValue.forEach(componentGas => {
-              gasProfiles.forEach(g => {
-                let validConc = false;
-                if(componentGas.epaGasCode === g.cedarGasCode) {
-                  const min = parseInt(g.allowableGasValueMin) 
-                  const max = parseInt(g.allowableGasValueMax) 
-                  const min2 = parseInt(g.allowableGasValueMin2) 
-                  const max2 = parseInt(g.allowableGasValueMax2)
-                  const conc = componentGas.gasConcentration;
-                  
-                  if(min2 && max2) {
-                    if((conc > min && conc < max) || (conc > min2 && conc < max2)) {
-                      validConc = true;
-                    }
+            resultCylinders = resultCylinders.filter(cyl => {
+              const matchedGasProfiles = gasProfiles.filter(g => g.cylID === cyl.cylinderID);
+              return matchedGasProfiles.filter(gas => 
+                filterValue.filter(cylGas => {
+                  let valid = false;
+                  const min1 = parseInt(gas.allowableGasValueMin);
+                  const max1 = parseInt(gas.allowableGasValueMax);
+                  const min2 = parseInt(gas.allowableGasValueMin2);
+                  const max2 = parseInt(gas.allowableGasValueMax2);
+                  const conc = parseInt(cylGas.concentration);
+
+                  valid = gas.cedarGasCode === cylGas.cedarGasCode
+                    && min1 <= conc
+                    && max1 >= conc
+                    && gas.uom === cylGas.uom;
+                  if(min2 && max2 && !valid) {
+                    valid = gas.cedarGasCode === cylGas.cedarGasCode
+                      && min2 <= conc 
+                      && max2 >= conc
+                      && gas.uom === cylGas.uom;
                   }
-                  else if((conc > min && conc < max)){
-                    validConc = true;
-                  }
-                }
-                if(validConc && !matchedCylIDs.includes(g.cylID)) matchedCylIDs.push(g.cylID);
-              })
-            })
-            resultCylinders = resultCylinders.filter(c => matchedCylIDs.includes(c.cylinderID));
+                  return valid;
+                }).length > 0
+              ).length > 0
+            });
           }
+          break;
+
+        case('singleConcentrations'):
+          // Remove any blank single concentrations
+          filterValue = filterValue.filter(conc => conc.concentration);
+          if(!filterValue.length) break;
+
+          resultCylinders = resultCylinders.filter(cyl => {
+            const matchedGasProfiles = gasProfiles.filter(g => g.cylID === cyl.cylinderID);
+            const matchedGasProfilesLength = matchedGasProfiles.filter(profile => 
+              filterValue.filter(cylGas => 
+                profile.cedarGasCode === cylGas.cedarGasCode
+              ).length > 0
+            ).length;
+
+            return matchedGasProfiles.filter(gas => 
+              filterValue.filter(cylGas => {
+                let valid = false;
+                const min1 = parseInt(gas.allowableGasValueMin);
+                const max1 = parseInt(gas.allowableGasValueMax);
+                const min2 = parseInt(gas.allowableGasValueMin2);
+                const max2 = parseInt(gas.allowableGasValueMax2);
+                const conc = parseInt(cylGas.concentration);
+                const uom = cylGas.uom ? cylGas.uom : gas.uom;
+                let gasCode = gas.cedarGasCode;
+                if(cylGas.cedarGasCode === 'NOX' && (gasCode === 'NO' || gasCode === 'NO2')) {
+                  gasCode = cylGas.cedarGasCode;
+                }
+
+                valid = gasCode === cylGas.cedarGasCode
+                  && min1 <= conc
+                  && max1 >= conc
+                  && gas.uom === uom;
+                if(min2 && max2 && !valid) {
+                  valid = gasCode === cylGas.cedarGasCode
+                    && min2 <= conc 
+                    && max2 >= conc
+                    && gas.uom === uom;
+                }
+                // TODO: Investigate this further
+                // I have no idea why returning the not valid works when gas.cedarGasCode = 'NO' or 'NO2'
+                // 'NO' and 'NO2' are somehow passing when valid = false and failing when valid = true
+                return (gas.cedarGasCode === 'NO') || (gas.cedarGasCode === 'NO2') ? !valid : valid;
+              }).length > 0
+            ).length === matchedGasProfilesLength
+          });
+          break;
+        
+        case('cylinderID'):
+          resultCylinders = resultCylinders.filter(c => c[filter] === filterValue);
+          break;
+
+        case('state'):
+          resultCylinders = resultCylinders.filter(c => c[filter] === filterValue);
           break;
 
         default:
           break;
       }
     }
-    
+
     return resultCylinders;
   }
-
-  // sorter(array, order, key) {
-  //   array.sort((a, b) => {
-  //     var A = a[key], B = b[key];
-
-  //     if (order.indexOf(A) > order.indexOf(B)) return 1;
-  //     else return -1;
-  //   });
-    
-  //   return array;
-  // }
 }

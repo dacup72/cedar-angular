@@ -1,6 +1,8 @@
 
 <ng-container *ngIf="!isAssignedCylinder; else inServiceCylinder">
-  <div [ngClass]="cylinder.errorList.length ? 'color-bar-error' : (cylinder.state === 'inUse') ? 'color-bar-inUse' : 'color-bar-spare'"></div>
+  <div [ngClass]="cylinder.errorList.length ? 'color-bar-error' : (cylinder.state === 'inUse') ? 'color-bar-inUse' : 'color-bar-spare'">
+    <mat-icon class="color-bar-icon">{{ cylinder.state === 'inUse' ? 'turned_in' : 'turned_in_not'}}</mat-icon>
+  </div>
   <div class="cylinder-item">
 
     <mat-expansion-panel 
@@ -11,9 +13,9 @@
       <mat-expansion-panel-header 
         class="panel-content" 
         [class.expansion-icon-space]="!cylinder.errorList.length && !(cylinder.state === 'inUse')">
-        <span>{{ cylinder.cylinderID }}</span>
+        <span>{{ cylinder.cylinderID.toUpperCase() }}</span>
         <span>{{ cylinder.expirationDate }}</span>
-        <span>{{ cylinder.vendorID }}</span>
+        <span>{{ cylinder.vendorID.toUpperCase() }}</span>
         <div class="panel-gases">
           <div 
             *ngFor="let gas of existingGasTypes"
@@ -95,9 +97,9 @@
     class="cylinder-item-content"
     (click)="filterOtherCard.emit(cylinder)">
     <div class="cylinder-item-id">
-      <h2>Cylinder ID: {{ cylinder.cylinderID }}</h2>
+      <h2>Cylinder ID: {{ cylinder.cylinderID.toUpperCase() }}</h2>
       <h3>Expires: {{ parseDate(cylinder.expirationDate) | date }}</h3>
-      <h3>Vendor ID: {{ cylinder.vendorID }}</h3>
+      <h3>Vendor ID: {{ cylinder.vendorID.toUpperCase() }}</h3>
     </div>
 
     <div class="cylinder-item-gas-codes">
@@ -112,7 +114,7 @@
           *ngIf="commonGasTypes.includes(gas.epaGasCode.toUpperCase())"
           class="gas-concentration"
           [class]="gas.epaGasCode">
-          {{ gas.gasConcentration }} {{ gas.uom }}
+          {{ gas.gasConcentration }} {{ gas.uom.toUpperCase() }}
         </span>
       </div>
     </div>

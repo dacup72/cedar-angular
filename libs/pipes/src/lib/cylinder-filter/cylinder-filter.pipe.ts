@@ -112,9 +112,6 @@ export class CylinderFilterPipe implements PipeTransform {
             }
           })
 
-          console.log(filterValue)
-
-
           // Filtering from assigned panel to available panel
           if(!gasProfiles.length) {
             resultCylinders = resultCylinders.filter(cyl => 

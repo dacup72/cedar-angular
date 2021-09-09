@@ -47,22 +47,3 @@ export const emptyGasProfile = {
     cylPressureUOM: '',
     errorInfo: []
 }
-
-export interface GasProfileFilters {
-    gasCodes: string[];
-    testType: string[];
-    unitIDs: string[];
-    singleConcentrations: {
-        cedarGasCode: string,
-        concentration: string,
-        uom: string,
-        changed: boolean
-    }[];
-}
-
-export const emptyGasProfileFilters: GasProfileFilters = {
-    gasCodes: [],
-    testType: [],
-    unitIDs: [],
-    singleConcentrations: []
-}

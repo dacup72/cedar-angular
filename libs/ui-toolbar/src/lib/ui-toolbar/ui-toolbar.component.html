@@ -11,18 +11,35 @@
     </span>
   </span>
   <span class="spacer"></span>
-  <!-- <ng-container class="card-title-content">
-    <button mat-raised-button (click)="swapCards.emit()">Swap Panels</button>
-  </ng-container> -->
-  <button mat-icon-button>
+  <button mat-icon-button [matMenuTriggerFor]="errorsMenu">
     <mat-icon>warning</mat-icon>
   </button>
-  <button mat-icon-button>
+  <mat-menu #errorsMenu="matMenu" xPosition="before" class="errors-menu">
+    <label class="errors-menu-title">Errors List</label>
+    <div *ngFor="let cyl of allCylinders">
+      <ng-container *ngIf="cyl.errorList.length">
+        <div mat-menu-item *ngFor="let error of cyl.errorList">{{ error.errorMsg }}</div>
+      </ng-container>
+    </div>
+    
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="notificationsMenu">
     <mat-icon>notifications</mat-icon>
   </button>
-  <button mat-icon-button>
+  <mat-menu #notificationsMenu="matMenu" xPosition="before">
+    <Label class="notifications-menu-title">Notifications</Label>
+    <div mat-menu-item>test</div>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
     <mat-icon>settings</mat-icon>
   </button>
+  <mat-menu #settingsMenu="matMenu" xPosition="before">
+    <Label class="settings-menu-title">Settings</Label>
+    <button mat-menu-item (click)="reversePanels.emit()">Swap Panels</button>
+  </mat-menu>
+
   <button class="login" (click)="logout.emit($event)" mat-icon-button>
     <mat-icon>person</mat-icon>
   </button>

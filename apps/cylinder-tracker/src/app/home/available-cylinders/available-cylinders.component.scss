@@ -226,6 +226,10 @@ li {
 
   .color-bar-space {
     flex-basis: 2%;
+
+    .icon-space {
+      visibility: hidden;
+    }
   }
 
   .cylinders-header-row-content {
@@ -248,6 +252,7 @@ li {
           text-align: center;
           background-color: gray;
           flex-basis: 12%;
+          color: white;
         }
     
         .cylinders-header-gases {

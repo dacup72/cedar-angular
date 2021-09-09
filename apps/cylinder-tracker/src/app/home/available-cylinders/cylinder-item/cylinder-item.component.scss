@@ -101,6 +101,7 @@
   flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
+  display: flex;
 }
 
 .color-bar-inUse {
@@ -109,6 +110,7 @@
   flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
+  display: flex;
 }
 
 .color-bar-error {
@@ -117,10 +119,16 @@
   flex-basis: 2%;
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
+  display: flex;
 }
 
 mat-icon {
   font-size: 34px;
+}
+
+mat-icon.color-bar-icon {
+  font-size: 25px;
+  align-self: center;
 }
 
 .cylinder-item-content {

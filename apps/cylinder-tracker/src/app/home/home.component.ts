@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   CylindersFacade,
   Cylinder,
@@ -9,7 +9,9 @@ import {
   CylinderFilters,
   emptyCylinderFilters,
   GasProfileFilters,
-  emptyGasProfileFilters
+  emptyGasProfileFilters,
+  CylinderTrackerAppState,
+  CylinderTrackerFacade
 } from '@cedar-all/core-data';
 import { Observable } from 'rxjs';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -19,7 +21,6 @@ import { first } from 'rxjs/operators';
 import { CylinderDropDialogComponent } from './cylinder-drop-dialog/cylinder-drop-dialog.component';
 import { EditCylinderDialogComponent } from './edit-cylinder-dialog/edit-cylinder-dialog.component'; 
 import { GasProfileUnassignDialogComponent } from './gas-profile-unassign-dialog/gas-profile-unassign-dialog.component';
-//import { CylinderUnassignDialogComponent } from './cylinder-unassign-dialog/cylinder-unassign-dialog.component';
 import { CylinderRetireDialogComponent } from './cylinder-retire-dialog/cylinder-retire-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -41,20 +42,19 @@ export class HomeComponent implements OnInit {
   gasProfiles$: Observable<QAGasProfile[]> = this.gasProfilesFacade.allGasProfiles$;
   users: User[];
   unitDefs$: Observable<UnitDef[]> = this.unitDefsFacade.allUnitDefs$;
+  cylinderTrackerState$: Observable<CylinderTrackerAppState[]> = this.cylinderTrackerFacade.cylinderTrackerAppState$;
 
   loading = false;
-  reverseCards = false;
-
   availableCardFiltes: {cylinderFilters: CylinderFilters};
   assignCardFilters: {cylinderFilters: CylinderFilters, gasProfileFilters: GasProfileFilters};
-
-
+  panelsReversed = false;
 
   constructor(
     private cylindersFacade: CylindersFacade,
     private userService: UserService,
     private gasProfilesFacade: GasProfilesFacade,
     private unitDefsFacade: UnitDefsFacade,
+    private cylinderTrackerFacade: CylinderTrackerFacade,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {}
@@ -86,6 +86,9 @@ export class HomeComponent implements OnInit {
         this.loading = false;
         this.users = users;
       });
+
+    this.panelsReversed = this.getCylinderTrackerState().panelsReversed;
+    //TODO: detect change on cylinder tracker state
   }
   
   getCylindersList() {
@@ -113,6 +116,15 @@ export class HomeComponent implements OnInit {
     });
     unitDefsObs.unsubscribe();
     return unitDefsOutput;
+  }
+
+  getCylinderTrackerState(): CylinderTrackerAppState {
+    let cylinderTrackerStateOutput: CylinderTrackerAppState[] = [];
+    const cylinderTrackerOBS = this.cylinderTrackerState$.subscribe(state => {
+      cylinderTrackerStateOutput = state;
+    });
+    cylinderTrackerOBS.unsubscribe();
+    return cylinderTrackerStateOutput[0];
   }
 
   // CYLINDERS ACTIONS
@@ -147,10 +159,6 @@ export class HomeComponent implements OnInit {
 
   updateGasProfile(gasProfile) {
     this.gasProfilesFacade.updateGasProfile(gasProfile);
-  }
-
-  swapCards() {
-    this.reverseCards = !this.reverseCards;
   }
 
   // CYLINDER DRAG AND DROP EVENT

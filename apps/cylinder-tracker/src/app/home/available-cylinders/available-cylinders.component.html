@@ -71,14 +71,16 @@
       </div>
 
       <div class="filter-btn-section">
-        <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button>
+        <!-- <button mat-button class="clear-filters-btn" (click)="null">Advanced Filters</button> -->
         <button mat-button class="clear-filters-btn" (click)="clearFilters()">Clear Filters</button>
       </div>
     </div>
 
     <!-- HEADER ROW FOR CYLINDRS LIST -->
     <div class="cylinders-header-row" [class.header-row-less-padding]="!scrollBarVisible" [class.header-row-padding]="scrollBarVisible">
-      <div class="color-bar-space"></div>
+      <div class="color-bar-space">
+        <mat-icon class="icon-space">turned_in</mat-icon>
+      </div>
       <div class="cylinders-header-row-content">
         <div class="cylinders-header-row-padding">
           <span class="cylinder-header-info">

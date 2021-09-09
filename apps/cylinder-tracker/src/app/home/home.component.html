@@ -10,7 +10,7 @@
 </div> -->
 
 <mat-grid-list cols="2" gutterSize="10px" rowHeight="91vh">
-  <mat-grid-tile *ngIf="!reverseCards">
+  <mat-grid-tile *ngIf="!panelsReversed">
     <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"
@@ -36,11 +36,10 @@
       (cylinderDropped)="cylinderDrop($event)"
       (retireCylinder)="retireCylinder($event)"
       (editCylinder)="editCylinder($event)"
-      (filterOtherCard)="assignFilteringAvailable($event)"
-      (swapCards)="swapCards()"
-    ></cylinder-tracker-assign-cylinders>
+      (filterOtherCard)="assignFilteringAvailable($event)">
+    </cylinder-tracker-assign-cylinders>
   </mat-grid-tile>
-  <mat-grid-tile *ngIf="reverseCards">
+  <mat-grid-tile *ngIf="panelsReversed">
     <cylinder-tracker-available-cylinders
       [cylinders]="cylinders$ | async"
       [qaGasProfiles]="gasProfiles$ | async"

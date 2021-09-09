@@ -9,6 +9,7 @@ import { reducers } from '.';
 import { CylindersEffects } from './cylinders/cylinders.effects';
 import { GasProfilesEffects } from './gas-profiles/gas-profiles.effects';
 import { UnitDefsEffects } from './unit-defs/unit-defs.effects';
+import { CylinderTrackerEffects } from './cylinder-tracker/cylinder-tracker.effects';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { UnitDefsEffects } from './unit-defs/unit-defs.effects';
     EffectsModule.forRoot([
       CylindersEffects,
       GasProfilesEffects,
-      UnitDefsEffects
+      UnitDefsEffects,
+      CylinderTrackerEffects
     ]),
   ],
   declarations: []

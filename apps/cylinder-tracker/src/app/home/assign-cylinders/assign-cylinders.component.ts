@@ -121,7 +121,6 @@ export class AssignCylindersComponent implements AfterContentChecked {
   @Output() retireCylinder = new EventEmitter();
   @Output() editCylinder = new EventEmitter();
   @Output('filterOtherCard') filterOtherCard = new EventEmitter();
-  @Output('swapCards') swapCards = new EventEmitter();
 
   @ViewChild('gasFilterChipsCylinders') gasFilterChipsCylinders: ElementRef;
   @ViewChild('gasFilterChipsGasProfiles') gasFilterChipsGasProfiles: ElementRef;
@@ -248,6 +247,7 @@ export class AssignCylindersComponent implements AfterContentChecked {
       let conc = chosenList[i];
       if(conc === gasConc) {
         conc.concentration = null;
+        conc.uom = null;
         conc.changed = false;
       }
     }

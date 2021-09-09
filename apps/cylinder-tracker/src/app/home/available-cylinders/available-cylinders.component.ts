@@ -233,8 +233,9 @@ export class AvailableCylindersComponent implements AfterContentChecked {
     for (let i = 0; i < this.cylinderFilters.concentrations.length; i++) {
       let conc = this.cylinderFilters.concentrations[i];
       if(conc === gasConc) {
+        conc.allowableGasValueMin = null;
         conc.allowableGasValueMax = null;
-        conc.allowableGasValueMax = null;
+        conc.uom = null;
         conc.changed = false;
       }
     }

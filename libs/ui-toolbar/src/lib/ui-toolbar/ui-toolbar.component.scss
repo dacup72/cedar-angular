@@ -5,3 +5,30 @@
 .title {
     color: white;
 }
+
+.errors-menu {
+   
+}
+
+.errors-menu-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+}
+
+.notifications-menu-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: yellow;
+}
+
+.settings-menu-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    color: white;
+}

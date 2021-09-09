@@ -31,7 +31,7 @@
             matInput 
             [matDatepicker]="picker"
             formControlName="expirationDate"
-            placeholder="Expiration Date - ex: 2/11/2023"/>
+            placeholder="Expiration Date - MM/DD/YYYY"/>
           <mat-datepicker-toggle matSuffix [for]="picker">
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </mat-datepicker-toggle>
@@ -191,5 +191,5 @@
         Cancel
       </button>
     </mat-card-actions>
-    <p>{{ cylinderForm.value | json }}</p>
+    <!-- <p>{{ cylinderForm.value | json }}</p> -->
   </mat-card>

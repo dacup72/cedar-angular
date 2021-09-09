@@ -2,6 +2,8 @@
   [title]="title"
   (toggleSidenav)="sidenav.toggle()"
   (logout)="logout()"
+  [cylinders]="cylinders$ | async"
+  (reversePanels)="reversePanels()"
 ></ui-ui-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" closed class="app-sidenav">

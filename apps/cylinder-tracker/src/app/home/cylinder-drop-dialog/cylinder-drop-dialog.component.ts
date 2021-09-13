@@ -34,7 +34,7 @@ export class CylinderDropDialogComponent {
       this.gasSectionTitle = 'Gas Profiles Being Swapped';
     }
     else if(data.dropType.includes('gasProfileDropList')) {
-      this.gasSectionTitle = 'Gas Profile Being Replaced';
+      this.gasSectionTitle = 'Gas Profile Being Updated';
       this.allGasesSelected = data.isLastAssignedGasProfile;
 
       if(!data.isLastAssignedGasProfile) {
@@ -73,13 +73,28 @@ export class CylinderDropDialogComponent {
   }
 
   isConcentrationValid(gasProfile: QAGasProfile, cylNum: string = 'cylinder1') {
-    const cylGas = this.data[cylNum].componentGases.filter(gas => gas.qaGasDefCode === gasProfile.cedarGasCode)[0];
+    const cylGas = this.data[cylNum].componentGases.filter(gas => {
+      const cylGasEPA = gas.epaGasCode.toLowerCase();
+      const cylGasQA = gas.qaGasDefCode.toLowerCase();
+      const gasProfileCode = gasProfile.cedarGasCode.toLowerCase();
+
+      if(cylGasEPA === 'no' 
+        && (gasProfileCode === 'no' || gasProfileCode === 'nox' || gasProfileCode === 'no2')
+      ) return true;
+      else if(cylGasQA === 'nox' 
+        && (gasProfileCode === 'no' || gasProfileCode === 'nox' || gasProfileCode === 'no2')
+      ) return true;
+      else return false;
+    })[0];
     let concMsg = `[${gasProfile.allowableGasValueMin} - ${gasProfile.allowableGasValueMax} ${gasProfile.uom}]`;
     if(gasProfile.allowableGasValueMin2) {
       concMsg += ` or [${gasProfile.allowableGasValueMin2} - ${gasProfile.allowableGasValueMax2} ${gasProfile.uom}]`;
     }
 
-    if(cylGas && cylGas.gasConcentration <= parseInt(gasProfile.allowableGasValueMax) && cylGas.gasConcentration >= parseInt(gasProfile.allowableGasValueMin)) {
+    if(cylGas 
+      && ((cylGas.gasConcentration <= parseInt(gasProfile.allowableGasValueMax) && cylGas.gasConcentration >= parseInt(gasProfile.allowableGasValueMin))
+      || cylGas.gasConcentration <= parseInt(gasProfile.allowableGasValueMax2) && cylGas.gasConcentration >= parseInt(gasProfile.allowableGasValueMin2))
+      ) {
       return '';
     }
     else if(!cylGas) {

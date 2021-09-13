@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, AfterContentChecked, OnInit, AfterViewInit } from '@angular/core';
 import { 
   Cylinder, 
   QAGasProfile, 
@@ -141,9 +141,12 @@ export class AvailableCylindersComponent implements AfterContentChecked {
     this.refreshFiltersVariables();
   }
 
+  //TODO: This method of determining state from the filter is confusing, simplify it.
+  // It only works because only 2 possible selections exist, thats why it needs to be fixed.
   cylinderStateSelected(event) {
-    const cylinderState = typeof(event) === 'string' ? event : event.option.value;
-    this.cylinderFilters.state = cylinderState ? cylinderState : '';
+    // const cylinderState = typeof(event) === 'string' ? event : event.option.value;
+    // this.cylinderFilters.state = cylinderState ? cylinderState : '';
+    this.cylinderFilters.state = event.length === 1 ? event[0] : '';
     this.refreshFiltersVariables();
   }
 

@@ -181,8 +181,8 @@
     <!-- ===== EDIT CYLINDER BUTTONS ===== -->
     <mat-divider></mat-divider>
     <mat-card-actions>
-      <button type="submit" mat-button [mat-dialog-close]="cylinderForm.value" color="primary">
-        Save
+      <button type="submit" mat-button [mat-dialog-close]="{'cyl': cylinderForm.value, 'cylID': currentCylinder.id}" color="primary">
+          Save
       </button>
       <button type="button" mat-button (click)="onClearCylinder()">
         Clear Form

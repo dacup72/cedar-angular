@@ -94,7 +94,12 @@ export class AssignCylindersComponent implements AfterContentChecked {
       if(!this.testTypes.includes(gas.cedarGasCode)) {
         this.testTypes.push(gas.cedarGasCode);
       }
-      if(!this.testTypes.includes(gas.qaTestType)) {
+      if(gas.qaTestType === 'LIN') {
+        if(!this.testTypes.includes('LINEARITY')) {
+          this.testTypes.push('LINEARITY');
+        }
+      }
+      else if(!this.testTypes.includes(gas.qaTestType)) {
         this.testTypes.push(gas.qaTestType);
       }
     })

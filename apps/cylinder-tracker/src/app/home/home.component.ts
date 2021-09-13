@@ -87,8 +87,10 @@ export class HomeComponent implements OnInit {
         this.users = users;
       });
 
-    this.panelsReversed = this.getCylinderTrackerState().panelsReversed;
-    //TODO: detect change on cylinder tracker state
+    //TODO: Possible memory leak as this observable is never unsubscribed from, look into it
+    this.cylinderTrackerState$.subscribe(state => {
+      this.panelsReversed = state[0].panelsReversed;
+    });
   }
   
   getCylindersList() {
@@ -116,15 +118,6 @@ export class HomeComponent implements OnInit {
     });
     unitDefsObs.unsubscribe();
     return unitDefsOutput;
-  }
-
-  getCylinderTrackerState(): CylinderTrackerAppState {
-    let cylinderTrackerStateOutput: CylinderTrackerAppState[] = [];
-    const cylinderTrackerOBS = this.cylinderTrackerState$.subscribe(state => {
-      cylinderTrackerStateOutput = state;
-    });
-    cylinderTrackerOBS.unsubscribe();
-    return cylinderTrackerStateOutput[0];
   }
 
   // CYLINDERS ACTIONS
@@ -195,7 +188,7 @@ export class HomeComponent implements OnInit {
       isLastAssignedGasProfile: false
     }
 
-    // Set dialog data cylinders and gas profiles
+    // Set dialog data for cylinders and gas profiles
     if (dropList === 'gasProfileDropList') {
       dialogData.cylinder2 = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylID'])[0];
       dialogData.gasProfiles = [dropContainerItem];
@@ -282,8 +275,6 @@ export class HomeComponent implements OnInit {
       }
      
       draggedCylinder.errorList = this.checkForCylExpired(draggedCylinder);
-      //console.log('dragged: ', draggedCylinder)
-      //console.log('drop container: ', dropContainerItem)
       this.saveCylinder(dropContainerItem);
       this.saveCylinder(draggedCylinder);
     }
@@ -396,14 +387,16 @@ export class HomeComponent implements OnInit {
       dialogData.cylinder.cylinderID = '';
       dialogData.cylinder.id = null;
     }
-
+    
     const dialogRef = this.dialog.open(EditCylinderDialogComponent, { data: dialogData });
     
-    dialogRef.afterClosed().subscribe(cylinder => {
-      if(!cylinder) return;
+    dialogRef.afterClosed().subscribe(data => {
+      if(!data) return;
       // TODO: Fix the form to no add additional component gas which requires this shift method
       //if(!cylinder.id) cylinder.componentGases.shift();
-      this.saveCylinder(cylinder);
+      let currentCylinder = data.cyl;
+      currentCylinder.id = data.cylID;
+      this.saveCylinder(currentCylinder);
     });
   }
 

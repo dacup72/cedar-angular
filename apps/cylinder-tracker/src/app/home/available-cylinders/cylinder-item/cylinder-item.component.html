@@ -14,7 +14,7 @@
         class="panel-content" 
         [class.expansion-icon-space]="!cylinder.errorList.length && !(cylinder.state === 'inUse')">
         <span>{{ cylinder.cylinderID.toUpperCase() }}</span>
-        <span>{{ cylinder.expirationDate }}</span>
+        <span>{{ cylinder.expirationDate | date:'shortDate' }}</span>
         <span>{{ cylinder.vendorID.toUpperCase() }}</span>
         <div class="panel-gases">
           <div 
@@ -98,7 +98,7 @@
     (click)="filterOtherCard.emit(cylinder)">
     <div class="cylinder-item-id">
       <h2>Cylinder ID: {{ cylinder.cylinderID.toUpperCase() }}</h2>
-      <h3>Expires: {{ parseDate(cylinder.expirationDate) | date }}</h3>
+      <h3>Expires: {{ parseDate(cylinder.expirationDate) | date:'shortDate' }}</h3>
       <h3>Vendor ID: {{ cylinder.vendorID.toUpperCase() }}</h3>
     </div>
 

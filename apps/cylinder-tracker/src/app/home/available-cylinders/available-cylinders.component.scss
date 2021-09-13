@@ -1,6 +1,6 @@
 @import 'apps/cylinder-tracker/src/cisco-theme.scss';
 
-ui-select-autocomplete {
+ui-select-autocomplete, .cylinder-state-filter {
   flex-basis: 19%;
   padding-top: 12px;
 }
@@ -111,7 +111,7 @@ button.mat-raised-button:hover {
 }
 
 .test {
-  height: 68vh;
+  height: 65vh;
 }
 
 .empty-bottom-item {
@@ -222,7 +222,6 @@ li {
 .cylinders-header-row {
   display: flex;
   justify-content: space-between;
-  background-color: #E1E1E1;
 
   .color-bar-space {
     flex-basis: 2%;
@@ -249,7 +248,9 @@ li {
         justify-content: space-around;
 
         span {
-          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           background-color: gray;
           flex-basis: 12%;
           color: white;
@@ -261,7 +262,9 @@ li {
           justify-content: space-around;
       
           div {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             flex-basis: 15%;
             cursor: pointer;
           }

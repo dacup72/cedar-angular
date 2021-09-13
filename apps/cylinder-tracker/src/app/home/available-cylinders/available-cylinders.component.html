@@ -7,12 +7,20 @@
   <ng-template #filterSection>
     <div class="card-filters">
       <div class="filter-input-section">
-        <ui-select-autocomplete
+        <!-- <ui-select-autocomplete
           [selectTitle]="'Cylinder State'"
           [options]="['spare', 'inUse']"
           (selectionChange)="cylinderStateSelected($event);"
           [clearItems]="clearFilterItems">
-        </ui-select-autocomplete>
+        </ui-select-autocomplete> -->
+
+        <cedar-all-ui-filter-chips
+          class="cylinder-state-filter"
+          [filterItemName]="'Cylinder State'"
+          [allItems]="['spare', 'inUse']"
+          (selectionChange)="cylinderStateSelected($event)"
+          [clearItems]="clearFilterItems">
+        </cedar-all-ui-filter-chips>
 
         <mat-expansion-panel class="test-panel" #myPanel>
           <mat-expansion-panel-header class="test-panel-content">

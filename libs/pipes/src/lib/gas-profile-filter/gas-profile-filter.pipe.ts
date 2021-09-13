@@ -23,6 +23,8 @@ export class GasProfileFilterPipe implements PipeTransform {
 
       switch(filter) {
         case('gasCodes'):
+        
+
           // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for
           if(filterValue.includes('NOX')) {
             if(!filterValue.includes('NO')) filterValue.push('NO');

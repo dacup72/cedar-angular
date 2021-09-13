@@ -417,7 +417,7 @@
       {
         "qaGasDefCode": "NOX",
         "epaGasCode": "NOX",
-        "gasConcentration": 12,
+        "gasConcentration": 21,
         "uom": "ppm"
       }
     ],

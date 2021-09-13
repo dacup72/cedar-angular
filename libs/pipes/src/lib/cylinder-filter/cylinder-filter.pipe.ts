@@ -25,15 +25,19 @@ export class CylinderFilterPipe implements PipeTransform {
 
       switch(filter) {
         case('gasCodes'):
-          // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for
+          // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for and vice versa
           const includesNOX = filterValue.includes('NOX');
+          const includesNO2OrNO = filterValue.includes('NO') || filterValue.includes('NO2');
           if(includesNOX) {
             if(!filterValue.includes('NO')) filterValue.push('NO');
             if(!filterValue.includes('NO2')) filterValue.push('NO2');
           }
+          else if(includesNO2OrNO) {
+            if(!filterValue.includes('NOX')) filterValue.push('NOX');
+          }
 
           resultCylinders = resultCylinders.filter(cyl => {
-            if(includesNOX) {
+            if(includesNOX || includesNO2OrNO) {
              return filterValue.filter(gas => 
                 cyl.componentGases.filter(cylGas => 
                   cylGas.epaGasCode === gas
@@ -100,7 +104,6 @@ export class CylinderFilterPipe implements PipeTransform {
           break;
 
         case('concentrations'):
-          // If filterValue contains 'NOX' then ensure 'NO' and 'NO2' are also filtered for
           filterValue.forEach(conc => {
             if(conc.cedarGasCode === 'NOX') {
               let noConc = _cloneDeep(conc);
@@ -110,8 +113,13 @@ export class CylinderFilterPipe implements PipeTransform {
               filterValue.push(noConc);
               filterValue.push(no2Conc);
             }
+            else if(conc.cedarGasCode === 'NO' || conc.cedarGasCode === 'NO2') {
+              let noxConc = _cloneDeep(conc);
+              noxConc.cedarGasCode = 'NOX';
+              filterValue.push(noxConc);
+            }
           })
-
+          
           // Filtering from assigned panel to available panel
           if(!gasProfiles.length) {
             resultCylinders = resultCylinders.filter(cyl => 
@@ -121,7 +129,7 @@ export class CylinderFilterPipe implements PipeTransform {
                   const max = conc.allowableGasValueMax ? parseInt(conc.allowableGasValueMax) : Infinity;
                   const uom = conc.uom ? conc.uom : gas.uom;
 
-                  return conc.cedarGasCode === gas.epaGasCode
+                  return (conc.cedarGasCode === gas.epaGasCode || conc.cedarGasCode === gas.qaGasDefCode)
                   && min <= gas.gasConcentration
                   && max >= gas.gasConcentration
                   && uom === gas.uom

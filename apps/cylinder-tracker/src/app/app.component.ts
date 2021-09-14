@@ -21,7 +21,7 @@ import { User } from '@cedar-angular/api-interfaces';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {  
-  title = "Cylinder Tracker";
+  title = "Cylinder Manager";
   currentUser: User;
   cylinders$: Observable<Cylinder[]> = this.cylindersFacade.allCylinders$;
   gasProfiles$: Observable<QAGasProfile[]> = this.gasProfilesFacade.allGasProfiles$;

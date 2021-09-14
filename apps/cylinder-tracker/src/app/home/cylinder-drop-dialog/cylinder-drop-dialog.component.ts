@@ -84,6 +84,9 @@ export class CylinderDropDialogComponent {
       else if(cylGasQA === 'nox' 
         && (gasProfileCode === 'no' || gasProfileCode === 'nox' || gasProfileCode === 'no2')
       ) return true;
+      else if(cylGasEPA === gasProfileCode) {
+        return true;
+      }
       else return false;
     })[0];
     let concMsg = `[${gasProfile.allowableGasValueMin} - ${gasProfile.allowableGasValueMax} ${gasProfile.uom}]`;

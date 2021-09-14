@@ -190,8 +190,10 @@ export class HomeComponent implements OnInit {
 
     // Set dialog data for cylinders and gas profiles
     if (dropList === 'gasProfileDropList') {
+      console.log('hello')
       dialogData.cylinder2 = this.getCylindersList().filter(cylinder => cylinder.cylinderID === dropContainerItem['cylID'])[0];
-      dialogData.gasProfiles = [dropContainerItem];
+      // dialogData.gasProfiles = [dropContainerItem];
+      dialogData.gasProfiles = this.getGasProfilesList().filter(gasProfile => gasProfile.cylID === dialogData.cylinder2.cylinderID);
       dialogData.isLastAssignedGasProfile = this.getGasProfilesList().filter(gasProfile => gasProfile.cylID === dialogData.cylinder2['cylinderID']).length === 1;
     }
     else if(dropList === 'inUseDropList') {
